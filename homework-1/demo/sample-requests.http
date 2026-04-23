@@ -1,0 +1,101 @@
+### Banking Transactions API - Sample Requests
+### Use with REST Client extension in VS Code
+
+@baseUrl = http://localhost:3000
+
+### Get API Info
+GET {{baseUrl}}/
+
+###
+
+### Create Transaction - Deposit
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-00000",
+  "toAccount": "ACC-12345",
+  "amount": 1000.00,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+###
+
+### Create Transaction - Transfer
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-67890",
+  "amount": 250.50,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+###
+
+### Get All Transactions
+GET {{baseUrl}}/transactions
+
+###
+
+### Get Transaction by ID
+GET {{baseUrl}}/transactions/TRANSACTION_ID_HERE
+
+###
+
+### Filter by Account
+GET {{baseUrl}}/transactions?accountId=ACC-12345
+
+###
+
+### Filter by Type
+GET {{baseUrl}}/transactions?type=transfer
+
+###
+
+### Filter by Date Range
+GET {{baseUrl}}/transactions?from=2024-01-01&to=2024-12-31
+
+###
+
+### Get Account Balance
+GET {{baseUrl}}/accounts/ACC-12345/balance
+
+###
+
+### Get Account Summary
+GET {{baseUrl}}/accounts/ACC-12345/summary
+
+###
+
+### Calculate Interest
+GET {{baseUrl}}/accounts/ACC-12345/interest?rate=0.05&days=30
+
+###
+
+### Export as CSV
+GET {{baseUrl}}/transactions/export?format=csv
+
+###
+
+### Test Validation Error
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "INVALID",
+  "toAccount": "ACC-67890",
+  "amount": -50.00,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+###
+
+### Test 404
+GET {{baseUrl}}/transactions/non-existent-id
+
+###

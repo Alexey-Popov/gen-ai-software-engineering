@@ -1,0 +1,28 @@
+{
+  "name": "banking-transactions-api",
+  "version": "1.0.0",
+  "description": "Simple Banking Transactions REST API for AI-Assisted Development Course",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix"
+  },
+  "keywords": [
+    "banking",
+    "transactions",
+    "rest-api",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4",
+    "nodemon": "^3.0.1"
+  }
+}
