@@ -87,7 +87,6 @@ homework-1/
 ├── demo/
 │   ├── run.sh                      # Quick start script
 │   ├── sample-requests.http        # REST Client sample requests
-│   ├── sample-requests.sh          # Curl-based test script
 │   └── sample-data.json            # Sample transaction data
 ├── docs/
 │   └── screenshots/                # AI interaction and testing screenshots
@@ -234,7 +233,7 @@ homework-1/
 8. **Export CSV** - Downloads CSV file
 9. **404 Error** - Non-existent transaction returns 404
 
-See `demo/sample-requests.sh` for automated test script.
+See `demo/sample-requests.http` for ready-to-run API request examples.
 
 ---
 
@@ -255,10 +254,11 @@ Server runs on `http://localhost:3000`
 
 ## 📸 Screenshots
 
-Screenshots demonstrating AI interaction and working API are located in `docs/screenshots/`:
+Screenshots demonstrating AI interaction and working API tests are located in `docs/screenshots/`:
+- 16 screenshots total (6 AI development + 10 API verification)
 - AI prompts and generated code
 - Server running successfully
-- API request/response examples
+- API request/response examples (POST, list, balance, interest, CSV)
 - Validation error handling
 - Additional features working
 
@@ -284,7 +284,6 @@ Screenshots demonstrating AI interaction and working API are located in `docs/sc
 - [TASKS.md](./TASKS.md) - Original homework requirements
 - [HOWTORUN.md](./HOWTORUN.md) - Detailed setup and run instructions
 - [demo/sample-requests.http](./demo/sample-requests.http) - REST Client examples
-- [demo/sample-requests.sh](./demo/sample-requests.sh) - Curl test script
 
 ---
 

@@ -1,6 +1,6 @@
 # Screenshots Documentation
 
-This folder contains 12 screenshots demonstrating AI-assisted development and the working API.
+This folder contains 16 screenshots demonstrating AI-assisted development and the working API.
 
 ## Screenshot List
 
@@ -12,19 +12,23 @@ This folder contains 12 screenshots demonstrating AI-assisted development and th
 - 5-ai-helper-functions.png - Helper functions for calculations
 - 6-ai-code-cleanup.png - Code optimization and cleanup
 
-### API Functionality (6 screenshots)
+### API Functionality (10 screenshots)
 - 7-server-running.png - Server startup and running
 - 8-api-create-transaction.png - Creating transactions via POST
 - 9-api-balance-summary.png - Balance and summary endpoints
 - 10-api-validation-errors.png - Validation error handling
 - 11-api-csv-export.png - CSV export functionality
 - 12-complete-implementation.png - Complete implementation overview
+- 13-api-post-transaction-success.png - Successful transaction creation with `201 Created`
+- 14-api-get-transactions-list.png - Retrieving transactions list with `200 OK`
+- 15-api-account-balance-check.png - Checking account balance endpoint response
+- 16-api-interest-calculation.png - Interest calculation endpoint with query parameters
 
 ## Requirements Met
 
 ✅ AI tool interactions documented (6 screenshots)
 ✅ API running successfully (1 screenshot)
-✅ API requests/responses demonstrated (5 screenshots)
+✅ API requests/responses demonstrated (9 screenshots)
 ✅ All homework documentation requirements fulfilled
 
 ## For Pull Request

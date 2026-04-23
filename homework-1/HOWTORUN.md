@@ -104,9 +104,9 @@ Import requests from `demo/sample-requests.http` and set base URL to `http://loc
 | GET | `/transactions` | List all (supports filtering) |
 | GET | `/transactions/:id` | Get by ID |
 | GET | `/transactions/export?format=csv` | Export CSV |
-| GET | `/accounts/:id/balance` | Get balance |
-| GET | `/accounts/:id/summary` | Get summary |
-| GET | `/accounts/:id/interest?rate=X&days=Y` | Calculate interest |
+| GET | `/accounts/:accountId/balance` | Get balance |
+| GET | `/accounts/:accountId/summary` | Get summary |
+| GET | `/accounts/:accountId/interest?rate=X&days=Y` | Calculate interest |
 
 **Query Parameters for filtering:**
 - `accountId` - Filter by account (e.g., `?accountId=ACC-12345`)
@@ -232,8 +232,8 @@ PORT=4000 npm start
 - [ ] POST /transactions creates transaction
 - [ ] GET /transactions lists all
 - [ ] Filtering works (accountId, type, date)
-- [ ] GET /accounts/:id/balance works
-- [ ] GET /accounts/:id/summary works
+- [ ] GET /accounts/:accountId/balance works
+- [ ] GET /accounts/:accountId/summary works
 - [ ] Interest calculation works
 - [ ] CSV export works
 - [ ] Validation errors return 400
