@@ -4,7 +4,7 @@ module.exports = [
   js.configs.recommended,
   {
     languageOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 2022,
       sourceType: 'commonjs',
       globals: {
         console: 'readonly',
@@ -23,7 +23,8 @@ module.exports = [
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
       'no-unused-vars': ['warn'],
-      'no-console': 'off'
+      'no-console': 'off',
+      'max-len': ['error', { 'code': 110 }]
     }
   },
   {

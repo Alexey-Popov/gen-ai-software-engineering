@@ -3,74 +3,118 @@ const VALID_CURRENCIES = [
   'CNY', 'INR', 'BRL', 'ZAR', 'MXN', 'SGD', 'HKD', 'SEK',
   'NOK', 'DKK', 'PLN', 'THB', 'IDR', 'MYR', 'PHP', 'CZK'
 ];
-
 const VALID_TYPES = ['deposit', 'withdrawal', 'transfer'];
 
-function isValidAccountId(accountId) {
-  return accountId && typeof accountId === 'string' && /^ACC-[A-Z0-9]{5}$/i.test(accountId);
-}
+const isValidAccountId = (accountId) => accountId && /^ACC-[A-Z0-9]{5}$/i.test(accountId);
 
-function isValidAmount(amount) {
-  if (typeof amount !== 'number' || isNaN(amount) || amount <= 0) {
-    return false;
+const isValidAmount = (amount) =>
+  Number.isFinite(amount) && amount > 0 && (amount.toString().split('.')[1] || '').length <= 2;
+
+const isValidCurrency = (currency) => currency && VALID_CURRENCIES.includes(String(currency).toUpperCase());
+
+const isValidType = (type) => type && VALID_TYPES.includes(String(type).toLowerCase());
+
+/**
+ * Schema-based validation pattern for transaction objects.
+ * Benefits:
+ * - Declarative: Rules are defined separately from validation logic
+ * - Maintainable: Adding new fields only requires updating this schema
+ * - Consistent: All fields are validated the same way
+ * - Self-documenting: Schema serves as documentation for transaction structure
+ */
+const TRANSACTION_SCHEMA = {
+  fromAccount: {
+    required: true,
+    validator: isValidAccountId,
+    messages: {
+      required: 'fromAccount is required',
+      invalid: 'fromAccount must follow format ACC-XXXXX (e.g., ACC-12345)'
+    }
+  },
+  toAccount: {
+    required: true,
+    validator: isValidAccountId,
+    messages: {
+      required: 'toAccount is required',
+      invalid: 'toAccount must follow format ACC-XXXXX (e.g., ACC-67890)'
+    }
+  },
+  amount: {
+    required: true,
+    validator: isValidAmount,
+    messages: {
+      required: 'amount is required',
+      invalid: 'amount must be a positive number with maximum 2 decimal places'
+    }
+  },
+  currency: {
+    required: true,
+    validator: isValidCurrency,
+    messages: {
+      required: 'currency is required',
+      invalid: (value) => `currency must be a valid ISO 4217 code. Received: ${value}`
+    }
+  },
+  type: {
+    required: true,
+    validator: isValidType,
+    messages: {
+      required: 'type is required',
+      invalid: 'type must be one of: deposit, withdrawal, transfer'
+    }
   }
-  const decimalPlaces = (amount.toString().split('.')[1] || '').length;
-  return decimalPlaces <= 2;
-}
+};
 
-function isValidCurrency(currency) {
-  return currency && typeof currency === 'string' && VALID_CURRENCIES.includes(currency.toUpperCase());
-}
-
-function isValidType(type) {
-  return type && typeof type === 'string' && VALID_TYPES.includes(type.toLowerCase());
-}
-
-function validateTransaction(transaction) {
-  const errors = [];
-
+/**
+ * Validates a transaction object against the defined schema.
+ * Checks all required fields, formats, and business rules.
+ *
+ * @param {Object} transaction - The transaction object to validate
+ * @returns {Object} Validation result with shape: { isValid: boolean, errors: Array }
+ */
+const validateTransaction = (transaction) => {
   if (!transaction) {
     return { isValid: false, errors: [{ field: 'transaction', message: 'Transaction data is required' }] };
   }
 
-  if (!transaction.fromAccount) {
-    errors.push({ field: 'fromAccount', message: 'fromAccount is required' });
-  } else if (!isValidAccountId(transaction.fromAccount)) {
-    errors.push({ field: 'fromAccount', message: 'fromAccount must follow format ACC-XXXXX (e.g., ACC-12345)' });
-  }
+  const errors = [];
 
-  if (!transaction.toAccount) {
-    errors.push({ field: 'toAccount', message: 'toAccount is required' });
-  } else if (!isValidAccountId(transaction.toAccount)) {
-    errors.push({ field: 'toAccount', message: 'toAccount must follow format ACC-XXXXX (e.g., ACC-67890)' });
-  }
+  // Validate each field according to schema
+  for (const [field, rules] of Object.entries(TRANSACTION_SCHEMA)) {
+    const value = transaction[field];
 
-  if (transaction.amount === undefined || transaction.amount === null) {
-    errors.push({ field: 'amount', message: 'amount is required' });
-  } else if (!isValidAmount(transaction.amount)) {
-    errors.push({ field: 'amount', message: 'amount must be a positive number with maximum 2 decimal places' });
-  }
+    // Check for missing required fields (explicit null/undefined check)
+    if (value === undefined || value === null) {
+      if (rules.required) {
+        errors.push({ field, message: rules.messages.required });
+      }
+      continue;
+    }
 
-  if (!transaction.currency) {
-    errors.push({ field: 'currency', message: 'currency is required' });
-  } else if (!isValidCurrency(transaction.currency)) {
-    errors.push({ field: 'currency', message: `currency must be a valid ISO 4217 code. Received: ${transaction.currency}` });
-  }
-
-  if (!transaction.type) {
-    errors.push({ field: 'type', message: 'type is required' });
-  } else if (!isValidType(transaction.type)) {
-    errors.push({ field: 'type', message: 'type must be one of: deposit, withdrawal, transfer' });
+    // For non-null values, check if they pass validation
+    // Empty strings will fail validation naturally through their validators
+    if (!rules.validator(value)) {
+      const message = typeof rules.messages.invalid === 'function'
+        ? rules.messages.invalid(value)
+        : rules.messages.invalid;
+      errors.push({ field, message });
+    }
   }
 
   return { isValid: errors.length === 0, errors };
-}
+};
 
-function isValidDate(dateStr) {
-  if (!dateStr) return false;
+// Strict ISO 8601 date validation (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss.sssZ)
+const ISO_8601_REGEX = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/;
+
+const isValidDate = (dateStr) => {
+  if (!dateStr || typeof dateStr !== 'string') return false;
+  // Check format matches ISO 8601
+  if (!ISO_8601_REGEX.test(dateStr)) return false;
+  // Check that date is actually valid (not like 2024-13-45)
   const date = new Date(dateStr);
-  return !isNaN(date);
-}
+  return !isNaN(date.getTime());
+};
 
 module.exports = {
   validateTransaction,
