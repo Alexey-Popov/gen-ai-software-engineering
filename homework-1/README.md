@@ -137,17 +137,37 @@ The entire implementation was driven by **Claude Code** (Anthropic's CLI agent, 
 
 ## 📸 Screenshots
 
-Place captures in `docs/screenshots/` matching this checklist:
+All captures live in [`docs/screenshots/`](./docs/screenshots/).
 
-- [ ] `01-claude-plan.png` — initial conversation with Claude producing the implementation plan
-- [ ] `02-claude-stage-implementation.png` — Claude implementing one of the stages
-- [ ] `03-server-running.png` — terminal showing `Banking API listening on http://localhost:3000`
-- [ ] `04-rest-client-create.png` — REST Client returning 201 for `POST /transactions`
-- [ ] `05-rest-client-validation.png` — REST Client returning 400 with `details[]` on a bad payload
-- [ ] `06-rest-client-balance.png` — `GET /accounts/:id/balance` response
-- [ ] `07-rest-client-summary.png` — `GET /accounts/:id/summary` response
-- [ ] `08-csv-export.png` — CSV download (browser or REST Client view)
-- [ ] `09-rate-limit-429.png` — 429 response after exceeding the configured limit
+### 1. Initial prompt to the AI assistant
+Asking Claude Code to analyse `TASKS.md` and produce a step-by-step implementation plan.
+
+![Initial prompt to Claude](./docs/screenshots/screenshot1.png)
+
+### 2. AI response with the analysis
+Claude's structured response covering tech stack, folder layout, endpoints, validation rules, and Task 4 strategy.
+
+![AI response](./docs/screenshots/screenshot2.png)
+
+### 3. Implementation plan committed to the repo
+The agreed plan saved as [`IMPLEMENTATION_PLAN.md`](./IMPLEMENTATION_PLAN.md) — 11 stages with status checkboxes that were ticked off as each stage was verified.
+
+![Implementation plan](./docs/screenshots/screenshot3.png)
+
+### 4. Server running + health check in the browser
+`npm start` boots the API on `http://localhost:3000`; `GET /` returns the JSON health payload.
+
+![Server running and health check](./docs/screenshots/screenshot4.png)
+
+### 5. Successful `POST /transactions` returning **201**
+REST Client showing a created transaction with auto-generated `id`, `timestamp`, and `status: "completed"`.
+
+![POST transaction 201 response](./docs/screenshots/screenshot5.png)
+
+### 6. Validation failure returning **400** with `details[]`
+Multiple validation errors collected in a single response (no fail-fast) — `fromAccount` format, `amount` sign, `currency` whitelist.
+
+![400 validation error with details array](./docs/screenshots/screenshot6.png)
 
 ---
 
@@ -175,7 +195,7 @@ Then open `demo/sample-requests.http` in VS Code (with the **REST Client** exten
 - [x] `HOWTORUN.md`
 - [x] `demo/run.sh`, `demo/sample-data.json`, `demo/sample-requests.http`, `demo/seed.js`
 - [x] `.gitignore` (at repo root)
-- [ ] Screenshots in `docs/screenshots/` (to be captured before submission)
+- [x] Screenshots in `docs/screenshots/` (6 captures: prompt, AI response, plan, running server, 201, 400)
 - [ ] PR opened on the personal fork with this folder as the diff
 
 ---
