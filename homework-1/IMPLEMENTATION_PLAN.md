@@ -140,8 +140,8 @@ Extend `GET /transactions` with query params:
 **Outcome:** anyone can clone the repo and exercise the API in minutes.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `sample-data.json` (7 transactions, 3 accounts, 3 currencies), `seed.js` (Node fetch loop), `run.sh`, `seed.sh` (executable). Verified — seed script POSTed all 7 transactions; balances for ACC-12345 / ACC-67890 / ACC-ABC12 match expected `4649.25 / 1675.25 / 2025.25`.
 
 ---
 
