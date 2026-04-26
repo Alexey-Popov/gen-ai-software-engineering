@@ -95,8 +95,8 @@ Extend `GET /transactions` with query params:
 **Outcome:** interest endpoint returns the calculated value with input validation.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Verified — `balance=10000, rate=0.05, days=365 → interest=500`; `days=30 → 41.10`. Zero-balance account returns `interest=0`. Missing rate, negative rate, non-integer days, and "both invalid" cases all return 400 with `details[]`. Response includes `balance`, `rate`, `days`, `interest`, and the formula string.
 
 ---
 

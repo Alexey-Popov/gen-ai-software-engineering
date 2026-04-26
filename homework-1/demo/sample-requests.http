@@ -191,3 +191,26 @@ GET {{host}}/accounts/ACC-12345/summary
 
 ### Summary for an account with no transactions — zeros + null date
 GET {{host}}/accounts/ACC-99999/summary
+
+###############################################################################
+# Stage 5 — Simple Interest
+# Formula: balance × rate × days / 365
+###############################################################################
+
+### Interest at 5% APR for 30 days
+GET {{host}}/accounts/ACC-12345/interest?rate=0.05&days=30
+
+### Interest for an account with zero balance — interest = 0
+GET {{host}}/accounts/ACC-99999/interest?rate=0.05&days=30
+
+### Missing rate — 400
+GET {{host}}/accounts/ACC-12345/interest?days=30
+
+### Negative rate — 400
+GET {{host}}/accounts/ACC-12345/interest?rate=-0.01&days=30
+
+### Non-integer days — 400
+GET {{host}}/accounts/ACC-12345/interest?rate=0.05&days=10.5
+
+### Both invalid — 400 with two errors
+GET {{host}}/accounts/ACC-12345/interest?rate=abc&days=0
