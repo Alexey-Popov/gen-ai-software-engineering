@@ -236,3 +236,17 @@ GET {{host}}/transactions/export?format=xml
 
 ### Invalid filter on export — 400
 GET {{host}}/transactions/export?format=csv&accountId=12345
+
+###############################################################################
+# Stage 7 — Rate Limiting
+# Default: 100 requests per minute per IP. Override via env:
+#   RATE_LIMIT_MAX=5 RATE_LIMIT_WINDOW_MS=10000 npm start
+# Successful responses include RateLimit-* headers (RFC standard).
+###############################################################################
+
+### Health check — inspect "RateLimit-*" response headers to see the quota
+GET {{host}}/
+
+### Trigger 429 by spamming requests (run with RATE_LIMIT_MAX=3 to demo quickly)
+### Click "Send Request" 4+ times in a row — the 4th should return 429.
+GET {{host}}/transactions

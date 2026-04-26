@@ -2,11 +2,13 @@ import express from 'express';
 import transactionsRouter from './routes/transactions.js';
 import accountsRouter from './routes/accounts.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
+import { rateLimiter } from './middleware/rateLimiter.js';
 
 export function createApp() {
   const app = express();
 
   app.use(express.json());
+  app.use(rateLimiter);
 
   app.get('/', (_req, res) => {
     res.json({

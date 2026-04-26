@@ -125,8 +125,8 @@ Extend `GET /transactions` with query params:
 **Outcome:** the API rejects clients exceeding the limit with HTTP 429.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Verified — with `RATE_LIMIT_MAX=3 RATE_LIMIT_WINDOW_MS=60000` the first 3 requests return 200 (with `RateLimit-Remaining: 2/1/0` headers), the 4th returns 429 with JSON `{ error: "Too many requests", message: "..." }` and a `Retry-After: 60` header. Limit is env-overridable via `RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_MS`; defaults to 100 req / 60s per IP.
 
 ---
 
