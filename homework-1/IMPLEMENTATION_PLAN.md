@@ -81,8 +81,8 @@ Extend `GET /transactions` with query params:
 **Outcome:** summary endpoint returns aggregated stats per account.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Verified — `totalDeposits` (money in), `totalWithdrawals` (money out), `transactionCount`, `lastTransactionDate` all correct for accounts with mixed deposit/withdrawal/transfer activity. Unknown account returns zeros + `lastTransactionDate: null`.
 
 ---
 

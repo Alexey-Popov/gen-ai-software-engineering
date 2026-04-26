@@ -179,3 +179,15 @@ GET {{host}}/transactions?from=not-a-date
 
 ### "to" before "from" — 400
 GET {{host}}/transactions?from=2026-12-31&to=2026-01-01
+
+###############################################################################
+# Stage 4 — Account Summary
+###############################################################################
+
+### Account summary
+### Returns: totalDeposits (money in), totalWithdrawals (money out),
+### transactionCount (transactions involving the account), lastTransactionDate
+GET {{host}}/accounts/ACC-12345/summary
+
+### Summary for an account with no transactions — zeros + null date
+GET {{host}}/accounts/ACC-99999/summary

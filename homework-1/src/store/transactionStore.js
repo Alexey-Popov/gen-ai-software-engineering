@@ -58,3 +58,34 @@ export function getBalance(accountId) {
   }
   return Number(balance.toFixed(2));
 }
+
+export function getAccountSummary(accountId) {
+  let totalDeposits = 0;
+  let totalWithdrawals = 0;
+  let transactionCount = 0;
+  let lastTransactionDate = null;
+
+  for (const t of transactions.values()) {
+    const involvesAccount = t.fromAccount === accountId || t.toAccount === accountId;
+    if (!involvesAccount) continue;
+
+    transactionCount += 1;
+
+    if (t.status === 'completed') {
+      if (t.toAccount === accountId) totalDeposits += t.amount;
+      if (t.fromAccount === accountId) totalWithdrawals += t.amount;
+    }
+
+    if (lastTransactionDate === null || t.timestamp > lastTransactionDate) {
+      lastTransactionDate = t.timestamp;
+    }
+  }
+
+  return {
+    accountId,
+    totalDeposits: Number(totalDeposits.toFixed(2)),
+    totalWithdrawals: Number(totalWithdrawals.toFixed(2)),
+    transactionCount,
+    lastTransactionDate,
+  };
+}
