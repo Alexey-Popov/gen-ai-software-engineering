@@ -214,3 +214,25 @@ GET {{host}}/accounts/ACC-12345/interest?rate=0.05&days=10.5
 
 ### Both invalid — 400 with two errors
 GET {{host}}/accounts/ACC-12345/interest?rate=abc&days=0
+
+###############################################################################
+# Stage 6 — Transaction Export
+###############################################################################
+
+### Export all transactions as CSV (default format)
+GET {{host}}/transactions/export
+
+### Export explicitly as CSV
+GET {{host}}/transactions/export?format=csv
+
+### Export as JSON (uses same response shape as GET /transactions)
+GET {{host}}/transactions/export?format=json
+
+### Export with filters — only transfers for ACC-12345
+GET {{host}}/transactions/export?format=csv&accountId=ACC-12345&type=transfer
+
+### Invalid format — 400
+GET {{host}}/transactions/export?format=xml
+
+### Invalid filter on export — 400
+GET {{host}}/transactions/export?format=csv&accountId=12345

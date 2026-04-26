@@ -110,8 +110,8 @@ Extend `GET /transactions` with query params:
 **Outcome:** export endpoint returns CSV (or JSON) with optional filtering.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Verified — default `format=csv` returns proper headers (`Content-Type: text/csv`, `Content-Disposition: attachment`), `format=json` returns the same payload as GET /transactions. Filters (`accountId`, `type`, `from`, `to`) apply to the export. Invalid `format` and invalid filter values both return 400 with `details[]`. Verified actual download via curl `-OJ`.
 
 ---
 
