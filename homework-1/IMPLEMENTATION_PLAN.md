@@ -50,8 +50,8 @@ Each stage is implemented and verified independently before moving on to the nex
 **Outcome:** invalid requests return 400 with every validation error reported in a single response.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Verified via REST Client. Empty body, multi-error payload, too-many-decimals, invalid type, same-account transfer, deposit without `toAccount` all return 400 with `details[]`. Valid request with lowercase `eur` returns 201 with `currency` normalized to `EUR`.
 
 ---
 
@@ -68,8 +68,8 @@ Extend `GET /transactions` with query params:
 **Outcome:** filtering works individually and in any combination.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Verified — single filters (`accountId`, `type`, `from`/`to`) and combined filters all narrow results correctly. Invalid `accountId`, invalid date format, and `to` < `from` all return 400 with `details[]`. Date-only inputs are normalized: `from` → 00:00:00 UTC, `to` → 23:59:59.999 UTC.
 
 ---
 

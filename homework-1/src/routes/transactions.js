@@ -5,6 +5,7 @@ import {
   getTransactionById,
 } from '../store/transactionStore.js';
 import { validateTransactionPayload } from '../validators/transactionValidator.js';
+import { validateTransactionFilters } from '../validators/queryValidator.js';
 
 const router = Router();
 
@@ -18,8 +19,13 @@ router.post('/', (req, res, next) => {
   }
 });
 
-router.get('/', (_req, res) => {
-  res.json(getAllTransactions());
+router.get('/', (req, res, next) => {
+  try {
+    const filters = validateTransactionFilters(req.query);
+    res.json(getAllTransactions(filters));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/:id', (req, res) => {

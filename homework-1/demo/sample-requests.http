@@ -148,3 +148,34 @@ Content-Type: application/json
   "currency": "eur",
   "type": "transfer"
 }
+
+###############################################################################
+# Stage 3 — Filtering on GET /transactions
+###############################################################################
+
+### Filter by account (matches fromAccount OR toAccount)
+GET {{host}}/transactions?accountId=ACC-12345
+
+### Filter by type
+GET {{host}}/transactions?type=transfer
+
+### Filter by date range (date-only, inclusive)
+GET {{host}}/transactions?from=2026-01-01&to=2026-12-31
+
+### Combined filters (AND): only transfers for ACC-12345 in 2026
+GET {{host}}/transactions?accountId=ACC-12345&type=transfer&from=2026-01-01&to=2026-12-31
+
+### Filter by ISO 8601 timestamp
+GET {{host}}/transactions?from=2026-04-26T00:00:00Z
+
+### Invalid accountId format — 400
+GET {{host}}/transactions?accountId=12345
+
+### Invalid type — 400
+GET {{host}}/transactions?type=payment
+
+### Invalid date — 400
+GET {{host}}/transactions?from=not-a-date
+
+### "to" before "from" — 400
+GET {{host}}/transactions?from=2026-12-31&to=2026-01-01

@@ -18,8 +18,31 @@ export function createTransaction({ fromAccount, toAccount, amount, currency, ty
   return transaction;
 }
 
-export function getAllTransactions() {
-  return Array.from(transactions.values());
+export function getAllTransactions(filters = {}) {
+  const { accountId, type, from, to } = filters;
+  let result = Array.from(transactions.values());
+
+  if (accountId) {
+    result = result.filter(
+      (t) => t.fromAccount === accountId || t.toAccount === accountId,
+    );
+  }
+
+  if (type) {
+    result = result.filter((t) => t.type === type);
+  }
+
+  if (from instanceof Date) {
+    const fromMs = from.getTime();
+    result = result.filter((t) => new Date(t.timestamp).getTime() >= fromMs);
+  }
+
+  if (to instanceof Date) {
+    const toMs = to.getTime();
+    result = result.filter((t) => new Date(t.timestamp).getTime() <= toMs);
+  }
+
+  return result;
 }
 
 export function getTransactionById(id) {
