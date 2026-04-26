@@ -1,0 +1,19 @@
+{
+  "name": "homework-1-banking-api",
+  "version": "1.0.0",
+  "description": "Banking Transactions REST API — Homework 1 (AI-Assisted Development course)",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "uuid": "^11.0.5"
+  }
+}
