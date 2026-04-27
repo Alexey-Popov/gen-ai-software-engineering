@@ -154,8 +154,8 @@ Extend `GET /transactions` with query params:
 **Outcome:** documentation is complete and review-ready.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `README.md` rewritten as a full submission narrative with feature matrix, architecture decisions table, project tree, AI-usage section (sample prompts, what was verified manually, what was corrected), and an inline screenshots gallery (6 captures embedded). `HOWTORUN.md` covers prerequisites, install, start, seed, three test options (REST Client / curl / browser), 429 demo, env-var config, troubleshooting, and stop instructions.
 
 ---
 
@@ -168,5 +168,5 @@ Extend `GET /transactions` with query params:
 **Outcome:** project is ready to be opened as a Pull Request.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Final E2E sweep on a clean server passed every assertion: health check, seed (7/7), unknown id → 404, balance ACC-12345 = 4649.25, filter by accountId returned 3 rows, invalid accountId → 400, validation negatives → 400, summary `{deposits: 5000, withdrawals: 350.75, count: 3}`, interest `19.11` for 5%/30d, CSV export downloaded (7 lines + header), `RateLimit-*` headers present. `git ls-files homework-1/node_modules` returns 0 — `node_modules/` correctly ignored by repo-root `.gitignore`. 9 commits already on `main`; only `IMPLEMENTATION_PLAN.md` is unstaged with the final stage updates.
