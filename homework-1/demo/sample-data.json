@@ -1,0 +1,31 @@
+{
+  "description": "Sample transaction data for testing",
+  "examples": [
+    {
+      "fromAccount": "ACC-00000",
+      "toAccount": "ACC-12345",
+      "amount": 1000.00,
+      "currency": "USD",
+      "type": "deposit"
+    },
+    {
+      "fromAccount": "ACC-12345",
+      "toAccount": "ACC-67890",
+      "amount": 250.50,
+      "currency": "USD",
+      "type": "transfer"
+    },
+    {
+      "fromAccount": "ACC-12345",
+      "toAccount": "ACC-00000",
+      "amount": 100.00,
+      "currency": "USD",
+      "type": "withdrawal"
+    }
+  ],
+  "notes": {
+    "accountFormat": "ACC-XXXXX (5 alphanumeric characters)",
+    "validCurrencies": ["USD", "EUR", "GBP", "JPY", "CHF"],
+    "validTypes": ["deposit", "withdrawal", "transfer"]
+  }
+}

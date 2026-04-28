@@ -1,8 +1,39 @@
-# This file ensures the screenshots folder is tracked by git
-# Add your screenshots demonstrating AI tool usage here
+# Screenshots Documentation
 
-# Recommended screenshots:
-# - ai-prompt-1.png: Screenshot of an AI prompt and response
-# - ai-prompt-2.png: Another significant AI interaction
-# - api-running.png: Your API running in the terminal
-# - Etc.
+This folder contains 16 screenshots demonstrating AI-assisted development and the working API.
+
+## Screenshot List
+
+### AI Tool Usage (6 screenshots)
+- 1-ai-project-setup.png - Initial project setup with Claude Code
+- 2-ai-transaction-model.png - Transaction model creation
+- 3-ai-validation-logic.png - Validation logic implementation
+- 4-ai-endpoints-implementation.png - REST endpoints implementation
+- 5-ai-helper-functions.png - Helper functions for calculations
+- 6-ai-code-cleanup.png - Code optimization and cleanup
+
+### API Functionality (10 screenshots)
+- 7-server-running.png - Server startup and running
+- 8-api-create-transaction.png - Creating transactions via POST
+- 9-api-balance-summary.png - Balance and summary endpoints
+- 10-api-validation-errors.png - Validation error handling
+- 11-api-csv-export.png - CSV export functionality
+- 12-complete-implementation.png - Complete implementation overview
+- 13-api-post-transaction-success.png - Successful transaction creation with `201 Created`
+- 14-api-get-transactions-list.png - Retrieving transactions list with `200 OK`
+- 15-api-account-balance-check.png - Checking account balance endpoint response
+- 16-api-interest-calculation.png - Interest calculation endpoint with query parameters
+
+## Requirements Met
+
+✅ AI tool interactions documented (6 screenshots)
+✅ API running successfully (1 screenshot)
+✅ API requests/responses demonstrated (9 screenshots)
+✅ All homework documentation requirements fulfilled
+
+## For Pull Request
+
+Reference these screenshots in your PR description to demonstrate:
+1. How AI tools were used throughout development
+2. All implemented features working correctly
+3. Proper error handling and validation
