@@ -1,0 +1,6 @@
+customer_id,customer_email,customer_name,subject,description,category,priority,status,tags,source,browser,device_type
+CUST-001,john@example.com,John Doe,Cannot login,I am unable to access my account. Password reset does not work.,account_access,urgent,new,"login,password",web_form,Chrome,desktop
+CUST-002,jane@example.com,Jane Smith,App crashes,The application crashes every time I open it. Error 500.,technical_issue,high,new,"crash,error",web_form,Firefox,mobile
+CUST-003,bob@example.com,Bob Johnson,Invoice missing,I did not receive my invoice for the last payment.,billing_question,medium,new,"invoice,payment",email,Safari,desktop
+CUST-004,alice@example.com,Alice Williams,Feature request: Dark mode,Would be nice to have dark mode in the app.,feature_request,low,new,"feature,enhancement",web_form,Chrome,desktop
+CUST-005,charlie@example.com,Charlie Brown,Bug in calculation,Steps to reproduce: 1. Enter values 2. Click calculate. Expected: correct result. Actual: wrong number.,bug_report,high,new,"bug,reproduce",api,Chrome,desktop

@@ -1,0 +1,3 @@
+customer_id,customer_email,customer_name,subject,description,category,priority,status
+CUST-100,invalid-email,John,Too short,Short,account_access,urgent,new
+CUST-101,jane@example.com,,Missing name,This is a longer description that should pass validation.,technical_issue,high,new

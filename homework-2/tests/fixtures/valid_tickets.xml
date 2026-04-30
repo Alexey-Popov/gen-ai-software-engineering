@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_id>CUST-001</customer_id>
+    <customer_email>john@example.com</customer_email>
+    <customer_name>John Doe</customer_name>
+    <subject>Cannot login to account</subject>
+    <description>I am unable to access my account after password reset attempt.</description>
+    <category>account_access</category>
+    <priority>urgent</priority>
+    <status>new</status>
+    <tags>
+      <tag>login</tag>
+      <tag>password</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Chrome</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-002</customer_id>
+    <customer_email>jane@example.com</customer_email>
+    <customer_name>Jane Smith</customer_name>
+    <subject>Application crashes</subject>
+    <description>The app crashes every time I try to open the dashboard page.</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <status>new</status>
+    <tags>
+      <tag>crash</tag>
+      <tag>error</tag>
+    </tags>
+    <metadata>
+      <source>email</source>
+      <browser>Firefox</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+</tickets>

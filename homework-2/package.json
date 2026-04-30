@@ -1,0 +1,36 @@
+{
+  "name": "customer-support-system",
+  "version": "1.0.0",
+  "description": "Intelligent Customer Support Ticket Management System for AI-Assisted Development Course",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix"
+  },
+  "keywords": [
+    "customer-support",
+    "tickets",
+    "rest-api",
+    "express",
+    "classification"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0",
+    "csv-parser": "^3.0.0",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3",
+    "eslint": "^9.39.4",
+    "nodemon": "^3.0.1"
+  }
+}
