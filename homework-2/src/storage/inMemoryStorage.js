@@ -98,25 +98,21 @@ class InMemoryStorage {
    */
   getFilteredTickets = (filters = {}) => {
     return this.tickets.filter(t => {
-      // Filter by category (case-insensitive)
       if (filters.category &&
           t.category.toLowerCase() !== filters.category.toLowerCase()) {
         return false;
       }
 
-      // Filter by priority (case-insensitive)
       if (filters.priority &&
           t.priority.toLowerCase() !== filters.priority.toLowerCase()) {
         return false;
       }
 
-      // Filter by status (case-insensitive)
       if (filters.status &&
           t.status.toLowerCase() !== filters.status.toLowerCase()) {
         return false;
       }
 
-      // Filter by date range
       const ticketDate = new Date(t.created_at);
       if (isNaN(ticketDate.getTime())) {
         console.error(`Invalid timestamp in ticket ${t.id}: ${t.created_at}`);
@@ -144,5 +140,4 @@ class InMemoryStorage {
   };
 }
 
-// Export singleton instance
 module.exports = new InMemoryStorage();

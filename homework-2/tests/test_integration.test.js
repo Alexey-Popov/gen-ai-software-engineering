@@ -10,7 +10,6 @@ describe('Integration Tests', () => {
   });
 
   test('Complete ticket lifecycle: create → update → classify → resolve', async () => {
-    // Create ticket
     const createResponse = await request(app)
       .post('/tickets')
       .send({
@@ -23,26 +22,22 @@ describe('Integration Tests', () => {
 
     const ticketId = createResponse.body.id;
 
-    // Update status
     await request(app)
       .put(`/tickets/${ticketId}`)
       .send({ status: 'in_progress' })
       .expect(200);
 
-    // Auto-classify
     const classifyResponse = await request(app)
       .post(`/tickets/${ticketId}/auto-classify`)
       .expect(200);
 
     expect(classifyResponse.body.category).toBe('account_access');
 
-    // Resolve ticket
     await request(app)
       .put(`/tickets/${ticketId}`)
       .send({ status: 'resolved', resolved_at: new Date().toISOString() })
       .expect(200);
 
-    // Verify final state
     const finalResponse = await request(app)
       .get(`/tickets/${ticketId}`)
       .expect(200);
@@ -55,7 +50,6 @@ describe('Integration Tests', () => {
     const csvPath = path.join(__dirname, 'fixtures', 'valid_tickets.csv');
     const csvBuffer = fs.readFileSync(csvPath);
 
-    // Import tickets
     const importResponse = await request(app)
       .post('/tickets/import')
       .set('Content-Type', 'text/csv')
@@ -64,19 +58,16 @@ describe('Integration Tests', () => {
 
     expect(importResponse.body.successful).toBeGreaterThan(0);
 
-    // Get all tickets
     const ticketsResponse = await request(app)
       .get('/tickets')
       .expect(200);
 
-    // Auto-classify each ticket
     for (const ticket of ticketsResponse.body.tickets) {
       await request(app)
         .post(`/tickets/${ticket.id}/auto-classify`)
         .expect(200);
     }
 
-    // Verify all have classifications
     const finalResponse = await request(app)
       .get('/tickets')
       .expect(200);
@@ -85,7 +76,6 @@ describe('Integration Tests', () => {
   });
 
   test('Combined filters: category + priority + status', async () => {
-    // Create tickets with different combinations
     await request(app)
       .post('/tickets')
       .send({
@@ -110,7 +100,6 @@ describe('Integration Tests', () => {
         status: 'resolved'
       });
 
-    // Filter with multiple criteria
     const response = await request(app)
       .get('/tickets?category=billing_question&priority=high&status=new')
       .expect(200);
@@ -133,12 +122,10 @@ describe('Integration Tests', () => {
 
     const ticketId = createResponse.body.id;
 
-    // Auto-classify
     await request(app)
       .post(`/tickets/${ticketId}/auto-classify`)
       .expect(200);
 
-    // Override with manual classification
     const updateResponse = await request(app)
       .put(`/tickets/${ticketId}`)
       .send({ category: 'feature_request', priority: 'low' })
@@ -152,7 +139,6 @@ describe('Integration Tests', () => {
     const jsonPath = path.join(__dirname, 'fixtures', 'valid_tickets.json');
     const jsonData = fs.readFileSync(jsonPath, 'utf8');
 
-    // Import
     const importResponse = await request(app)
       .post('/tickets/import')
       .set('Content-Type', 'application/json')
@@ -161,29 +147,24 @@ describe('Integration Tests', () => {
 
     expect(importResponse.body.successful).toBeGreaterThan(0);
 
-    // Get all tickets to see what was imported
     const allTickets = await request(app)
       .get('/tickets')
       .expect(200);
 
     expect(allTickets.body.count).toBeGreaterThan(0);
 
-    // Filter by category
     const filterResponse = await request(app)
       .get('/tickets?category=account_access')
       .expect(200);
 
-    // If no account_access tickets, use any imported ticket
     const ticketId = filterResponse.body.tickets.length > 0
       ? filterResponse.body.tickets[0].id
       : allTickets.body.tickets[0].id;
 
-    // Delete ticket
     await request(app)
       .delete(`/tickets/${ticketId}`)
       .expect(200);
 
-    // Verify deleted
     await request(app)
       .get(`/tickets/${ticketId}`)
       .expect(404);

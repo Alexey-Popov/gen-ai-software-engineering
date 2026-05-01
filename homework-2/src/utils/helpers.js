@@ -13,17 +13,14 @@ const detectFileFormat = (contentType, buffer) => {
 
   const content = buffer.toString().trim();
 
-  // XML starts with <?xml or <tickets
   if (content.startsWith('<?xml') || content.startsWith('<tickets')) {
     return 'xml';
   }
 
-  // JSON starts with { or [
   if (content.startsWith('{') || content.startsWith('[')) {
     return 'json';
   }
 
-  // Default to CSV (most common)
   return 'csv';
 };
 

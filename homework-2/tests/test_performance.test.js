@@ -49,7 +49,6 @@ describe('Performance Tests', () => {
   });
 
   test('should filter large dataset quickly', async () => {
-    // Create 100 tickets
     for (let i = 0; i < 100; i++) {
       await request(app)
         .post('/tickets')
@@ -68,7 +67,7 @@ describe('Performance Tests', () => {
     const duration = Date.now() - startTime;
 
     expect(response.status).toBe(200);
-    expect(duration).toBeLessThan(200); // Should be very fast
+    expect(duration).toBeLessThan(200);
   });
 
   test('should classify 10 tickets quickly', async () => {
@@ -95,7 +94,6 @@ describe('Performance Tests', () => {
   });
 
   test('should maintain memory stability with many operations', async () => {
-    // Perform 100 CRUD operations
     for (let i = 0; i < 100; i++) {
       const createResponse = await request(app)
         .post('/tickets')
@@ -116,7 +114,6 @@ describe('Performance Tests', () => {
       }
     }
 
-    // Verify system still works
     const response = await request(app).get('/tickets');
     expect(response.status).toBe(200);
   });
