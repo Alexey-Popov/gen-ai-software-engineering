@@ -71,7 +71,25 @@ Should return:
 
 ## Testing the API
 
-### Create a Ticket
+### Quick Test: Test All Routes Automatically
+```bash
+./demo/test-all-routes.sh
+```
+
+This script will automatically test all 8 API endpoints:
+- ✓ Health check
+- ✓ Create ticket
+- ✓ List tickets
+- ✓ Get ticket by ID
+- ✓ Update ticket
+- ✓ Auto-classify ticket
+- ✓ Import CSV
+- ✓ Delete ticket
+- ✓ Filtering
+
+### Manual Testing Examples
+
+#### Create a Ticket
 ```bash
 curl -X POST http://localhost:3000/tickets \
   -H "Content-Type: application/json" \
@@ -156,6 +174,7 @@ Check file format and Content-Type:
 | `npm run test:watch` | Run tests in watch mode |
 | `npm run lint` | Check code style |
 | `npm run lint:fix` | Fix code style issues |
+| `./demo/test-all-routes.sh` | Test all API endpoints automatically |
 
 ## Default Configuration
 
@@ -167,10 +186,11 @@ Check file format and Content-Type:
 ## Next Steps
 
 1. ✅ Server running at http://localhost:3000
-2. Import sample data: `demo/sample_tickets.csv`
-3. Test endpoints using curl or Postman
-4. Check API documentation in README.md
-5. Run tests to verify everything works
+2. **Quick test all routes**: `./demo/test-all-routes.sh`
+3. Import sample data: `demo/sample_tickets.csv`
+4. Test endpoints using curl or Postman
+5. Check API documentation in README.md
+6. Run tests to verify everything works
 
 ## Support
 
