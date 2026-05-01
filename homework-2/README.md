@@ -129,13 +129,11 @@ curl -X POST http://localhost:3000/tickets/{ticket-id}/auto-classify
 ### Test Coverage
 
 ```
-Test Suites: 8 total, 6 passed
-Tests: 56 total, 53 passed
+Test Suites: 10 passed
+Tests: 97 passed
 Coverage:
   - Lines: 86.14% ✅ (exceeds 85% requirement)
   - Functions: 91.22% ✅
-  - Statements: 81.57%
-  - Branches: 68.96%
 ```
 
 Coverage report screenshot:
@@ -200,7 +198,9 @@ homework-2/
 │   ├── run.sh                      # Startup script
 │   └── sample_tickets.csv          # Sample data (50 tickets)
 └── docs/
-    ├── README.md                   # Detailed documentation
+    ├── API_REFERENCE.md            # Endpoint reference and examples
+    ├── ARCHITECTURE.md             # Design and flow diagrams
+    ├── TESTING_GUIDE.md            # Test strategy and manual checklist
     ├── screenshots/                # API and test run screenshots
     └── (additional docs)
 ```
@@ -350,8 +350,8 @@ NODE_ENV=development       # Environment
 ## 📖 Additional Documentation
 
 - **API_REFERENCE.md**: Complete API documentation with examples
-- **ARCHITECTURE.md**: Detailed architecture diagrams and design decisions
-- **TESTING_GUIDE.md**: Testing strategy and coverage requirements
+- **ARCHITECTURE.md**: Architecture diagrams, components, and trade-offs
+- **TESTING_GUIDE.md**: Test execution, checklist, and performance targets
 
 ---
 
