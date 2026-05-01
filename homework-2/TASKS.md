@@ -183,7 +183,7 @@ Implement end-to-end tests.
 
 ### 2️⃣ Test Coverage Report
 - Coverage report showing >85%
-- Screenshot in `docs/screenshots/test_coverage.png`
+- Screenshot in `docs/screenshots/5-test-coverage-report.png`
 
 ### 3️⃣ Sample Data
 - `sample_tickets.csv` (50 tickets)

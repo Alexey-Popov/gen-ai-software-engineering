@@ -1,7 +1,7 @@
 # 🎧 Homework 2: Intelligent Customer Support System
 
 > **Student Name**: Ruslan Formanchuk
-> **Date Submitted**: April 30, 2026
+> **Date Submitted**: May 01, 2026
 > **AI Tools Used**: Claude Code (Sonnet 4.5)
 
 ---
@@ -138,6 +138,10 @@ Coverage:
   - Branches: 68.96%
 ```
 
+Coverage report screenshot:
+
+![Test Coverage Report](docs/screenshots/5-test-coverage-report.png)
+
 ### Running Tests
 
 ```bash
@@ -197,7 +201,7 @@ homework-2/
 │   └── sample_tickets.csv          # Sample data (50 tickets)
 └── docs/
     ├── README.md                   # Detailed documentation
-    ├── screenshots/                # Test coverage screenshots
+    ├── screenshots/                # API and test run screenshots
     └── (additional docs)
 ```
 
@@ -367,19 +371,3 @@ NODE_ENV=development       # Environment
 - ✅ Documentation generation
 
 ---
-
-<div align="center">
-
-*This project was completed as part of the GenAI and Agentic AI for Software Engineering course.*
-
-**🚀 Project Complete and Ready for Submission**
-
----
-
-**Achieved:**
-- ✅ All 5 tasks completed
-- ✅ 86% line coverage (exceeds 85%)
-- ✅ 56 comprehensive tests
-- ✅ Production-ready code
-
-</div>

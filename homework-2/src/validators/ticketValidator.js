@@ -16,7 +16,7 @@ const VALID_PRIORITIES = ['urgent', 'high', 'medium', 'low'];
 
 const VALID_STATUSES = ['new', 'in_progress', 'waiting_customer', 'resolved', 'closed'];
 
-const VALID_SOURCES = ['web_form', 'email', 'api', 'chat', 'phone'];
+const VALID_SOURCES = ['web_form', 'email', 'api', 'chat', 'phone', 'mobile_app'];
 
 const VALID_DEVICE_TYPES = ['desktop', 'mobile', 'tablet'];
 
@@ -122,9 +122,7 @@ const isValidMetadata = (metadata) => {
   if (typeof metadata !== 'object' || Array.isArray(metadata)) return false;
 
   if (metadata.source && !isValidSource(metadata.source)) return false;
-  if (metadata.device_type && !isValidDeviceType(metadata.device_type)) return false;
-
-  return true;
+  return !(metadata.device_type && !isValidDeviceType(metadata.device_type));
 };
 
 /**
