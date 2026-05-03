@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_id>cust-001</customer_id>
+    <customer_email>alice@example.com</customer_email>
+    <customer_name>Alice Example</customer_name>
+    <subject>Cannot log in</subject>
+    <description>I cannot log into my account since this morning.</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>login</tag>
+      <tag>urgent</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Chrome</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>cust-002</customer_id>
+    <customer_email>bob@example.com</customer_email>
+    <customer_name>Bob Example</customer_name>
+    <subject>Invoice question</subject>
+    <description>I have a question about invoice number 12345.</description>
+  </ticket>
+</tickets>

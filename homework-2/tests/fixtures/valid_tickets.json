@@ -1,0 +1,18 @@
+[
+  {
+    "customer_id": "cust-001",
+    "customer_email": "alice@example.com",
+    "customer_name": "Alice Example",
+    "subject": "Cannot log in",
+    "description": "I cannot log into my account since this morning.",
+    "category": "account_access",
+    "tags": ["login", "urgent"]
+  },
+  {
+    "customer_id": "cust-002",
+    "customer_email": "bob@example.com",
+    "customer_name": "Bob Example",
+    "subject": "Invoice question",
+    "description": "I have a question about invoice number 12345."
+  }
+]

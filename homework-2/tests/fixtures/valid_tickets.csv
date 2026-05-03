@@ -1,0 +1,3 @@
+customer_id,customer_email,customer_name,subject,description,category,priority,status,tags,metadata_source,metadata_browser,metadata_device_type
+cust-001,alice@example.com,Alice Example,Cannot log in,I cannot log into my account since this morning.,account_access,high,new,login;urgent,web_form,Chrome,desktop
+cust-002,bob@example.com,Bob Example,Invoice question,I have a question about invoice number 12345.,billing_question,medium,new,billing,email,,

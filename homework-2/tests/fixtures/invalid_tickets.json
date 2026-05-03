@@ -1,0 +1,4 @@
+[
+  {"customer_email": "alice@example.com", "customer_name": "Alice"},
+  {"customer_id": "cust-002", "customer_email": "not-an-email", "customer_name": "Bob", "subject": "Subject", "description": "Valid description here"}
+]

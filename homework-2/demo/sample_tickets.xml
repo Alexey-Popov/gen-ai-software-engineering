@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_id>CUST-3001</customer_id>
+    <customer_email>elizabeth.martinez@example.com</customer_email>
+    <customer_name>Elizabeth Martinez</customer_name>
+    <subject>Account verification email not arrived</subject>
+    <description>I registered a new account but did not receive the verification email. How can I proceed without it?</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>email</tag>
+      <tag>verification</tag>
+      <tag>signup</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Chrome 120</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3002</customer_id>
+    <customer_email>thomas.anderson@example.com</customer_email>
+    <customer_name>Thomas Anderson</customer_name>
+    <subject>Integration with Stripe payment gateway broken</subject>
+    <description>After the last system update our Stripe integration stopped working. Payments are failing on customer checkouts.</description>
+    <category>technical_issue</category>
+    <priority>urgent</priority>
+    <status>in_progress</status>
+    <assigned_to>agent-2</assigned_to>
+    <tags>
+      <tag>payment</tag>
+      <tag>integration</tag>
+      <tag>stripe</tag>
+    </tags>
+    <metadata>
+      <source>api</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3003</customer_id>
+    <customer_email>michelle.johnson@example.com</customer_email>
+    <customer_name>Michelle Johnson</customer_name>
+    <subject>Refund request approved but not processed</subject>
+    <description>My refund was approved but the money has not been returned to my account yet. It has been 5 business days.</description>
+    <category>billing_question</category>
+    <priority>high</priority>
+    <status>waiting_customer</status>
+    <assigned_to>agent-5</assigned_to>
+    <tags>
+      <tag>refund</tag>
+      <tag>payment</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3004</customer_id>
+    <customer_email>richard.taylor@example.com</customer_email>
+    <customer_name>Richard Taylor</customer_name>
+    <subject>Charts and graphs not displaying in reports</subject>
+    <description>The charting functionality in the reports section is broken. All graphs show as blank or error messages.</description>
+    <category>bug_report</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>reporting</tag>
+      <tag>charts</tag>
+      <tag>ui</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 115</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3005</customer_id>
+    <customer_email>christine.davis@example.com</customer_email>
+    <customer_name>Christine Davis</customer_name>
+    <subject>Please add webhook retry mechanism</subject>
+    <description>When our webhook receiver is temporarily unavailable the webhooks are lost. A retry mechanism with exponential backoff would help.</description>
+    <category>feature_request</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>webhook</tag>
+      <tag>reliability</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3006</customer_id>
+    <customer_email>daniel.clark@example.com</customer_email>
+    <customer_name>Daniel Clark</customer_name>
+    <subject>SSH key authentication failing</subject>
+    <description>My SSH key that was working last month is now being rejected by the authentication service. I have not changed anything.</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to>agent-3</assigned_to>
+    <tags>
+      <tag>ssh</tag>
+      <tag>authentication</tag>
+      <tag>security</tag>
+    </tags>
+    <metadata>
+      <source>api</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3007</customer_id>
+    <customer_email>susan.martinez@example.com</customer_email>
+    <customer_name>Susan Martinez</customer_name>
+    <subject>Rate limiting too aggressive</subject>
+    <description>The API is rate limiting our legitimate requests. We keep hitting 429 errors even with heavy optimization of our calls.</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <status>in_progress</status>
+    <assigned_to>agent-4</assigned_to>
+    <tags>
+      <tag>api</tag>
+      <tag>rate_limit</tag>
+    </tags>
+    <metadata>
+      <source>api</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3008</customer_id>
+    <customer_email>paul.robinson@example.com</customer_email>
+    <customer_name>Paul Robinson</customer_name>
+    <subject>Mobile responsive design broken on tablets</subject>
+    <description>The interface layout is completely broken when accessed on iPad or other tablets in landscape orientation.</description>
+    <category>bug_report</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>responsive</tag>
+      <tag>mobile</tag>
+      <tag>tablet</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <device_type>tablet</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3009</customer_id>
+    <customer_email>laura.garcia@example.com</customer_email>
+    <customer_name>Laura Garcia</customer_name>
+    <subject>Custom domain CNAME configuration</subject>
+    <description>I need help setting up a custom domain for my subdomain. The current CNAME documentation is unclear.</description>
+    <category>technical_issue</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>domain</tag>
+      <tag>dns</tag>
+      <tag>cname</tag>
+    </tags>
+    <metadata>
+      <source>email</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3010</customer_id>
+    <customer_email>mark.williams@example.com</customer_email>
+    <customer_name>Mark Williams</customer_name>
+    <subject>Request notification preferences center</subject>
+    <description>Users should be able to control which notifications they receive without logging support tickets for each preference change.</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>notifications</tag>
+      <tag>settings</tag>
+      <tag>ux</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3011</customer_id>
+    <customer_email>andrew.lee@example.com</customer_email>
+    <customer_name>Andrew Lee</customer_name>
+    <subject>Database query performance degradation</subject>
+    <description>Over the past week database query times have increased significantly. Some queries now take 3x longer than they did before.</description>
+    <category>technical_issue</category>
+    <priority>urgent</priority>
+    <status>in_progress</status>
+    <assigned_to>agent-1</assigned_to>
+    <tags>
+      <tag>database</tag>
+      <tag>performance</tag>
+      <tag>urgent</tag>
+    </tags>
+    <metadata>
+      <source>api</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3012</customer_id>
+    <customer_email>diana.thompson@example.com</customer_email>
+    <customer_name>Diana Thompson</customer_name>
+    <subject>Change payment method error</subject>
+    <description>When I try to update my payment method in the billing settings the page returns an error and does not save the change.</description>
+    <category>bug_report</category>
+    <priority>medium</priority>
+    <status>waiting_customer</status>
+    <assigned_to>agent-5</assigned_to>
+    <tags>
+      <tag>billing</tag>
+      <tag>payment</tag>
+      <tag>ui</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Safari 17</browser>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3013</customer_id>
+    <customer_email>kevin.hall@example.com</customer_email>
+    <customer_name>Kevin Hall</customer_name>
+    <subject>Single sign-on implementation request</subject>
+    <description>Our organization uses Active Directory. Please support SSO integration so our users can sign in with their company credentials.</description>
+    <category>feature_request</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to>agent-2</assigned_to>
+    <tags>
+      <tag>sso</tag>
+      <tag>authentication</tag>
+      <tag>enterprise</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3014</customer_id>
+    <customer_email>rachel.white@example.com</customer_email>
+    <customer_name>Rachel White</customer_name>
+    <subject>Scheduled backup seems to have failed</subject>
+    <description>My scheduled daily backup did not run yesterday. No notification was sent and I cannot see any backup files from that date.</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>backup</tag>
+      <tag>scheduled</tag>
+      <tag>critical</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Chrome 120</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3015</customer_id>
+    <customer_email>william.harris@example.com</customer_email>
+    <customer_name>William Harris</customer_name>
+    <subject>Cost optimization recommendations needed</subject>
+    <description>We need guidance on optimizing our usage to reduce monthly costs without sacrificing functionality.</description>
+    <category>other</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to>agent-3</assigned_to>
+    <tags>
+      <tag>billing</tag>
+      <tag>optimization</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3016</customer_id>
+    <customer_email>barbara.young@example.com</customer_email>
+    <customer_name>Barbara Young</customer_name>
+    <subject>Timezone handling in scheduled tasks</subject>
+    <description>Our scheduled tasks are running at incorrect times. It appears the timezone settings are not being respected properly.</description>
+    <category>bug_report</category>
+    <priority>high</priority>
+    <status>resolved</status>
+    <assigned_to>agent-4</assigned_to>
+    <tags>
+      <tag>timezone</tag>
+      <tag>scheduled</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 115</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3017</customer_id>
+    <customer_email>joseph.king@example.com</customer_email>
+    <customer_name>Joseph King</customer_name>
+    <subject>Multi-tenant architecture needed for enterprise clients</subject>
+    <description>Enterprise clients require isolated data environments. Please implement multi-tenant support in the platform.</description>
+    <category>feature_request</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>enterprise</tag>
+      <tag>architecture</tag>
+      <tag>multi_tenant</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3018</customer_id>
+    <customer_email>margaret.scott@example.com</customer_email>
+    <customer_name>Margaret Scott</customer_name>
+    <subject>Cannot delete resources in certain states</subject>
+    <description>Some resources cannot be deleted even though they appear to be in a deletable state. The error message is not helpful.</description>
+    <category>bug_report</category>
+    <priority>medium</priority>
+    <status>waiting_customer</status>
+    <assigned_to>agent-1</assigned_to>
+    <tags>
+      <tag>resource</tag>
+      <tag>deletion</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Chrome 120</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3019</customer_id>
+    <customer_email>charles.wood@example.com</customer_email>
+    <customer_name>Charles Wood</customer_name>
+    <subject>OAuth2 client secret rotation</subject>
+    <description>I need to rotate an OAuth2 client secret but the interface does not provide this capability. How can I do this securely?</description>
+    <category>account_access</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>oauth</tag>
+      <tag>security</tag>
+    </tags>
+    <metadata>
+      <source>email</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3020</customer_id>
+    <customer_email>nancy.hill@example.com</customer_email>
+    <customer_name>Nancy Hill</customer_name>
+    <subject>Memory leak in background processing</subject>
+    <description>The background worker process is consuming increasing amounts of memory over time and never releases it.</description>
+    <category>bug_report</category>
+    <priority>urgent</priority>
+    <status>in_progress</status>
+    <assigned_to>agent-2</assigned_to>
+    <tags>
+      <tag>memory</tag>
+      <tag>performance</tag>
+      <tag>worker</tag>
+    </tags>
+    <metadata>
+      <source>api</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3021</customer_id>
+    <customer_email>steven.carter@example.com</customer_email>
+    <customer_name>Steven Carter</customer_name>
+    <subject>Compliance documentation request</subject>
+    <description>We need SOC 2 compliance documentation for your service to proceed with enterprise onboarding.</description>
+    <category>other</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to>agent-5</assigned_to>
+    <tags>
+      <tag>compliance</tag>
+      <tag>soc2</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3022</customer_id>
+    <customer_email>lisa.parker@example.com</customer_email>
+    <customer_name>Lisa Parker</customer_name>
+    <subject>Caching header misconfiguration</subject>
+    <description>Static assets are being cached too aggressively. Even after deploying new versions users still see old cached content.</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to>agent-3</assigned_to>
+    <tags>
+      <tag>cache</tag>
+      <tag>cdn</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Safari 17</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3023</customer_id>
+    <customer_email>george.edwards@example.com</customer_email>
+    <customer_name>George Edwards</customer_name>
+    <subject>Activity audit log visualization</subject>
+    <description>Please provide a better way to view and filter the audit logs. The current interface is difficult to navigate.</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>audit</tag>
+      <tag>logging</tag>
+      <tag>ui</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3024</customer_id>
+    <customer_email>virginia.torres@example.com</customer_email>
+    <customer_name>Virginia Torres</customer_name>
+    <subject>CORS policy blocking requests from subdomain</subject>
+    <description>Cross-origin requests from our app.example.com subdomain are being blocked by CORS policy. How do I whitelist our domain?</description>
+    <category>technical_issue</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to>agent-4</assigned_to>
+    <tags>
+      <tag>cors</tag>
+      <tag>api</tag>
+    </tags>
+    <metadata>
+      <source>email</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3025</customer_id>
+    <customer_email>edward.peterson@example.com</customer_email>
+    <customer_name>Edward Peterson</customer_name>
+    <subject>Invoice number sequence reset issue</subject>
+    <description>The invoice numbering sequence got reset to 1000. We need it restored to continue from where it left off.</description>
+    <category>billing_question</category>
+    <priority>high</priority>
+    <status>waiting_customer</status>
+    <assigned_to>agent-1</assigned_to>
+    <tags>
+      <tag>invoice</tag>
+      <tag>billing</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3026</customer_id>
+    <customer_email>helen.hughes@example.com</customer_email>
+    <customer_name>Helen Hughes</customer_name>
+    <subject>API documentation examples use deprecated endpoints</subject>
+    <description>The API documentation examples reference deprecated endpoints that have been removed. This is confusing for new developers.</description>
+    <category>bug_report</category>
+    <priority>low</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>documentation</tag>
+      <tag>api</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Chrome 120</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3027</customer_id>
+    <customer_email>frank.phillips@example.com</customer_email>
+    <customer_name>Frank Phillips</customer_name>
+    <subject>Request support for GraphQL API</subject>
+    <description>GraphQL would be more efficient for our use case compared to REST. Can you provide a GraphQL interface alongside REST?</description>
+    <category>feature_request</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to></assigned_to>
+    <tags>
+      <tag>api</tag>
+      <tag>graphql</tag>
+    </tags>
+    <metadata>
+      <source>api</source>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3028</customer_id>
+    <customer_email>christine.campbell@example.com</customer_email>
+    <customer_name>Christine Campbell</customer_name>
+    <subject>Session data persistence issue on logout</subject>
+    <description>After logging out sensitive session data appears to still be in browser storage. This is a security concern.</description>
+    <category>bug_report</category>
+    <priority>urgent</priority>
+    <status>in_progress</status>
+    <assigned_to>agent-2</assigned_to>
+    <tags>
+      <tag>security</tag>
+      <tag>session</tag>
+      <tag>logout</tag>
+    </tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 115</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3029</customer_id>
+    <customer_email>henry.parker@example.com</customer_email>
+    <customer_name>Henry Parker</customer_name>
+    <subject>Custom business rules engine</subject>
+    <description>Our workflows require custom logic that cannot be configured through the standard UI. A rules engine would enable this.</description>
+    <category>feature_request</category>
+    <priority>high</priority>
+    <status>new</status>
+    <assigned_to>agent-5</assigned_to>
+    <tags>
+      <tag>workflow</tag>
+      <tag>business_logic</tag>
+    </tags>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3030</customer_id>
+    <customer_email>olivia.evans@example.com</customer_email>
+    <customer_name>Olivia Evans</customer_name>
+    <subject>Data retention policy compliance</subject>
+    <description>We need to ensure data is deleted after the configured retention period. Can you confirm this is working as expected?</description>
+    <category>other</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <assigned_to>agent-3</assigned_to>
+    <tags>
+      <tag>data_retention</tag>
+      <tag>compliance</tag>
+      <tag>privacy</tag>
+    </tags>
+  </ticket>
+</tickets>

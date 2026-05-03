@@ -1,0 +1,3 @@
+customer_id,customer_email,customer_name,subject,description
+cust-003,not-an-email,Charlie,Short,Too short
+cust-004,valid@example.com,Dave,Valid subject,This description is long enough to be valid

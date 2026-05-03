@@ -1,0 +1,123 @@
+### Support Tickets API — Sample Requests
+### Compatible with VS Code REST Client and JetBrains HTTP Client
+
+@base = http://localhost:3000
+@ticketId = 00000000-0000-0000-0000-000000000000
+
+# ─────────────────────────────────────────────────────────────
+# Create
+# ─────────────────────────────────────────────────────────────
+
+### Create ticket (full valid body)
+POST {{base}}/tickets
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-1001",
+  "customer_email": "alice@example.com",
+  "customer_name": "Alice Example",
+  "subject": "Cannot log in to my account",
+  "description": "I have been locked out of my account since yesterday. I tried resetting my password but did not receive the email.",
+  "category": "account_access",
+  "priority": "high",
+  "status": "new",
+  "assigned_to": "agent-1",
+  "tags": ["login", "urgent", "password"],
+  "metadata": {
+    "source": "web_form",
+    "browser": "Chrome 120",
+    "device_type": "desktop"
+  }
+}
+
+###
+
+# ─────────────────────────────────────────────────────────────
+# List
+# ─────────────────────────────────────────────────────────────
+
+### List all tickets
+GET {{base}}/tickets
+
+###
+
+### Filter by status=new
+GET {{base}}/tickets?status=new
+
+###
+
+### Filter by category=account_access
+GET {{base}}/tickets?category=account_access
+
+###
+
+# ─────────────────────────────────────────────────────────────
+# Get / Update / Delete by ID
+# Set @ticketId to a real UUID returned from POST /tickets
+# ─────────────────────────────────────────────────────────────
+
+### Get ticket by ID
+GET {{base}}/tickets/{{ticketId}}
+
+###
+
+### Partial update — change status only
+PUT {{base}}/tickets/{{ticketId}}
+Content-Type: application/json
+
+{
+  "status": "in_progress"
+}
+
+###
+
+### Delete ticket
+DELETE {{base}}/tickets/{{ticketId}}
+
+###
+
+# ─────────────────────────────────────────────────────────────
+# Import
+# ─────────────────────────────────────────────────────────────
+
+### Import CSV (multipart/form-data)
+# Send a CSV file using the REST Client file reference syntax.
+# In VS Code REST Client: use @file = path/to/sample_tickets.csv
+# In curl: curl -X POST http://localhost:3000/tickets/import -F "file=@demo/sample_tickets.csv"
+POST {{base}}/tickets/import
+Content-Type: multipart/form-data; boundary=----FormBoundary
+
+------FormBoundary
+Content-Disposition: form-data; name="file"; filename="sample_tickets.csv"
+Content-Type: text/csv
+
+< ./sample_tickets.csv
+------FormBoundary--
+
+###
+
+### Import JSON (multipart/form-data)
+POST {{base}}/tickets/import
+Content-Type: multipart/form-data; boundary=----FormBoundary
+
+------FormBoundary
+Content-Disposition: form-data; name="file"; filename="sample_tickets.json"
+Content-Type: application/json
+
+< ./sample_tickets.json
+------FormBoundary--
+
+###
+
+### Import XML (multipart/form-data)
+POST {{base}}/tickets/import
+Content-Type: multipart/form-data; boundary=----FormBoundary
+
+------FormBoundary
+Content-Disposition: form-data; name="file"; filename="sample_tickets.xml"
+Content-Type: application/xml
+
+< ./sample_tickets.xml
+------FormBoundary--
+
+###

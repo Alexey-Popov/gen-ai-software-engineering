@@ -1,0 +1,283 @@
+[
+  {
+    "customer_id": "CUST-2001",
+    "customer_email": "john.doe@example.com",
+    "customer_name": "John Doe",
+    "subject": "Cannot reset password",
+    "description": "I requested a password reset but never received the confirmation email in my inbox.",
+    "category": "account_access",
+    "priority": "high",
+    "status": "new",
+    "assigned_to": "agent-1",
+    "tags": ["password", "reset", "email"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Chrome 120",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "CUST-2002",
+    "customer_email": "jane.smith@example.com",
+    "customer_name": "Jane Smith",
+    "subject": "API response time is too slow",
+    "description": "The API is taking longer than 5 seconds to respond to simple queries. This is impacting our integration.",
+    "category": "technical_issue",
+    "priority": "urgent",
+    "status": "in_progress",
+    "assigned_to": "agent-2",
+    "tags": ["api", "performance", "integration"]
+  },
+  {
+    "customer_id": "CUST-2003",
+    "customer_email": "robert.johnson@example.com",
+    "customer_name": "Robert Johnson",
+    "subject": "Upgrade pricing inquiry",
+    "description": "I want to upgrade my plan but the pricing page doesn't show the monthly vs annual cost comparison.",
+    "category": "billing_question",
+    "priority": "medium",
+    "status": "waiting_customer"
+  },
+  {
+    "customer_id": "CUST-2004",
+    "customer_email": "lisa.williams@example.com",
+    "customer_name": "Lisa Williams",
+    "subject": "Mobile app crashes on startup",
+    "description": "The iOS app immediately crashes when I try to launch it on my iPhone 14 running iOS 17.",
+    "category": "bug_report",
+    "priority": "high",
+    "status": "new",
+    "tags": ["ios", "crash", "mobile"],
+    "metadata": {
+      "source": "api",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "CUST-2005",
+    "customer_email": "michael.brown@example.com",
+    "customer_name": "Michael Brown",
+    "subject": "Feature: Batch operations API",
+    "description": "We need an API endpoint that allows batch operations to reduce the number of individual API calls required.",
+    "category": "feature_request",
+    "priority": "medium",
+    "status": "new",
+    "tags": ["api", "batch", "performance"],
+    "metadata": {
+      "source": "api"
+    }
+  },
+  {
+    "customer_id": "CUST-2006",
+    "customer_email": "sarah.davis@example.com",
+    "customer_name": "Sarah Davis",
+    "subject": "Two-factor auth login loop",
+    "description": "After entering the 2FA code I'm stuck in a redirect loop and cannot complete the login process.",
+    "category": "account_access",
+    "priority": "urgent",
+    "status": "in_progress",
+    "assigned_to": "agent-3",
+    "tags": ["2fa", "security", "login", "bug"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Safari 17",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "CUST-2007",
+    "customer_email": "james.miller@example.com",
+    "customer_name": "James Miller",
+    "subject": "Duplicate billing entries",
+    "description": "My billing statement shows duplicate entries for the same transaction on different dates. Please correct this.",
+    "category": "billing_question",
+    "priority": "high",
+    "status": "waiting_customer",
+    "assigned_to": "agent-5"
+  },
+  {
+    "customer_id": "CUST-2008",
+    "customer_email": "patricia.garcia@example.com",
+    "customer_name": "Patricia Garcia",
+    "subject": "Export data in JSON format",
+    "description": "Our workflow requires JSON output format for data export. Currently only CSV is supported.",
+    "category": "feature_request",
+    "priority": "low",
+    "status": "new",
+    "tags": ["export", "json", "format"],
+    "metadata": {
+      "source": "email"
+    }
+  },
+  {
+    "customer_id": "CUST-2009",
+    "customer_email": "charles.martinez@example.com",
+    "customer_name": "Charles Martinez",
+    "subject": "Unable to upload files larger than 5MB",
+    "description": "The file upload feature rejects any files larger than 5MB. We need support for larger uploads.",
+    "category": "technical_issue",
+    "priority": "medium",
+    "status": "new",
+    "assigned_to": "agent-2",
+    "tags": ["upload", "file", "limit"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Firefox 115",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "CUST-2010",
+    "customer_email": "jennifer.robinson@example.com",
+    "customer_name": "Jennifer Robinson",
+    "subject": "Scheduled maintenance impact",
+    "description": "The recent maintenance window broke our scheduled integration tasks. They were running perfectly before.",
+    "category": "technical_issue",
+    "priority": "high",
+    "status": "in_progress",
+    "assigned_to": "agent-4",
+    "tags": ["maintenance", "integration", "scheduled"]
+  },
+  {
+    "customer_id": "CUST-2011",
+    "customer_email": "david.anderson@example.com",
+    "customer_name": "David Anderson",
+    "subject": "Refund not received after 2 weeks",
+    "description": "I initiated a refund 14 days ago but it hasn't appeared in my bank account yet.",
+    "category": "billing_question",
+    "priority": "high",
+    "status": "waiting_customer",
+    "assigned_to": "agent-1",
+    "tags": ["refund", "payment", "delay"]
+  },
+  {
+    "customer_id": "CUST-2012",
+    "customer_email": "amanda.taylor@example.com",
+    "customer_name": "Amanda Taylor",
+    "subject": "Dark mode implementation request",
+    "description": "Many users are requesting a dark mode option for the web interface to reduce eye strain.",
+    "category": "feature_request",
+    "priority": "low",
+    "status": "new",
+    "tags": ["ui", "dark_mode", "accessibility"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Chrome 120",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "CUST-2013",
+    "customer_email": "christopher.thomas@example.com",
+    "customer_name": "Christopher Thomas",
+    "subject": "Webhook signature validation failing",
+    "description": "Our webhook receiver is rejecting all incoming webhooks due to signature validation failures.",
+    "category": "technical_issue",
+    "priority": "high",
+    "status": "new",
+    "assigned_to": "agent-3",
+    "tags": ["webhook", "security", "signature"],
+    "metadata": {
+      "source": "api"
+    }
+  },
+  {
+    "customer_id": "CUST-2014",
+    "customer_email": "betty.wilson@example.com",
+    "customer_name": "Betty Wilson",
+    "subject": "Account data export functionality",
+    "description": "I need to export all my account data for compliance with data portability requirements.",
+    "category": "feature_request",
+    "priority": "medium",
+    "status": "new",
+    "tags": ["export", "data", "gdpr", "privacy"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Safari 17",
+      "device_type": "mobile"
+    }
+  },
+  {
+    "customer_id": "CUST-2015",
+    "customer_email": "andrew.johnson@example.com",
+    "customer_name": "Andrew Johnson",
+    "subject": "API key expiration warning",
+    "description": "Please add email notifications for API key expiration so we don't lose access unexpectedly.",
+    "category": "feature_request",
+    "priority": "low",
+    "status": "new",
+    "tags": ["api", "security", "notification"]
+  },
+  {
+    "customer_id": "CUST-2016",
+    "customer_email": "nancy.martinez@example.com",
+    "customer_name": "Nancy Martinez",
+    "subject": "Search autocomplete not working",
+    "description": "The search autocomplete feature stopped working after the latest update.",
+    "category": "bug_report",
+    "priority": "medium",
+    "status": "resolved",
+    "assigned_to": "agent-5",
+    "tags": ["search", "ui", "autocomplete"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Chrome 120",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "CUST-2017",
+    "customer_email": "george.garcia@example.com",
+    "customer_name": "George Garcia",
+    "subject": "Team collaboration features needed",
+    "description": "Our organization would benefit from shared workspaces and team collaboration capabilities.",
+    "category": "feature_request",
+    "priority": "medium",
+    "status": "new",
+    "tags": ["collaboration", "team", "workspace"]
+  },
+  {
+    "customer_id": "CUST-2018",
+    "customer_email": "margaret.thompson@example.com",
+    "customer_name": "Margaret Thompson",
+    "subject": "PDF export quality issues",
+    "description": "The exported PDF files have poor image quality and formatting issues that make them unusable.",
+    "category": "bug_report",
+    "priority": "high",
+    "status": "waiting_customer",
+    "assigned_to": "agent-2",
+    "tags": ["export", "pdf", "quality"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Chrome 120",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "CUST-2019",
+    "customer_email": "thomas.white@example.com",
+    "customer_name": "Thomas White",
+    "subject": "Multi-currency support for invoices",
+    "description": "We operate in multiple countries and need invoices to display in the appropriate currency.",
+    "category": "feature_request",
+    "priority": "high",
+    "status": "new",
+    "assigned_to": "agent-4",
+    "tags": ["currency", "invoices", "billing"],
+    "metadata": {
+      "source": "api"
+    }
+  },
+  {
+    "customer_id": "CUST-2020",
+    "customer_email": "karen.harris@example.com",
+    "customer_name": "Karen Harris",
+    "subject": "Connection timeout on large dataset queries",
+    "description": "Queries on large datasets consistently timeout. We need better performance or the ability to increase timeout limits.",
+    "category": "technical_issue",
+    "priority": "urgent",
+    "status": "in_progress",
+    "assigned_to": "agent-1",
+    "tags": ["database", "performance", "timeout", "urgent"]
+  }
+]
