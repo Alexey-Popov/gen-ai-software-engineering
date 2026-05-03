@@ -1,0 +1,293 @@
+###############################################
+# Customer Support System API - Sample Requests
+# VS Code REST Client Extension
+###############################################
+
+# Variables
+@baseUrl = http://localhost:3000
+@contentTypeJson = application/json
+@contentTypeCsv = text/csv
+
+###############################################
+# 1. Health Check
+###############################################
+
+### Get API Health Check
+GET {{baseUrl}}
+Accept: application/json
+
+###############################################
+# 2. Create Tickets
+###############################################
+
+### Create a new ticket - Account Access Issue
+POST {{baseUrl}}/tickets
+Content-Type: {{contentTypeJson}}
+
+{
+  "customer_email": "test@example.com",
+  "customer_name": "Test User",
+  "subject": "Cannot login to my account",
+  "description": "I've been trying to login for 2 hours but keep getting invalid credentials error. I'm sure my password is correct. Need urgent help with password reset."
+}
+
+### Create a new ticket - Technical Issue
+POST {{baseUrl}}/tickets
+Content-Type: {{contentTypeJson}}
+
+{
+  "customer_email": "jane.smith@acme.com",
+  "customer_name": "Jane Smith",
+  "subject": "Application crashes on startup",
+  "description": "The app crashes every time I try to open it on my phone. Getting error 500. This is blocking my work."
+}
+
+### Create a new ticket - Billing Question
+POST {{baseUrl}}/tickets
+Content-Type: {{contentTypeJson}}
+
+{
+  "customer_email": "bob.johnson@corp.com",
+  "customer_name": "Bob Johnson",
+  "subject": "Invoice for March payment",
+  "description": "I did not receive my invoice for the March payment. Can you please send it to my email?"
+}
+
+### Create a new ticket - Feature Request
+POST {{baseUrl}}/tickets
+Content-Type: {{contentTypeJson}}
+
+{
+  "customer_email": "alice.wong@startup.io",
+  "customer_name": "Alice Wong",
+  "subject": "Feature request: Dark mode",
+  "description": "Would be nice to have a dark mode option in the app. This would really improve user experience at night."
+}
+
+### Create a new ticket - Bug Report
+POST {{baseUrl}}/tickets
+Content-Type: {{contentTypeJson}}
+
+{
+  "customer_email": "charlie.brown@tech.com",
+  "customer_name": "Charlie Brown",
+  "subject": "Bug in calculation module",
+  "description": "Steps to reproduce: 1. Enter values 100 and 50 2. Click calculate. Expected: 150. Actual: 149.99. The calculation is incorrect."
+}
+
+### Create ticket with validation error (should return 400)
+POST {{baseUrl}}/tickets
+Content-Type: {{contentTypeJson}}
+
+{
+  "customer_email": "invalid-email",
+  "customer_name": "",
+  "subject": "Test"
+}
+
+###############################################
+# 3. List and Filter Tickets
+###############################################
+
+### Get all tickets
+GET {{baseUrl}}/tickets
+Accept: application/json
+
+### Filter tickets by category
+GET {{baseUrl}}/tickets?category=account_access
+Accept: application/json
+
+### Filter tickets by priority
+GET {{baseUrl}}/tickets?priority=urgent
+Accept: application/json
+
+### Filter tickets by status
+GET {{baseUrl}}/tickets?status=new
+Accept: application/json
+
+### Filter tickets by multiple criteria
+GET {{baseUrl}}/tickets?category=technical_issue&priority=high&status=new
+Accept: application/json
+
+### Search tickets by customer email
+GET {{baseUrl}}/tickets?customer_email=test@example.com
+Accept: application/json
+
+### Search tickets by subject keyword
+GET {{baseUrl}}/tickets?subject=login
+Accept: application/json
+
+###############################################
+# 4. Get Specific Ticket
+###############################################
+
+### Get ticket by ID (replace with actual ticket ID)
+# @name getTicket
+GET {{baseUrl}}/tickets/TICKET-ID-HERE
+Accept: application/json
+
+### Get non-existent ticket (should return 404)
+GET {{baseUrl}}/tickets/non-existent-id
+Accept: application/json
+
+###############################################
+# 5. Update Tickets
+###############################################
+
+### Update ticket status (replace with actual ticket ID)
+PUT {{baseUrl}}/tickets/TICKET-ID-HERE
+Content-Type: {{contentTypeJson}}
+
+{
+  "status": "in_progress"
+}
+
+### Update ticket with resolution (replace with actual ticket ID)
+PUT {{baseUrl}}/tickets/TICKET-ID-HERE
+Content-Type: {{contentTypeJson}}
+
+{
+  "status": "resolved",
+  "priority": "medium"
+}
+
+### Update non-existent ticket (should return 404)
+PUT {{baseUrl}}/tickets/non-existent-id
+Content-Type: {{contentTypeJson}}
+
+{
+  "status": "resolved"
+}
+
+###############################################
+# 6. Auto-Classify Tickets
+###############################################
+
+### Auto-classify a ticket (replace with actual ticket ID)
+POST {{baseUrl}}/tickets/TICKET-ID-HERE/auto-classify
+Accept: application/json
+
+### Auto-classify non-existent ticket (should return 404)
+POST {{baseUrl}}/tickets/non-existent-id/auto-classify
+Accept: application/json
+
+###############################################
+# 7. Delete Tickets
+###############################################
+
+### Delete a ticket (replace with actual ticket ID)
+DELETE {{baseUrl}}/tickets/TICKET-ID-HERE
+
+### Delete non-existent ticket (should return 404)
+DELETE {{baseUrl}}/tickets/non-existent-id
+
+###############################################
+# 8. Import Tickets
+###############################################
+
+### Import tickets from CSV file
+POST {{baseUrl}}/tickets/import
+Content-Type: text/csv
+
+< ./sample_tickets.csv
+
+### Import tickets from JSON array
+POST {{baseUrl}}/tickets/import
+Content-Type: application/json
+
+[
+  {
+    "customer_email": "import1@example.com",
+    "customer_name": "Import User 1",
+    "subject": "Test import ticket 1",
+    "description": "This is a test ticket imported from JSON",
+    "category": "technical_issue",
+    "priority": "medium"
+  },
+  {
+    "customer_email": "import2@example.com",
+    "customer_name": "Import User 2",
+    "subject": "Test import ticket 2",
+    "description": "Another test ticket imported from JSON",
+    "category": "billing_question",
+    "priority": "low"
+  }
+]
+
+### Import tickets from XML
+POST {{baseUrl}}/tickets/import
+Content-Type: application/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_email>xml1@example.com</customer_email>
+    <customer_name>XML User 1</customer_name>
+    <subject>Test XML import</subject>
+    <description>This is a test ticket imported from XML</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+  </ticket>
+  <ticket>
+    <customer_email>xml2@example.com</customer_email>
+    <customer_name>XML User 2</customer_name>
+    <subject>Another XML import</subject>
+    <description>Another test ticket from XML</description>
+    <category>bug_report</category>
+    <priority>high</priority>
+  </ticket>
+</tickets>
+
+### Import with invalid format (should return 400)
+POST {{baseUrl}}/tickets/import
+Content-Type: application/json
+
+{
+  "invalid": "format"
+}
+
+###############################################
+# 9. Complete Workflow Example
+###############################################
+
+### Step 1: Create a ticket
+# @name createWorkflowTicket
+POST {{baseUrl}}/tickets
+Content-Type: {{contentTypeJson}}
+
+{
+  "customer_email": "workflow@example.com",
+  "customer_name": "Workflow Test User",
+  "subject": "Password reset not working",
+  "description": "I clicked the password reset link but it says the link has expired. I need urgent help to access my account."
+}
+
+### Step 2: Auto-classify the ticket (use ID from previous response)
+# POST {{baseUrl}}/tickets/{{createWorkflowTicket.response.body.id}}/auto-classify
+
+### Step 3: Update ticket status
+# PUT {{baseUrl}}/tickets/{{createWorkflowTicket.response.body.id}}
+# Content-Type: {{contentTypeJson}}
+#
+# {
+#   "status": "in_progress"
+# }
+
+### Step 4: Get ticket details
+# GET {{baseUrl}}/tickets/{{createWorkflowTicket.response.body.id}}
+
+### Step 5: Resolve the ticket
+# PUT {{baseUrl}}/tickets/{{createWorkflowTicket.response.body.id}}
+# Content-Type: {{contentTypeJson}}
+#
+# {
+#   "status": "resolved"
+# }
+
+###############################################
+# Notes:
+# - Replace TICKET-ID-HERE with actual ticket IDs
+# - Server must be running on http://localhost:3000
+# - Uncomment workflow steps to use response chaining
+# - Use VS Code REST Client extension to run these requests
+###############################################

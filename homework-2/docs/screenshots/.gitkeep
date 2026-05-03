@@ -1,2 +1,40 @@
-# This file ensures the screenshots folder is tracked by git
-# Add your screenshots here (e.g. test_coverage.png per TASKS.md)
+# Screenshots Documentation
+
+This folder contains 7 screenshots demonstrating AI-assisted development and the working Customer Support System API.
+
+## Screenshot List
+
+### AI Tool Usage (4 screenshots)
+- 1-ai-project-setup.png - Initial project setup with Claude Code for Homework 2
+- 2-ai-ticket-model-parsers.png - Ticket model and multi-format parsers (CSV/JSON/XML) implementation
+- 3-ai-classification-engine.png - Rule-based auto-classification engine with keyword matching
+- 4-ai-testing-implementation.png - Comprehensive test suite creation with Jest and Supertest
+
+### API Functionality & Testing (3 screenshots)
+- 5-test-coverage-report.png - Jest test coverage report showing 86%+ coverage (56 tests passing)
+- 6-api-running-endpoints.png - Server running with all 7 REST endpoints operational
+- 7-api-import-classify-demo.png - Demonstrating ticket import (CSV/JSON/XML) and auto-classification features
+
+## Requirements Met
+
+✅ AI tool interactions documented (4 screenshots)
+✅ Test coverage demonstrated (1 screenshot showing >85% coverage)
+✅ API running successfully (1 screenshot)
+✅ Import and classification features working (1 screenshot)
+✅ All homework documentation requirements fulfilled
+
+## Homework 2 Features Demonstrated
+
+1. **Multi-format Import**: CSV, JSON, and XML ticket import with validation
+2. **Auto-Classification**: Rule-based keyword matching for categories and priorities
+3. **Comprehensive Testing**: 56 tests with 86.14% line coverage
+4. **Complete CRUD API**: 7 RESTful endpoints for ticket management
+5. **Advanced Filtering**: Category, priority, status, and date range filters
+
+## For Pull Request
+
+Reference these screenshots in your PR description to demonstrate:
+1. How Claude Code AI was used throughout Homework 2 development
+2. All implemented features working correctly (import, classification, filtering)
+3. Comprehensive test coverage exceeding 85% requirement
+4. Proper error handling and validation for all formats

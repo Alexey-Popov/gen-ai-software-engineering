@@ -1,0 +1,34 @@
+[
+  {
+    "customer_id": "CUST-001",
+    "customer_email": "john@example.com",
+    "customer_name": "John Doe",
+    "subject": "Cannot login to account",
+    "description": "I am unable to access my account after password reset attempt.",
+    "category": "account_access",
+    "priority": "urgent",
+    "status": "new",
+    "tags": ["login", "password"],
+    "metadata": {
+      "source": "web_form",
+      "browser": "Chrome",
+      "device_type": "desktop"
+    }
+  },
+  {
+    "customer_id": "CUST-002",
+    "customer_email": "jane@example.com",
+    "customer_name": "Jane Smith",
+    "subject": "Application crashes",
+    "description": "The app crashes every time I try to open the dashboard page.",
+    "category": "technical_issue",
+    "priority": "high",
+    "status": "new",
+    "tags": ["crash", "error"],
+    "metadata": {
+      "source": "email",
+      "browser": "Firefox",
+      "device_type": "mobile"
+    }
+  }
+]
