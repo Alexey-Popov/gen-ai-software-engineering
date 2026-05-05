@@ -273,8 +273,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** coverage report ≥ 85% with screenshot embedded in PR.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `vitest.config.js` enforces threshold `lines/functions/branches/statements ≥ 85` (overall, not per-file) and excludes `src/index.js` (bootstrap-only). Current numbers: **93% statements / 88.31% branches / 100% functions / 93% lines** — all comfortably above the bar; `npm run test:coverage` exits 0. HTML report generated at `coverage/index.html` (gitignored); summary captured to `docs/screenshots/screenshot5.png` showing all four metrics over the 85% bar.
 
 ---
 
