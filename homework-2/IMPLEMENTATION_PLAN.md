@@ -55,12 +55,13 @@ Each stage is implemented and verified independently before moving on to the nex
   - `PUT /tickets/:id` → 200 / 404 (also bumps `updated_at`, sets `resolved_at` when status flips to `resolved`)
   - `DELETE /tickets/:id` → 204 / 404
 - Minimal error handler (404, 500)
+- **Bootstrap `demo/sample-requests.http`** (REST Client): CRUD happy-path + 404 scenarios; chained requests via `# @name createTicket` + `{{createTicket.response.body.id}}`. Extend the file in every later stage.
 
 **Outcome:** all five CRUD endpoints reachable; round-trip (create → read → update → delete) works via REST Client.
 
 ### Status
 - [x] Completed
-- Notes: All 5 endpoints (POST, GET list, GET by ID, PUT, DELETE) working. 13 integration tests passing. Round-trip cycle verified.
+- Notes: All 5 endpoints (POST, GET list, GET by ID, PUT, DELETE) working. 13 integration tests passing. Round-trip cycle verified. `demo/sample-requests.http` bootstrapped with Stage 2 happy-path + 404 + placeholders for Stages 3–9.
 
 ---
 
@@ -74,6 +75,7 @@ Each stage is implemented and verified independently before moving on to the nex
   - `metadata.source` enum, `metadata.device_type` enum
 - `src/middleware/errorHandler.js` — collects **all** errors in `details[]` (no fail-fast); maps `NotFoundError` → 404
 - Wire into `POST /tickets` and `PUT /tickets/:id`
+- **Extend `demo/sample-requests.http`** with negative cases: empty body, multi-error 400, bad email, oversized subject/description, invalid enums
 
 **Outcome:** invalid requests return 400 with every error in a single `details[]` array.
 
@@ -93,6 +95,7 @@ Each stage is implemented and verified independently before moving on to the nex
   { "total": 50, "successful": 47, "failed": [{ "row": 12, "errors": [...] }] }
   ```
 - Malformed file → 400 with meaningful message (not 500)
+- **Extend `demo/sample-requests.http`** with CSV `multipart/form-data` POST referencing `< ../tests/fixtures/sample_tickets.csv` + a malformed-file negative case
 
 **Outcome:** CSV upload works; partial-success summary returned.
 
@@ -107,6 +110,7 @@ Each stage is implemented and verified independently before moving on to the nex
 - Same endpoint detects format by `Content-Type` or filename extension
 - `src/parsers/jsonParser.js` — accepts both `[{...}]` and `{ "tickets": [...] }`
 - Reuses validation + summary shape from Stage 4
+- **Extend `demo/sample-requests.http`** with JSON import block + mixed-valid/invalid file scenario
 
 **Outcome:** JSON upload works; mixed valid/invalid file returns correct summary.
 
@@ -121,6 +125,7 @@ Each stage is implemented and verified independently before moving on to the nex
 - `src/parsers/xmlParser.js` using `fast-xml-parser`
 - Expected root: `<tickets><ticket>...</ticket></tickets>`
 - Field mapping (snake_case in XML → ticket model)
+- **Extend `demo/sample-requests.http`** with XML import block + malformed-XML negative case
 
 **Outcome:** XML upload works; malformed XML → 400 (not 500).
 
@@ -141,6 +146,8 @@ Query params (all optional, AND-combined):
 - `?assigned_to=...`
 
 Validate query params (invalid enum/date → 400).
+
+- **Extend `demo/sample-requests.http`** with single-filter, combined-filter, and date-range scenarios + a 400 case for an invalid enum value
 
 **Outcome:** filtering works individually and in any combination.
 
@@ -173,6 +180,7 @@ Validate query params (invalid enum/date → 400).
 - `POST /tickets/:id/auto-classify` → updates ticket + returns classification result
 - `POST /tickets?autoClassify=true` triggers classification on creation
 - Manual override via `PUT /tickets/:id` is preserved (does not re-classify unless asked)
+- **Extend `demo/sample-requests.http`** with: auto-classify-on-create, explicit `POST /:id/auto-classify`, manual-override flow, and `GET /classifier/log`
 
 **Outcome:** auto-classify endpoint works; opt-in flag on create works; manual override respected.
 
@@ -292,9 +300,10 @@ Use **different AI models** for different doc types (record which model in each 
 
 ---
 
-## 📸 Stage 16 — HOWTORUN.md + Screenshots
+## 📸 Stage 16 — Demo polish + HOWTORUN.md + Screenshots
 
-- `HOWTORUN.md` — prerequisites, install, start, seed (`demo/import-all.sh`), running tests + coverage, troubleshooting
+- **Polish `demo/sample-requests.http`**: every endpoint covered, sections labelled by stage, chained variables work end-to-end on a clean server
+- `HOWTORUN.md` — prerequisites, install, start, seed (`demo/import-all.sh`), running tests + coverage, troubleshooting; explicitly mention REST Client extension + the `.http` file as the primary verification path
 - Screenshots in `docs/screenshots/`:
   1. AI prompt: asking model to draft this plan
   2. AI response: structured plan

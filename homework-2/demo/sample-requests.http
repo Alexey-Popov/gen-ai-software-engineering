@@ -1,0 +1,206 @@
+### Sample Requests — Intelligent Customer Support Ticket System
+###
+### Open this file in VS Code with the REST Client extension installed,
+### then click "Send Request" above each block.
+###
+### Variables (override per-environment if needed)
+@host = http://localhost:3000
+
+###############################################################################
+# Stage 0 — Health check
+###############################################################################
+
+### Health check
+GET {{host}}/
+Accept: application/json
+
+
+###############################################################################
+# Stage 2 — CRUD: happy path
+###############################################################################
+
+### Create a ticket (capture id for chained requests via @name)
+# @name createTicket
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-001",
+  "customer_email": "alice@example.com",
+  "customer_name": "Alice Doe",
+  "subject": "Cannot log into my account",
+  "description": "Login fails with 'invalid credentials' even after password reset.",
+  "metadata": {
+    "source": "web_form",
+    "device_type": "desktop"
+  }
+}
+
+### List all tickets
+GET {{host}}/tickets
+Accept: application/json
+
+### Get the ticket created above (id pulled from createTicket response)
+GET {{host}}/tickets/{{createTicket.response.body.id}}
+Accept: application/json
+
+### Update the ticket (subject only — updated_at should bump)
+PUT {{host}}/tickets/{{createTicket.response.body.id}}
+Content-Type: application/json
+
+{
+  "subject": "Cannot log in — happens after password reset"
+}
+
+### Update status to in_progress
+PUT {{host}}/tickets/{{createTicket.response.body.id}}
+Content-Type: application/json
+
+{
+  "status": "in_progress",
+  "assigned_to": "agent-42"
+}
+
+### Resolve the ticket — server should set resolved_at
+PUT {{host}}/tickets/{{createTicket.response.body.id}}
+Content-Type: application/json
+
+{
+  "status": "resolved"
+}
+
+### Delete the ticket → expect 204 (no body)
+DELETE {{host}}/tickets/{{createTicket.response.body.id}}
+
+### Verify deleted → expect 404
+GET {{host}}/tickets/{{createTicket.response.body.id}}
+
+
+###############################################################################
+# Stage 2 — CRUD: 404 paths
+###############################################################################
+
+### GET non-existent id → 404
+GET {{host}}/tickets/does-not-exist-123
+Accept: application/json
+
+### PUT non-existent id → 404
+PUT {{host}}/tickets/does-not-exist-123
+Content-Type: application/json
+
+{
+  "subject": "ghost"
+}
+
+### DELETE non-existent id → 404
+DELETE {{host}}/tickets/does-not-exist-123
+
+
+###############################################################################
+# Stage 3 — Validation (placeholder; expected to return 400 once Stage 3 lands)
+###############################################################################
+
+### POST with empty body → expect 400 with details[]
+POST {{host}}/tickets
+Content-Type: application/json
+
+{}
+
+### POST with multiple invalid fields → expect 400 listing all errors
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_email": "not-an-email",
+  "subject": "",
+  "description": "tiny",
+  "category": "not_a_real_category",
+  "priority": "super_urgent",
+  "status": "pending"
+}
+
+
+###############################################################################
+# Stage 4–6 — Bulk import (placeholder; expected to work once import lands)
+###############################################################################
+
+### Bulk import CSV
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="sample_tickets.csv"
+Content-Type: text/csv
+
+< ../tests/fixtures/sample_tickets.csv
+------WebFormBoundary--
+
+### Bulk import JSON
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="sample_tickets.json"
+Content-Type: application/json
+
+< ../tests/fixtures/sample_tickets.json
+------WebFormBoundary--
+
+### Bulk import XML
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="sample_tickets.xml"
+Content-Type: application/xml
+
+< ../tests/fixtures/sample_tickets.xml
+------WebFormBoundary--
+
+
+###############################################################################
+# Stage 7 — Filtering (placeholder)
+###############################################################################
+
+### Filter by category
+GET {{host}}/tickets?category=technical_issue
+Accept: application/json
+
+### Filter by priority
+GET {{host}}/tickets?priority=urgent
+Accept: application/json
+
+### Combined filters (category + priority + status)
+GET {{host}}/tickets?category=billing_question&priority=high&status=new
+Accept: application/json
+
+### Date range
+GET {{host}}/tickets?from=2026-01-01&to=2026-12-31
+Accept: application/json
+
+
+###############################################################################
+# Stage 8–9 — Auto-classification (placeholder)
+###############################################################################
+
+### Create a ticket with autoClassify=true
+# @name createWithClassify
+POST {{host}}/tickets?autoClassify=true
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-002",
+  "customer_email": "bob@example.com",
+  "customer_name": "Bob Smith",
+  "subject": "Production down — critical security issue",
+  "description": "We can't access the dashboard. This is blocking the whole team and needs to be fixed asap.",
+  "metadata": { "source": "email", "device_type": "desktop" }
+}
+
+### Classify an existing ticket explicitly
+POST {{host}}/tickets/{{createWithClassify.response.body.id}}/auto-classify
+Accept: application/json
+
+### View classifier decision log
+GET {{host}}/classifier/log
+Accept: application/json
