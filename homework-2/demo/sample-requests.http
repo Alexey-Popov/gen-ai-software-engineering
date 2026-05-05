@@ -121,21 +121,52 @@ Content-Type: application/json
 
 
 ###############################################################################
-# Stage 4–6 — Bulk import (placeholder; expected to work once import lands)
+# Stage 4 — CSV Bulk Import (working)
 ###############################################################################
 
-### Bulk import CSV
+### Bulk import CSV — mixed valid + invalid rows (partial-success summary)
 POST {{host}}/tickets/import
 Content-Type: multipart/form-data; boundary=----WebFormBoundary
 
 ------WebFormBoundary
-Content-Disposition: form-data; name="file"; filename="sample_tickets.csv"
+Content-Disposition: form-data; name="file"; filename="import-sample.csv"
 Content-Type: text/csv
 
-< ../tests/fixtures/sample_tickets.csv
+< ./import-sample.csv
 ------WebFormBoundary--
 
-### Bulk import JSON
+### Malformed CSV → expect 400 (not 500) with "Malformed CSV: ..." in details[]
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="broken.csv"
+Content-Type: text/csv
+
+customer_email,subject,description
+"a@example.com,broken,"unterminated
+------WebFormBoundary--
+
+### Empty multipart — expect 400 "file is required"
+POST {{host}}/tickets/import
+
+### Unsupported extension (.txt) → expect 400 "Unsupported file format"
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="notes.txt"
+Content-Type: text/plain
+
+just plain text, not a ticket file
+------WebFormBoundary--
+
+
+###############################################################################
+# Stage 5–6 — JSON / XML Bulk Import (placeholder; not implemented yet)
+###############################################################################
+
+### Bulk import JSON — currently returns 400 "JSON import is not implemented yet"
 POST {{host}}/tickets/import
 Content-Type: multipart/form-data; boundary=----WebFormBoundary
 
@@ -143,10 +174,10 @@ Content-Type: multipart/form-data; boundary=----WebFormBoundary
 Content-Disposition: form-data; name="file"; filename="sample_tickets.json"
 Content-Type: application/json
 
-< ../tests/fixtures/sample_tickets.json
+[]
 ------WebFormBoundary--
 
-### Bulk import XML
+### Bulk import XML — currently returns 400 "XML import is not implemented yet"
 POST {{host}}/tickets/import
 Content-Type: multipart/form-data; boundary=----WebFormBoundary
 
@@ -154,7 +185,7 @@ Content-Type: multipart/form-data; boundary=----WebFormBoundary
 Content-Disposition: form-data; name="file"; filename="sample_tickets.xml"
 Content-Type: application/xml
 
-< ../tests/fixtures/sample_tickets.xml
+<tickets/>
 ------WebFormBoundary--
 
 

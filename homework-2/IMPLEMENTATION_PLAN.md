@@ -100,8 +100,8 @@ Each stage is implemented and verified independently before moving on to the nex
 **Outcome:** CSV upload works; partial-success summary returned.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `csvParser.js` (RFC 4180-ish, splits `tags` on `;`, nests `metadata.*`), `importService.js` (per-row validate + create, 1-based row numbers in `failed[]`), `POST /tickets/import` with multer memory storage and 5 MB cap. Format dispatch by extension/MIME ready for Stages 5–6 (JSON/XML return 400 "not implemented yet"). Malformed CSV → 400 (not 500), missing file → 400, unsupported extension → 400. 12 new tests (6 parser unit + 6 import integration); 94 total green. `demo/import-sample.csv` (5 rows, mixed valid+invalid) added so the `.http` block runs immediately.
 
 ---
 
