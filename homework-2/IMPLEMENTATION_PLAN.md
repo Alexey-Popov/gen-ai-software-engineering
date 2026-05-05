@@ -130,8 +130,8 @@ Each stage is implemented and verified independently before moving on to the nex
 **Outcome:** XML upload works; malformed XML → 400 (not 500).
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `xmlParser.js` using `fast-xml-parser` v5 with `XMLValidator` for strict pre-parse validation. Forces `<ticket>` and `<tag>` into arrays via `isArray` callback (so single-ticket files still come back as a list). Maps `<tags><tag/></tags>` → string array, `<metadata>...</metadata>` → object. Endpoint reuses Stage-4 `importService` and the same partial-success summary. Empty `<tickets/>` returns 200 with total: 0. 12 new tests (7 parser unit + 5 import integration); 116 total green. `demo/import-sample.xml` (4 tickets, 1 invalid) added so the `.http` block runs immediately.
 
 ---
 

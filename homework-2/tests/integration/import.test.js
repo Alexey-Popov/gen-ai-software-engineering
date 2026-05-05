@@ -188,3 +188,116 @@ describe('POST /tickets/import — JSON', () => {
     expect(res.body.details[0]).toMatch(/Unsupported JSON shape/);
   });
 });
+
+describe('POST /tickets/import — XML', () => {
+  beforeEach(() => {
+    ticketStore.clear();
+  });
+
+  function xmlBuffer(str) {
+    return Buffer.from(str, 'utf-8');
+  }
+
+  const ticketXml = (i) => `
+    <ticket>
+      <customer_email>user${i}@ex.com</customer_email>
+      <subject>T${i}</subject>
+      <description>${VALID_DESC}</description>
+      <category>technical_issue</category>
+      <priority>medium</priority>
+    </ticket>
+  `;
+
+  it('imports a valid XML file with multiple tickets', async () => {
+    const file = xmlBuffer(`
+      <tickets>${ticketXml(1)}${ticketXml(2)}${ticketXml(3)}</tickets>
+    `);
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'sample.xml');
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ total: 3, successful: 3, failed: [] });
+    expect(ticketStore.getAll()).toHaveLength(3);
+  });
+
+  it('returns a partial-success summary for a mixed-valid XML file', async () => {
+    const file = xmlBuffer(`
+      <tickets>
+        ${ticketXml(1)}
+        <ticket>
+          <customer_email>not-an-email</customer_email>
+          <subject>T2</subject>
+          <description>${VALID_DESC}</description>
+        </ticket>
+        ${ticketXml(3)}
+      </tickets>
+    `);
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'sample.xml');
+
+    expect(res.status).toBe(200);
+    expect(res.body.total).toBe(3);
+    expect(res.body.successful).toBe(2);
+    expect(res.body.failed).toHaveLength(1);
+    expect(res.body.failed[0]).toMatchObject({ row: 2 });
+    expect(res.body.failed[0].errors.some((e) => e.includes('customer_email'))).toBe(true);
+  });
+
+  it('returns 400 (not 500) on malformed XML', async () => {
+    const file = xmlBuffer('<tickets><ticket></tickets>');
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'broken.xml');
+
+    expect(res.status).toBe(400);
+    expect(res.body.details[0]).toMatch(/Malformed XML/);
+  });
+
+  it('returns 400 for unsupported XML shape (missing <tickets> root)', async () => {
+    const file = xmlBuffer('<foo><bar/></foo>');
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'wrong.xml');
+
+    expect(res.status).toBe(400);
+    expect(res.body.details[0]).toMatch(/Unsupported XML shape/);
+  });
+
+  it('imports nested metadata and tags from XML correctly', async () => {
+    const file = xmlBuffer(`
+      <tickets>
+        <ticket>
+          <customer_email>a@ex.com</customer_email>
+          <subject>Nested test</subject>
+          <description>${VALID_DESC}</description>
+          <category>technical_issue</category>
+          <priority>high</priority>
+          <tags>
+            <tag>urgent</tag>
+            <tag>security</tag>
+          </tags>
+          <metadata>
+            <source>web_form</source>
+            <device_type>desktop</device_type>
+          </metadata>
+        </ticket>
+      </tickets>
+    `);
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'sample.xml');
+
+    expect(res.status).toBe(200);
+    expect(res.body.successful).toBe(1);
+    const [stored] = ticketStore.getAll();
+    expect(stored.tags).toEqual(['urgent', 'security']);
+    expect(stored.metadata).toEqual({ source: 'web_form', device_type: 'desktop' });
+  });
+});

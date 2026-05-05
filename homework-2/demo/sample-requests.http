@@ -214,18 +214,51 @@ Content-Type: application/json
 
 
 ###############################################################################
-# Stage 6 — XML Bulk Import (placeholder; not implemented yet)
+# Stage 6 — XML Bulk Import (working)
 ###############################################################################
 
-### Bulk import XML — currently returns 400 "XML import is not implemented yet"
+### Bulk import XML — 4 tickets, 1 invalid (partial-success summary)
 POST {{host}}/tickets/import
 Content-Type: multipart/form-data; boundary=----WebFormBoundary
 
 ------WebFormBoundary
-Content-Disposition: form-data; name="file"; filename="sample_tickets.xml"
+Content-Disposition: form-data; name="file"; filename="import-sample.xml"
 Content-Type: application/xml
 
-<tickets/>
+< ./import-sample.xml
+------WebFormBoundary--
+
+### Malformed XML (mismatched tag) → expect 400 "Malformed XML: ..."
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="broken.xml"
+Content-Type: application/xml
+
+<tickets><ticket></tickets>
+------WebFormBoundary--
+
+### Unsupported root element → expect 400 "Unsupported XML shape"
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="wrong-root.xml"
+Content-Type: application/xml
+
+<foo><bar/></foo>
+------WebFormBoundary--
+
+### Empty <tickets/> → expect 200 with total: 0
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="empty.xml"
+Content-Type: application/xml
+
+<tickets></tickets>
 ------WebFormBoundary--
 
 
