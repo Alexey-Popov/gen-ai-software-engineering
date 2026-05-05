@@ -342,5 +342,5 @@ Use **different AI models** for different doc types (record which model in each 
 **Outcome:** PR submitted, ready for grading.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed (pending the actual PR-open click)
+- Notes: Final sanity sweep passed on a clean server: health 200, CSV import 50/50, malformed CSV → 400 with parser-specific message, filter `?category=technical_issue` returned 10 tickets, bad filter → 400 with allowed values listed, `?autoClassify=true` ran and persisted classification block, PUT `{status:"resolved"}` stamped `resolved_at`, DELETE → 204, GET on deleted id → 404, classifier log captured the auto-classify entry. `git ls-files homework-2/node_modules` and `git ls-files homework-2/coverage` both return 0 — `.gitignore` is doing its job. Branch `homework-2-submission` has 17 commits, in sync with `origin/homework-2-submission`. PR body drafted in the conversation; ready to open via `gh pr create` or the GitHub web UI.
