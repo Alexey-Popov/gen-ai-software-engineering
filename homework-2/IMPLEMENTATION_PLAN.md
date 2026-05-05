@@ -185,8 +185,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** auto-classify endpoint works; opt-in flag on create works; manual override respected.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `applyClassification()` helper in `routes/tickets.js` runs `classify()`, persists `category` + `priority` + `classification` block (`{confidence, reasoning, keywords, classified_at}`) on the ticket, and appends a decision-log entry. `POST /:id/auto-classify` returns `{ ticket, classification }`; missing id → 404. `POST /tickets?autoClassify=true` triggers classification on create (only `"true"` literal — anything else is a no-op). `PUT /:id` stays a plain partial update — no automatic reclassification — so manual override is preserved. Decision log distinguishes triggers via `auto-on-create` vs `manual`. 10 new integration tests; 167 total green.
 
 ---
 

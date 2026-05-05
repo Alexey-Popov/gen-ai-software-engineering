@@ -8,6 +8,8 @@ import { parseCsvTickets } from '../parsers/csvParser.js';
 import { parseJsonTickets } from '../parsers/jsonParser.js';
 import { parseXmlTickets } from '../parsers/xmlParser.js';
 import { importTickets } from '../services/importService.js';
+import { classify } from '../classifier/classify.js';
+import { record as recordDecision } from '../classifier/decisionLog.js';
 
 const router = Router();
 
@@ -24,6 +26,35 @@ function detectFormat(file) {
   if (name.endsWith('.json') || mime.includes('json')) return 'json';
   if (name.endsWith('.xml') || mime.includes('xml')) return 'xml';
   return null;
+}
+
+/**
+ * Run the classifier on a ticket, persist the result on the ticket itself,
+ * and append an entry to the decision log.
+ *
+ * @param {object} ticket   the existing stored ticket
+ * @param {'auto-on-create' | 'manual'} trigger
+ * @returns {{ updatedTicket: object, result: object }}
+ */
+function applyClassification(ticket, trigger) {
+  const result = classify(ticket);
+  const updatedTicket = ticketStore.update(ticket.id, {
+    category: result.category,
+    priority: result.priority,
+    classification: {
+      confidence: result.confidence,
+      reasoning: result.reasoning,
+      keywords: result.keywords,
+      classified_at: new Date().toISOString(),
+    },
+  });
+  recordDecision({
+    ticket_id: ticket.id,
+    subject: ticket.subject,
+    result,
+    trigger,
+  });
+  return { updatedTicket, result };
 }
 
 /**
@@ -61,12 +92,34 @@ router.post('/import', upload.single('file'), (req, res, next) => {
 
 /**
  * POST /tickets — Create a new ticket
+ *   ?autoClassify=true  — run the classifier on creation and store category/priority
  */
 router.post('/', (req, res, next) => {
   try {
     validateTicketOrThrow(req.body);
-    const ticket = ticketStore.create(req.body);
+    let ticket = ticketStore.create(req.body);
+    if (req.query.autoClassify === 'true') {
+      ticket = applyClassification(ticket, 'auto-on-create').updatedTicket;
+    }
     res.status(201).json(ticket);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * POST /tickets/:id/auto-classify — explicitly classify an existing ticket.
+ * Updates `category`, `priority`, and the `classification` block on the ticket;
+ * returns both the updated ticket and the classifier result.
+ */
+router.post('/:id/auto-classify', (req, res, next) => {
+  try {
+    const existing = ticketStore.getById(req.params.id);
+    if (!existing) {
+      throw new NotFoundError('Ticket not found');
+    }
+    const { updatedTicket, result } = applyClassification(existing, 'manual');
+    res.json({ ticket: updatedTicket, classification: result });
   } catch (err) {
     next(err);
   }

@@ -312,10 +312,10 @@ Accept: application/json
 
 
 ###############################################################################
-# Stage 8–9 — Auto-classification (placeholder)
+# Stage 8–9 — Auto-classification (working)
 ###############################################################################
 
-### Create a ticket with autoClassify=true
+### Create a ticket with autoClassify=true → server runs classifier on creation
 # @name createWithClassify
 POST {{host}}/tickets?autoClassify=true
 Content-Type: application/json
@@ -329,10 +329,41 @@ Content-Type: application/json
   "metadata": { "source": "email", "device_type": "desktop" }
 }
 
-### Classify an existing ticket explicitly
+### Verify the auto-classified fields stuck (category, priority, classification block)
+GET {{host}}/tickets/{{createWithClassify.response.body.id}}
+Accept: application/json
+
+### Manual override via PUT — overrides category/priority WITHOUT re-classifying
+PUT {{host}}/tickets/{{createWithClassify.response.body.id}}
+Content-Type: application/json
+
+{
+  "category": "feature_request",
+  "priority": "low"
+}
+
+### Re-classify explicitly — should restore the auto-classifier's verdict
 POST {{host}}/tickets/{{createWithClassify.response.body.id}}/auto-classify
 Accept: application/json
 
-### View classifier decision log
+### Auto-classify a ticket that doesn't exist → expect 404
+POST {{host}}/tickets/no-such-id/auto-classify
+
+### Create WITHOUT the flag — server does NOT classify
+# @name createNoClassify
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_email": "carol@example.com",
+  "subject": "Hello",
+  "description": "just a friendly note about your service"
+}
+
+### Classify it later, on demand
+POST {{host}}/tickets/{{createNoClassify.response.body.id}}/auto-classify
+Accept: application/json
+
+### View classifier decision log — should show entries from above (oldest first)
 GET {{host}}/classifier/log
 Accept: application/json
