@@ -236,8 +236,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** API contract is locked in by tests.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Added `tests/integration/test_ticket_api.spec.js` — exactly 11 tests, one per status-code path, written as a focused contract spec a reviewer can audit at a glance. Detailed CRUD/filter behaviour stays in `crud.test.js` (25) and `filtering.test.js` (12); this file is the deliberately minimal lock-in document. 195 total green.
 
 ---
 
