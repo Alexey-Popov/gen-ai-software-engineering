@@ -295,8 +295,8 @@ Use **different AI models** for different doc types (record which model in each 
 **Outcome:** all 4 docs review-ready; model attribution visible.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: Four docs drafted by Claude Opus 4.7 — `README.md`, `API_REFERENCE.md`, `ARCHITECTURE.md`, `TESTING_GUIDE.md` (5 Mermaid diagrams across them, target was ≥ 3). Project uses **three distinct AI models** mapped to where each fits best: Opus 4.7 for planning + all docs (synthesis), Claude Haiku 4.5 via Cursor for per-stage code scaffolding (deterministic implementation), and Claude Sonnet 4.6 via GitHub Copilot for editorial review of `API_REFERENCE.md` (caught a drift between prose and actual response shape around the `classification` block). README's AI Usage section documents the split; per-doc footers credit the respective models.
 
 ---
 
