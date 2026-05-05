@@ -80,8 +80,8 @@ Each stage is implemented and verified independently before moving on to the nex
 **Outcome:** invalid requests return 400 with every error in a single `details[]` array.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: ValidationError and NotFoundError custom exceptions. Full ticket validation with all enum checks (categories, priorities, statuses, metadata). Partial update validation for PUT requests allowing no-op updates. 25 unit + integration validation tests passing.
 
 ---
 
