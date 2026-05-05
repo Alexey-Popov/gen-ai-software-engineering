@@ -115,8 +115,8 @@ Each stage is implemented and verified independently before moving on to the nex
 **Outcome:** JSON upload works; mixed valid/invalid file returns correct summary.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `jsonParser.js` accepts both `[{...}]` and `{ "tickets": [...] }` shapes, throws on malformed JSON or unsupported shape (caller maps to 400). Endpoint reuses Stage-4 `importService` + summary shape. 11 new tests (5 parser unit + 6 import integration); 104 total green. `demo/import-sample.json` (4 tickets, 1 invalid) added so the `.http` block runs immediately. XML branch still returns 400 "XML import is not implemented yet" — wired for Stage 6.
 
 ---
 

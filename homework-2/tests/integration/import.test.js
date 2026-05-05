@@ -105,3 +105,86 @@ describe('POST /tickets/import — CSV', () => {
     expect(ticketStore.getAll()).toHaveLength(0);
   });
 });
+
+describe('POST /tickets/import — JSON', () => {
+  beforeEach(() => {
+    ticketStore.clear();
+  });
+
+  function jsonBuffer(value) {
+    return Buffer.from(JSON.stringify(value), 'utf-8');
+  }
+
+  const validTicket = (i) => ({
+    customer_email: `user${i}@ex.com`,
+    subject: `T${i}`,
+    description: VALID_DESC,
+    category: 'technical_issue',
+    priority: 'medium',
+  });
+
+  it('imports a top-level array of valid tickets', async () => {
+    const file = jsonBuffer([validTicket(1), validTicket(2), validTicket(3)]);
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'sample.json');
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ total: 3, successful: 3, failed: [] });
+    expect(ticketStore.getAll()).toHaveLength(3);
+  });
+
+  it('imports a wrapper { tickets: [...] } shape', async () => {
+    const file = jsonBuffer({ tickets: [validTicket(1), validTicket(2)] });
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'sample.json');
+
+    expect(res.status).toBe(200);
+    expect(res.body.successful).toBe(2);
+    expect(ticketStore.getAll()).toHaveLength(2);
+  });
+
+  it('returns a partial-success summary for a mixed-valid JSON file', async () => {
+    const file = jsonBuffer([
+      validTicket(1),
+      { customer_email: 'bad', subject: 'T2', description: VALID_DESC }, // bad email
+      validTicket(3),
+    ]);
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'sample.json');
+
+    expect(res.status).toBe(200);
+    expect(res.body.total).toBe(3);
+    expect(res.body.successful).toBe(2);
+    expect(res.body.failed).toHaveLength(1);
+    expect(res.body.failed[0]).toMatchObject({ row: 2 });
+    expect(res.body.failed[0].errors.some((e) => e.includes('customer_email'))).toBe(true);
+  });
+
+  it('returns 400 (not 500) on malformed JSON', async () => {
+    const file = Buffer.from('{not valid json', 'utf-8');
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'broken.json');
+
+    expect(res.status).toBe(400);
+    expect(res.body.details[0]).toMatch(/Malformed JSON/);
+  });
+
+  it('returns 400 for unsupported JSON shape (raw object)', async () => {
+    const file = jsonBuffer({ foo: 'bar' });
+
+    const res = await request(app)
+      .post('/tickets/import')
+      .attach('file', file, 'sample.json');
+
+    expect(res.status).toBe(400);
+    expect(res.body.details[0]).toMatch(/Unsupported JSON shape/);
+  });
+});

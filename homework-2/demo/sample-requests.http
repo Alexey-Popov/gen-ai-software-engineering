@@ -163,19 +163,59 @@ just plain text, not a ticket file
 
 
 ###############################################################################
-# Stage 5–6 — JSON / XML Bulk Import (placeholder; not implemented yet)
+# Stage 5 — JSON Bulk Import (working)
 ###############################################################################
 
-### Bulk import JSON — currently returns 400 "JSON import is not implemented yet"
+### Bulk import JSON — wrapper { tickets: [...] } shape, mixed valid + invalid
 POST {{host}}/tickets/import
 Content-Type: multipart/form-data; boundary=----WebFormBoundary
 
 ------WebFormBoundary
-Content-Disposition: form-data; name="file"; filename="sample_tickets.json"
+Content-Disposition: form-data; name="file"; filename="import-sample.json"
 Content-Type: application/json
 
-[]
+< ./import-sample.json
 ------WebFormBoundary--
+
+### Top-level array shape — also valid
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="array.json"
+Content-Type: application/json
+
+[
+  {"customer_email":"x@ex.com","subject":"From array","description":"this is from a top-level array","category":"other","priority":"low"}
+]
+------WebFormBoundary--
+
+### Malformed JSON → expect 400 with "Malformed JSON: ..."
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="broken.json"
+Content-Type: application/json
+
+{not valid json
+------WebFormBoundary--
+
+### Unsupported shape (raw object) → expect 400 with "Unsupported JSON shape"
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="weird.json"
+Content-Type: application/json
+
+{"foo":"bar"}
+------WebFormBoundary--
+
+
+###############################################################################
+# Stage 6 — XML Bulk Import (placeholder; not implemented yet)
+###############################################################################
 
 ### Bulk import XML — currently returns 400 "XML import is not implemented yet"
 POST {{host}}/tickets/import

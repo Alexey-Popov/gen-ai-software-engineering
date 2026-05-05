@@ -4,6 +4,7 @@ import ticketStore from '../store/ticketStore.js';
 import { validateTicketOrThrow, validateTicketPartialOrThrow } from '../validators/ticketValidator.js';
 import { NotFoundError, ValidationError } from '../utils/errors.js';
 import { parseCsvTickets } from '../parsers/csvParser.js';
+import { parseJsonTickets } from '../parsers/jsonParser.js';
 import { importTickets } from '../services/importService.js';
 
 const router = Router();
@@ -24,7 +25,7 @@ function detectFormat(file) {
 }
 
 /**
- * POST /tickets/import — Bulk import tickets from CSV (JSON/XML in later stages)
+ * POST /tickets/import — Bulk import tickets from CSV or JSON (XML in Stage 6)
  * Field name: "file" (multipart/form-data)
  */
 router.post('/import', upload.single('file'), (req, res, next) => {
@@ -36,19 +37,21 @@ router.post('/import', upload.single('file'), (req, res, next) => {
     const format = detectFormat(req.file);
     if (format === null) {
       throw new ValidationError([
-        'Unsupported file format; expected .csv (.json and .xml coming in later stages)',
+        'Unsupported file format; expected .csv, .json (.xml coming in Stage 6)',
       ]);
     }
 
     let parsed;
-    if (format === 'csv') {
-      try {
+    try {
+      if (format === 'csv') {
         parsed = parseCsvTickets(req.file.buffer);
-      } catch (err) {
-        throw new ValidationError([err.message]);
+      } else if (format === 'json') {
+        parsed = parseJsonTickets(req.file.buffer);
+      } else {
+        throw new Error(`${format.toUpperCase()} import is not implemented yet`);
       }
-    } else {
-      throw new ValidationError([`${format.toUpperCase()} import is not implemented yet`]);
+    } catch (err) {
+      throw new ValidationError([err.message]);
     }
 
     const summary = importTickets(parsed);
