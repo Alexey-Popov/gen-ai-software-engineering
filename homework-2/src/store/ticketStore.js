@@ -78,14 +78,24 @@ class TicketStore {
   }
 
   /**
-   * Filter tickets by criteria
-   * @param {object} criteria - filter criteria (category, priority, status, etc.)
+   * Filter tickets by criteria. Equality match for scalar fields; date-range
+   * match for `from` / `to` (compared against `created_at`).
+   *
+   * @param {object} criteria
+   *   { category?, priority?, status?, customer_id?, assigned_to?, from?: Date, to?: Date }
    * @returns {array} filtered tickets
    */
-  filter(criteria) {
+  filter(criteria = {}) {
+    const { from, to, ...equality } = criteria;
+
     return this.getAll().filter((ticket) => {
-      for (const [key, value] of Object.entries(criteria)) {
+      for (const [key, value] of Object.entries(equality)) {
         if (ticket[key] !== value) return false;
+      }
+      if (from || to) {
+        const created = new Date(ticket.created_at);
+        if (from && created < from) return false;
+        if (to && created > to) return false;
       }
       return true;
     });

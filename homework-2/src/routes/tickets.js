@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import ticketStore from '../store/ticketStore.js';
 import { validateTicketOrThrow, validateTicketPartialOrThrow } from '../validators/ticketValidator.js';
+import { validateQueryFilters } from '../validators/queryValidator.js';
 import { NotFoundError, ValidationError } from '../utils/errors.js';
 import { parseCsvTickets } from '../parsers/csvParser.js';
 import { parseJsonTickets } from '../parsers/jsonParser.js';
@@ -72,11 +73,16 @@ router.post('/', (req, res, next) => {
 });
 
 /**
- * GET /tickets — List all tickets
+ * GET /tickets — List tickets, with optional filtering
+ *   ?category, ?priority, ?status, ?customer_id, ?assigned_to,
+ *   ?from=YYYY-MM-DD, ?to=YYYY-MM-DD (or full ISO 8601)
  */
 router.get('/', (req, res, next) => {
   try {
-    const tickets = ticketStore.getAll();
+    const criteria = validateQueryFilters(req.query);
+    const tickets = Object.keys(criteria).length === 0
+      ? ticketStore.getAll()
+      : ticketStore.filter(criteria);
     res.json(tickets);
   } catch (err) {
     next(err);

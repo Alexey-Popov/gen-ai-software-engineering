@@ -263,7 +263,7 @@ Content-Type: application/xml
 
 
 ###############################################################################
-# Stage 7 — Filtering (placeholder)
+# Stage 7 — Filtering on GET /tickets (working)
 ###############################################################################
 
 ### Filter by category
@@ -274,12 +274,40 @@ Accept: application/json
 GET {{host}}/tickets?priority=urgent
 Accept: application/json
 
-### Combined filters (category + priority + status)
+### Filter by status
+GET {{host}}/tickets?status=new
+Accept: application/json
+
+### Filter by customer_id
+GET {{host}}/tickets?customer_id=CUST-001
+Accept: application/json
+
+### Combined filters (category + priority + status) — AND-combined
 GET {{host}}/tickets?category=billing_question&priority=high&status=new
 Accept: application/json
 
-### Date range
+### Date range — date-only (start of day → end of day, UTC)
 GET {{host}}/tickets?from=2026-01-01&to=2026-12-31
+Accept: application/json
+
+### Date range — full ISO 8601
+GET {{host}}/tickets?from=2026-05-01T00:00:00Z&to=2026-05-31T23:59:59Z
+Accept: application/json
+
+### Invalid enum → expect 400 with "category must be one of: ..."
+GET {{host}}/tickets?category=invalid_category
+Accept: application/json
+
+### Invalid date format → expect 400
+GET {{host}}/tickets?from=not-a-date
+Accept: application/json
+
+### to < from → expect 400 "from must be earlier than or equal to to"
+GET {{host}}/tickets?from=2026-12-31&to=2026-01-01
+Accept: application/json
+
+### Multiple invalid params → expect 400 with collected details[]
+GET {{host}}/tickets?category=bad&priority=bad&from=not-a-date
 Accept: application/json
 
 

@@ -152,8 +152,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** filtering works individually and in any combination.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `queryValidator.js` validates enums (category/priority/status) + dates (date-only YYYY-MM-DD or full ISO 8601) and returns sanitized criteria; collects all errors before throwing. `ticketStore.filter` extended with `from`/`to` range against `created_at`. Date-only inputs normalize to bound: `from` → start of day UTC, `to` → end of day UTC. `from > to` → 400. Unknown query params silently ignored. 21 new tests (9 query-validator unit + 12 filter integration); 137 total green.
 
 ---
 
