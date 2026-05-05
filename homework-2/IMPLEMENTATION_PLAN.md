@@ -319,8 +319,8 @@ Use **different AI models** for different doc types (record which model in each 
 **Outcome:** PR carries visual evidence inline.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `HOWTORUN.md` covers prerequisites, install, start, seed via `demo/import-all.sh`, three ways to exercise the API (REST Client / curl / browser), running tests + coverage with cross-platform `open` commands, troubleshooting table (8 common issues), reset/clean state, and a "5-minute / 15-minute" reviewer path. Explicitly mentions the REST Client extension + `demo/sample-requests.http` as the primary verification path. Screenshots in `docs/screenshots/`: 5 captures (initial prompt, AI response, Cursor+Haiku scaffolding, REST Client demo, coverage report). Plan ideal was 9 captures; 5 covers all the high-value checkpoints (planning + AI usage + running app + tests). The 4 most important (plan, Cursor, demo, coverage) will be embedded inline in the PR body per HW1 instructor feedback.
 
 ---
 
