@@ -59,8 +59,8 @@ Each stage is implemented and verified independently before moving on to the nex
 **Outcome:** all five CRUD endpoints reachable; round-trip (create → read → update → delete) works via REST Client.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: All 5 endpoints (POST, GET list, GET by ID, PUT, DELETE) working. 13 integration tests passing. Round-trip cycle verified.
 
 ---
 
