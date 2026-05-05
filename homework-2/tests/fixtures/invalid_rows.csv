@@ -1,0 +1,7 @@
+customer_email,subject,description,category,priority
+not-an-email,bad email row,description here is long enough,technical_issue,medium
+valid@example.com,,empty subject is not allowed,technical_issue,medium
+valid@example.com,Short desc,short,technical_issue,medium
+valid@example.com,Bad enum,description here is long enough to pass validation,not_a_category,medium
+valid@example.com,Bad priority,description here is long enough to pass validation,technical_issue,super_urgent
+valid@example.com,All good,this row is fine and should pass validation,technical_issue,medium

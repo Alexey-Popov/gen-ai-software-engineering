@@ -201,8 +201,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** reviewers can reproduce import scenarios in one command.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `tests/fixtures/sample_tickets.csv` (50 rows, all valid, ~6 categories × 4 priorities × 5 statuses mix), `sample_tickets.json` (20 tickets, wrapper shape, optional fields exercised including tags/metadata), `sample_tickets.xml` (30 tickets including nested `<tags>` and `<metadata>`). `invalid_sample.{csv,json,xml}` cover parse-time errors; `invalid_rows.csv` covers row-level validation (5 invalid + 1 valid). `demo/import-all.sh` POSTs all three valid files and prints the final ticket count (verified end-to-end → 100 tickets). 8 new tests; 175 total green.
 
 ---
 

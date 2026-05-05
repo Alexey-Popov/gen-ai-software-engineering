@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_email>aaron@example.com</customer_email>
+    <customer_name>Aaron Avery</customer_name>
+    <subject>Cannot log in via SSO</subject>
+    <description>Cannot log in via SSO since the IdP migration last weekend</description>
+    <category>account_access</category>
+    <priority>urgent</priority>
+    <metadata><source>web_form</source><device_type>desktop</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>beth@example.com</customer_email>
+    <subject>Password reset email never arrives</subject>
+    <description>Password reset email never arrives even after multiple attempts</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <metadata><source>email</source><device_type>desktop</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>chad@example.com</customer_email>
+    <subject>Two-factor codes rejected</subject>
+    <description>Two-factor codes from my authenticator app are rejected as invalid</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <metadata><source>chat</source><device_type>mobile</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>diana@example.com</customer_email>
+    <customer_name>Diana Doyle</customer_name>
+    <subject>Dashboard error after update</subject>
+    <description>Dashboard shows a generic error message after the last release</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <tags><tag>dashboard</tag><tag>release</tag></tags>
+    <metadata><source>web_form</source><browser>Firefox</browser><device_type>desktop</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>ethan@example.com</customer_email>
+    <subject>API timeouts under load</subject>
+    <description>API times out under modest concurrent load — calls fail with 504</description>
+    <category>technical_issue</category>
+    <priority>medium</priority>
+    <metadata><source>api</source><device_type>desktop</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>fiona@example.com</customer_email>
+    <subject>App crashes on photo upload</subject>
+    <description>The mobile app crashes when uploading a photo larger than five megabytes</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <metadata><source>chat</source><device_type>mobile</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>gabe@example.com</customer_email>
+    <subject>Webhook delivery failing</subject>
+    <description>Our webhook endpoint stopped receiving events after the recent maintenance</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <metadata><source>api</source></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>holly@example.com</customer_email>
+    <subject>Refund for cancellation</subject>
+    <description>Please refund the prorated amount for the cancellation processed yesterday</description>
+    <category>billing_question</category>
+    <priority>medium</priority>
+    <metadata><source>email</source></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>isaac@example.com</customer_email>
+    <subject>Wrong invoice currency</subject>
+    <description>Invoice for our team plan is in USD but our billing currency should be EUR</description>
+    <category>billing_question</category>
+    <priority>low</priority>
+    <metadata><source>web_form</source></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>julia@example.com</customer_email>
+    <subject>Charged after cancellation</subject>
+    <description>Charged after I cancelled the subscription a week ago — please refund</description>
+    <category>billing_question</category>
+    <priority>high</priority>
+    <metadata><source>email</source></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>kyle@example.com</customer_email>
+    <subject>Wrong tax on invoice</subject>
+    <description>Wrong tax rate appears on the invoice for our subsidiary in Spain</description>
+    <category>billing_question</category>
+    <priority>medium</priority>
+    <metadata><source>email</source></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>lara@example.com</customer_email>
+    <subject>Would like CSV export</subject>
+    <description>I would like CSV export to include the assigned agent and the resolution time</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+    <tags><tag>csv</tag><tag>export</tag></tags>
+  </ticket>
+  <ticket>
+    <customer_email>mark@example.com</customer_email>
+    <subject>Add Slack notifications</subject>
+    <description>Please add Slack notifications for new tickets in the high priority queue</description>
+    <category>feature_request</category>
+    <priority>medium</priority>
+    <tags><tag>slack</tag></tags>
+  </ticket>
+  <ticket>
+    <customer_email>nina@example.com</customer_email>
+    <subject>Bulk action support</subject>
+    <description>Could you add bulk action support so we can close many tickets at once</description>
+    <category>feature_request</category>
+    <priority>medium</priority>
+  </ticket>
+  <ticket>
+    <customer_email>oliver@example.com</customer_email>
+    <subject>SAML SSO integration</subject>
+    <description>We would like SAML SSO integration for the enterprise tier as a requirement</description>
+    <category>feature_request</category>
+    <priority>high</priority>
+  </ticket>
+  <ticket>
+    <customer_email>paige@example.com</customer_email>
+    <subject>Bug in date filter</subject>
+    <description>Steps to reproduce filter by date pick yesterday observe wrong tickets returned</description>
+    <category>bug_report</category>
+    <priority>medium</priority>
+    <tags><tag>filter</tag><tag>date</tag></tags>
+  </ticket>
+  <ticket>
+    <customer_email>quentin@example.com</customer_email>
+    <subject>Reproducible 500 on export</subject>
+    <description>Steps to reproduce go to export click CSV with 1000 rows watch error 500</description>
+    <category>bug_report</category>
+    <priority>high</priority>
+  </ticket>
+  <ticket>
+    <customer_email>rachel@example.com</customer_email>
+    <subject>Search returns wrong results</subject>
+    <description>Steps to reproduce search for ticket id observe unrelated tickets in the result list</description>
+    <category>bug_report</category>
+    <priority>medium</priority>
+  </ticket>
+  <ticket>
+    <customer_email>steve@example.com</customer_email>
+    <subject>Tablet layout broken</subject>
+    <description>Steps to reproduce open the app on a tablet rotate to landscape see broken layout</description>
+    <category>bug_report</category>
+    <priority>low</priority>
+    <metadata><device_type>tablet</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>tess@example.com</customer_email>
+    <subject>Pagination off by one</subject>
+    <description>Steps to reproduce open ticket list and notice the pagination is off by one</description>
+    <category>bug_report</category>
+    <priority>low</priority>
+  </ticket>
+  <ticket>
+    <customer_email>ulysses@example.com</customer_email>
+    <subject>How to invite teammates</subject>
+    <description>How do I invite teammates to my workspace and set their role</description>
+    <category>other</category>
+    <priority>low</priority>
+  </ticket>
+  <ticket>
+    <customer_email>vanessa@example.com</customer_email>
+    <subject>Pricing for the Enterprise plan</subject>
+    <description>What is the pricing for the Enterprise plan with 250 seats and SSO</description>
+    <category>other</category>
+    <priority>medium</priority>
+  </ticket>
+  <ticket>
+    <customer_email>walt@example.com</customer_email>
+    <subject>Documentation question</subject>
+    <description>Where can I find the API documentation for the new v3 endpoints in beta</description>
+    <category>other</category>
+    <priority>low</priority>
+  </ticket>
+  <ticket>
+    <customer_email>xiomara@example.com</customer_email>
+    <subject>Account activation email</subject>
+    <description>My new account activation email never arrived after I signed up yesterday</description>
+    <category>account_access</category>
+    <priority>medium</priority>
+  </ticket>
+  <ticket>
+    <customer_email>yusuf@example.com</customer_email>
+    <subject>Charge dispute</subject>
+    <description>I would like to dispute the charge from last week which I did not authorize</description>
+    <category>billing_question</category>
+    <priority>urgent</priority>
+  </ticket>
+  <ticket>
+    <customer_email>zoe@example.com</customer_email>
+    <subject>Slow rendering on Safari</subject>
+    <description>Page rendering is slow on Safari but works fine on Chrome and Firefox</description>
+    <category>technical_issue</category>
+    <priority>low</priority>
+    <metadata><browser>Safari</browser><device_type>desktop</device_type></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>arthur@example.com</customer_email>
+    <subject>Add export to PDF</subject>
+    <description>Please add export to PDF for invoices so I can attach them to expense reports</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+  </ticket>
+  <ticket>
+    <customer_email>bea@example.com</customer_email>
+    <subject>Cannot access the API</subject>
+    <description>Cannot access the API since this morning even with a fresh token from settings</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <metadata><source>api</source></metadata>
+  </ticket>
+  <ticket>
+    <customer_email>cyrus@example.com</customer_email>
+    <subject>Notifications never delivered</subject>
+    <description>Notifications never delivered to my email since I changed the address last week</description>
+    <category>technical_issue</category>
+    <priority>medium</priority>
+  </ticket>
+  <ticket>
+    <customer_email>daria@example.com</customer_email>
+    <subject>Custom branding for portal</subject>
+    <description>Please add support for custom branding colors and logo on the customer portal</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+  </ticket>
+</tickets>

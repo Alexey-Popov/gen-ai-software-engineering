@@ -1,0 +1,51 @@
+customer_email,customer_name,subject,description,category,priority,status,metadata.source,metadata.device_type
+alice@example.com,Alice Adams,Cannot log in,Login fails with invalid credentials after password reset,account_access,high,new,web_form,desktop
+bob@example.com,Bob Brown,Two-factor code never arrives,My phone never receives the 2fa SMS code on the new device,account_access,high,new,web_form,mobile
+carol@example.com,Carol Carter,Locked out of account,I am locked out and cannot access my dashboard,account_access,urgent,new,web_form,desktop
+dan@example.com,Dan Davis,Password reset link expired,The reset link expired before I could use it,account_access,medium,new,email,desktop
+eve@example.com,Eve Edwards,Sign in fails on mobile,Sign in works on desktop but not on the mobile app,account_access,medium,in_progress,chat,mobile
+frank@example.com,Frank Foster,Cannot access account,Cannot access my account since yesterday,account_access,urgent,new,phone,desktop
+grace@example.com,Grace Green,Forgot password and email is wrong,Forgot password but my recovery email is outdated,account_access,medium,new,web_form,tablet
+henry@example.com,Henry Hall,Authentication keeps failing,Authentication fails with a 401 even with the correct password,account_access,high,new,api,desktop
+irina@example.com,Irina Ivanov,Reset password did not work,I reset password but new credentials still rejected,account_access,medium,resolved,email,mobile
+jack@example.com,Jack Jones,MFA setup broken,MFA setup wizard never completes the final step,account_access,high,new,web_form,desktop
+karen@example.com,Karen King,Dashboard error 500,Dashboard returns an error 500 every time I open it,technical_issue,high,new,web_form,desktop
+leo@example.com,Leo Lopez,Export feature crashed,Export feature crashed and the report download failed,technical_issue,high,in_progress,web_form,desktop
+mia@example.com,Mia Miller,Slow page loads,Pages are extremely slow and unresponsive after the last update,technical_issue,medium,new,web_form,mobile
+nick@example.com,Nick Nguyen,App freezing during sync,The mobile app keeps freezing every time I sync data,technical_issue,medium,new,chat,mobile
+olga@example.com,Olga Olson,Timeout during export,The export request times out after 30 seconds,technical_issue,medium,new,api,desktop
+paul@example.com,Paul Parker,Browser console errors,Console shows several errors when I open the dashboard,technical_issue,low,new,web_form,desktop
+quinn@example.com,Quinn Quill,Webhook fails intermittently,The webhook fails intermittently and our integration breaks,technical_issue,high,in_progress,api,desktop
+rita@example.com,Rita Roberts,Crash when uploading,The app crashes when I try to upload a file larger than 10MB,technical_issue,high,new,web_form,desktop
+sam@example.com,Sam Smith,Search not working,Search not working and returns zero results for everything,technical_issue,medium,new,web_form,desktop
+tina@example.com,Tina Taylor,Notifications broken,Push notifications are broken and the bell icon never updates,technical_issue,low,closed,chat,mobile
+uma@example.com,Uma Underwood,Refund requested,Please refund the duplicate charge from last week,billing_question,medium,new,email,desktop
+victor@example.com,Victor Vega,Wrong invoice amount,The April invoice shows the previous month plan amount,billing_question,medium,new,email,desktop
+wendy@example.com,Wendy Wong,Subscription not active,My subscription payment went through but my plan is still free,billing_question,high,new,web_form,desktop
+xavier@example.com,Xavier Xu,Cannot update credit card,Cannot update credit card on file from the billing settings,billing_question,medium,in_progress,web_form,desktop
+yara@example.com,Yara Young,Charged twice for same plan,I was charged twice for the same plan in March,billing_question,high,new,email,desktop
+zach@example.com,Zach Zimmer,Payment receipt missing,Payment receipt for last month never arrived in my inbox,billing_question,low,new,email,desktop
+amy@example.com,Amy Anderson,Refund taking too long,Refund was promised two weeks ago but never arrived,billing_question,medium,new,phone,desktop
+ben@example.com,Ben Becker,Wrong currency on invoice,Invoice shows USD but my plan is billed in EUR,billing_question,low,resolved,email,desktop
+cara@example.com,Cara Cole,Tax not applied,Tax was not applied on this month invoice for our region,billing_question,medium,new,web_form,desktop
+diego@example.com,Diego Diaz,Pricing tier confusion,I cannot tell which pricing tier I am currently on,billing_question,low,new,chat,mobile
+emma@example.com,Emma Evans,Would like CSV export,I would like CSV export to include the metadata column,feature_request,low,new,web_form,desktop
+felix@example.com,Felix Foster,Add dark mode,Please add dark mode to the dashboard would be a great improvement,feature_request,low,new,web_form,desktop
+gina@example.com,Gina Greene,Bulk action support,Could you add bulk action support for tickets in the queue,feature_request,medium,new,web_form,desktop
+hugo@example.com,Hugo Hansen,Export to PDF,I wish you could add export to PDF as a feature request,feature_request,low,new,web_form,desktop
+ivy@example.com,Ivy Irving,Mobile app feature,Would like CSV export available in the mobile app too,feature_request,low,new,chat,mobile
+jake@example.com,Jake Jensen,API rate limits,Please add support for higher API rate limits on enterprise plans,feature_request,medium,new,api,desktop
+kira@example.com,Kira Klein,Custom branding,Add support for custom branding colors on the customer portal,feature_request,low,new,web_form,desktop
+liam@example.com,Liam Lambert,SAML SSO,We would like SAML SSO integration for the enterprise plan,feature_request,medium,new,email,desktop
+maya@example.com,Maya Martin,Webhooks for events,Please add webhooks for ticket lifecycle events to trigger automation,feature_request,medium,in_progress,api,desktop
+noah@example.com,Noah Nelson,Better filters,Could you add better filters on the dashboard for advanced search,feature_request,low,new,web_form,desktop
+opal@example.com,Opal Owens,Defect with reproduction,Steps to reproduce open dashboard click filter then see error 500,bug_report,high,new,web_form,desktop
+peter@example.com,Peter Park,Reproducible crash,Steps to reproduce upload large file watch the app crash on submit,bug_report,high,new,web_form,desktop
+queen@example.com,Queen Quinn,Layout bug on tablets,Steps to reproduce open the dashboard on a tablet then rotate it,bug_report,low,new,chat,tablet
+ravi@example.com,Ravi Rao,Export filename wrong,Steps to reproduce export the report and see the wrong filename,bug_report,medium,new,api,desktop
+sara@example.com,Sara Stone,Date filter off by one,Steps to reproduce filter by date and see the off-by-one bug,bug_report,medium,new,web_form,desktop
+tom@example.com,Tom Turner,General feedback,Just wanted to say I really enjoy using your product overall,other,low,new,web_form,desktop
+ula@example.com,Ula Underhill,How to invite team,How do I invite my team members to my workspace,other,low,new,chat,desktop
+vince@example.com,Vince Vasquez,Documentation question,Where can I find the API documentation for the v2 endpoints,other,low,new,email,desktop
+wade@example.com,Wade Williams,Pricing question,What is the price for the Enterprise plan with 100 seats,other,medium,new,phone,desktop
+xena@example.com,Xena Xanders,Account activation,My new account activation email never arrived after sign-up,account_access,medium,new,web_form,desktop
