@@ -1,5 +1,6 @@
 import express from 'express';
 import ticketsRouter from './routes/tickets.js';
+import classifierRouter from './routes/classifier.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
@@ -11,6 +12,7 @@ app.get('/', (_req, res) => {
 });
 
 app.use('/tickets', ticketsRouter);
+app.use('/classifier', classifierRouter);
 
 app.use(errorHandler);
 

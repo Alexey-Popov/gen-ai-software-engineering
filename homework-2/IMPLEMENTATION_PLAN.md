@@ -170,8 +170,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** classifier produces deterministic, explainable output.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `keywords.js` with category + priority maps (priority words verbatim from spec). `classify.js` is a pure function: tokenizes (lowercase, alnum, ≥2 chars), matches phrases as substrings and single words against the token set, picks the highest-scoring label with stable tie-breaking, falls back to `other`/`medium`. `confidence = matchedKeywords / uniqueTokens` (capped at 1, rounded to 3 decimals). `reasoning` is human-readable and lists matched keywords. `decisionLog.js` is a 1000-entry ring buffer; `GET /classifier/log` exposes it for graders. 20 new tests (13 classify unit + 5 decisionLog unit + 2 classifier integration); 157 total green.
 
 ---
 
