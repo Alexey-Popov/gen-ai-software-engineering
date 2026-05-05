@@ -259,8 +259,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** non-functional behaviour is exercised; benchmarks recorded for `TESTING_GUIDE.md`.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: `tests/integration/test_integration.spec.js` — exactly the 5 workflow narratives the plan requested (lifecycle, bulk+autoclassify, combined filter, manual override, mixed-format batch). `tests/performance/test_performance.spec.js` — 5 benchmarks with generous upper bounds chosen so CI doesn't flake while still catching real regressions. Whole performance file completes in ~300 ms locally; individual targets (concurrent <2 s, bulk-50 <1 s, single-classify <50 ms avg over 100, filter-1000 <100 ms, mixed-load all-succeed) all comfortably under their bounds. 10 new tests; 205 total green.
 
 ---
 
