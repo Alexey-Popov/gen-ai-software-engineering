@@ -219,8 +219,8 @@ Validate query params (invalid enum/date → 400).
 **Outcome:** unit suite green; ~35 tests passing.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: All 5 plan files exist or have direct equivalents. Existing files (built incrementally in earlier stages) cover their scope and exceed the per-file count: `csvParser.test.js` (6), `jsonParser.test.js` (5), `xmlParser.test.js` (7), `classify.test.js` (13). Added `test_ticket_model.spec.js` (9) focused purely on the model contract — defaults, UUID v4 / ISO 8601 timestamps, id and created_at immutability, resolved_at lifecycle. Caught a real defect while writing it: `ticketStore.create` accepted caller-supplied `id` through the object spread; reordered the spread so the server-generated id always wins. Total unit-test count: 110 across 9 files (target ~35); 184 grand total green.
 
 ---
 

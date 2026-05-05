@@ -14,8 +14,8 @@ class TicketStore {
     const id = uuidv4();
     const now = new Date().toISOString();
     const fullTicket = {
-      id,
       ...ticket,
+      id,
       status: ticket.status || 'new',
       created_at: now,
       updated_at: now,
