@@ -41,8 +41,8 @@ Each stage is implemented and verified independently before moving on to the nex
 **Outcome:** in-memory CRUD primitives covered by unit tests.
 
 ### Status
-- [ ] Completed
-- Notes:
+- [x] Completed
+- Notes: TicketStore with Map-based CRUD (create, getAll, getById, update, delete), filter helpers, resolved_at tracking. All 21 unit tests passing.
 
 ---
 
