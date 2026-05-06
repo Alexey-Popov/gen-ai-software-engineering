@@ -1,0 +1,422 @@
+<tickets>
+  <ticket>
+    <id>1ff00e7f-0c6b-4ed1-9e98-b0eaf47415be</id>
+    <customer_id>CUST-1000</customer_id>
+    <customer_email>user0@example.com</customer_email>
+    <customer_name>User 0</customer_name>
+    <subject>Issue 0</subject>
+    <description>This is a description for issue 0. It needs to be at least 10 chars.</description>
+    <category>account_access</category>
+    <priority>urgent</priority>
+    <status>new</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>df54e6d9-18f5-40b8-a14e-30de62ceedec</id>
+    <customer_id>CUST-1001</customer_id>
+    <customer_email>user1@example.com</customer_email>
+    <customer_name>User 1</customer_name>
+    <subject>Issue 1</subject>
+    <description>This is a description for issue 1. It needs to be at least 10 chars.</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <status>in_progress</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>813dacf2-6796-401e-97e8-49ae6ac5add8</id>
+    <customer_id>CUST-1002</customer_id>
+    <customer_email>user2@example.com</customer_email>
+    <customer_name>User 2</customer_name>
+    <subject>Issue 2</subject>
+    <description>This is a description for issue 2. It needs to be at least 10 chars.</description>
+    <category>billing_question</category>
+    <priority>medium</priority>
+    <status>waiting_customer</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>42d86c0f-7137-4e9f-811c-95653a8816c7</id>
+    <customer_id>CUST-1003</customer_id>
+    <customer_email>user3@example.com</customer_email>
+    <customer_name>User 3</customer_name>
+    <subject>Issue 3</subject>
+    <description>This is a description for issue 3. It needs to be at least 10 chars.</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+    <status>resolved</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>ec9de783-056b-48ef-8026-edb23a2b72ea</id>
+    <customer_id>CUST-1004</customer_id>
+    <customer_email>user4@example.com</customer_email>
+    <customer_name>User 4</customer_name>
+    <subject>Issue 4</subject>
+    <description>This is a description for issue 4. It needs to be at least 10 chars.</description>
+    <category>bug_report</category>
+    <priority>urgent</priority>
+    <status>closed</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>5e60b0f2-2c94-4c12-aad2-44653f4ab613</id>
+    <customer_id>CUST-1005</customer_id>
+    <customer_email>user5@example.com</customer_email>
+    <customer_name>User 5</customer_name>
+    <subject>Issue 5</subject>
+    <description>This is a description for issue 5. It needs to be at least 10 chars.</description>
+    <category>other</category>
+    <priority>high</priority>
+    <status>new</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>38994d06-db11-4571-aa8a-2b822ff38faa</id>
+    <customer_id>CUST-1006</customer_id>
+    <customer_email>user6@example.com</customer_email>
+    <customer_name>User 6</customer_name>
+    <subject>Issue 6</subject>
+    <description>This is a description for issue 6. It needs to be at least 10 chars.</description>
+    <category>account_access</category>
+    <priority>medium</priority>
+    <status>in_progress</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>30924b9a-2349-4011-80d1-8cd3ff6be9a8</id>
+    <customer_id>CUST-1007</customer_id>
+    <customer_email>user7@example.com</customer_email>
+    <customer_name>User 7</customer_name>
+    <subject>Issue 7</subject>
+    <description>This is a description for issue 7. It needs to be at least 10 chars.</description>
+    <category>technical_issue</category>
+    <priority>low</priority>
+    <status>waiting_customer</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>f9dd6d00-8cf3-4bfd-aabd-75ce7f54db55</id>
+    <customer_id>CUST-1008</customer_id>
+    <customer_email>user8@example.com</customer_email>
+    <customer_name>User 8</customer_name>
+    <subject>Issue 8</subject>
+    <description>This is a description for issue 8. It needs to be at least 10 chars.</description>
+    <category>billing_question</category>
+    <priority>urgent</priority>
+    <status>resolved</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>122d48c0-0c0a-4cf7-bb39-515391182830</id>
+    <customer_id>CUST-1009</customer_id>
+    <customer_email>user9@example.com</customer_email>
+    <customer_name>User 9</customer_name>
+    <subject>Issue 9</subject>
+    <description>This is a description for issue 9. It needs to be at least 10 chars.</description>
+    <category>feature_request</category>
+    <priority>high</priority>
+    <status>closed</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>824bcbb0-b4c5-4c3a-953d-3f5cda5f5eec</id>
+    <customer_id>CUST-1010</customer_id>
+    <customer_email>user10@example.com</customer_email>
+    <customer_name>User 10</customer_name>
+    <subject>Issue 10</subject>
+    <description>This is a description for issue 10. It needs to be at least 10 chars.</description>
+    <category>bug_report</category>
+    <priority>medium</priority>
+    <status>new</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>6987a1de-9bea-4ef4-bb03-decd188e16e5</id>
+    <customer_id>CUST-1011</customer_id>
+    <customer_email>user11@example.com</customer_email>
+    <customer_name>User 11</customer_name>
+    <subject>Issue 11</subject>
+    <description>This is a description for issue 11. It needs to be at least 10 chars.</description>
+    <category>other</category>
+    <priority>low</priority>
+    <status>in_progress</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>764dfb01-9847-4b64-b841-a3e99c52fbf4</id>
+    <customer_id>CUST-1012</customer_id>
+    <customer_email>user12@example.com</customer_email>
+    <customer_name>User 12</customer_name>
+    <subject>Issue 12</subject>
+    <description>This is a description for issue 12. It needs to be at least 10 chars.</description>
+    <category>account_access</category>
+    <priority>urgent</priority>
+    <status>waiting_customer</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>404ed03f-f20b-4b1f-9a7f-76fd5b1cf6ee</id>
+    <customer_id>CUST-1013</customer_id>
+    <customer_email>user13@example.com</customer_email>
+    <customer_name>User 13</customer_name>
+    <subject>Issue 13</subject>
+    <description>This is a description for issue 13. It needs to be at least 10 chars.</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <status>resolved</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>4af9e294-3e2f-480e-a2a2-bcb9042e3cd8</id>
+    <customer_id>CUST-1014</customer_id>
+    <customer_email>user14@example.com</customer_email>
+    <customer_name>User 14</customer_name>
+    <subject>Issue 14</subject>
+    <description>This is a description for issue 14. It needs to be at least 10 chars.</description>
+    <category>billing_question</category>
+    <priority>medium</priority>
+    <status>closed</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>6e3def30-92e9-4251-9f70-b1ba84081701</id>
+    <customer_id>CUST-1015</customer_id>
+    <customer_email>user15@example.com</customer_email>
+    <customer_name>User 15</customer_name>
+    <subject>Issue 15</subject>
+    <description>This is a description for issue 15. It needs to be at least 10 chars.</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+    <status>new</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>0a5e2982-359b-4ea5-a15a-b3e2f279b93c</id>
+    <customer_id>CUST-1016</customer_id>
+    <customer_email>user16@example.com</customer_email>
+    <customer_name>User 16</customer_name>
+    <subject>Issue 16</subject>
+    <description>This is a description for issue 16. It needs to be at least 10 chars.</description>
+    <category>bug_report</category>
+    <priority>urgent</priority>
+    <status>in_progress</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>952d3378-6a8b-44db-a270-bfceecdb975c</id>
+    <customer_id>CUST-1017</customer_id>
+    <customer_email>user17@example.com</customer_email>
+    <customer_name>User 17</customer_name>
+    <subject>Issue 17</subject>
+    <description>This is a description for issue 17. It needs to be at least 10 chars.</description>
+    <category>other</category>
+    <priority>high</priority>
+    <status>waiting_customer</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>396aa2c8-7769-4292-9514-a5b8fdce1e9c</id>
+    <customer_id>CUST-1018</customer_id>
+    <customer_email>user18@example.com</customer_email>
+    <customer_name>User 18</customer_name>
+    <subject>Issue 18</subject>
+    <description>This is a description for issue 18. It needs to be at least 10 chars.</description>
+    <category>account_access</category>
+    <priority>medium</priority>
+    <status>resolved</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>7ff68960-e9a3-4bed-80cd-476d0fac8cd2</id>
+    <customer_id>CUST-1019</customer_id>
+    <customer_email>user19@example.com</customer_email>
+    <customer_name>User 19</customer_name>
+    <subject>Issue 19</subject>
+    <description>This is a description for issue 19. It needs to be at least 10 chars.</description>
+    <category>technical_issue</category>
+    <priority>low</priority>
+    <status>closed</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>762d5cc9-d57f-4400-a2bb-eef58c57b6eb</id>
+    <customer_id>CUST-1020</customer_id>
+    <customer_email>user20@example.com</customer_email>
+    <customer_name>User 20</customer_name>
+    <subject>Issue 20</subject>
+    <description>This is a description for issue 20. It needs to be at least 10 chars.</description>
+    <category>billing_question</category>
+    <priority>urgent</priority>
+    <status>new</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>87de8611-a442-4479-9eb1-9a658d6fc251</id>
+    <customer_id>CUST-1021</customer_id>
+    <customer_email>user21@example.com</customer_email>
+    <customer_name>User 21</customer_name>
+    <subject>Issue 21</subject>
+    <description>This is a description for issue 21. It needs to be at least 10 chars.</description>
+    <category>feature_request</category>
+    <priority>high</priority>
+    <status>in_progress</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>5009cf19-5ac8-4b15-8501-0a5124912dc9</id>
+    <customer_id>CUST-1022</customer_id>
+    <customer_email>user22@example.com</customer_email>
+    <customer_name>User 22</customer_name>
+    <subject>Issue 22</subject>
+    <description>This is a description for issue 22. It needs to be at least 10 chars.</description>
+    <category>bug_report</category>
+    <priority>medium</priority>
+    <status>waiting_customer</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>eb8654da-699e-476c-bd6a-922ab329639c</id>
+    <customer_id>CUST-1023</customer_id>
+    <customer_email>user23@example.com</customer_email>
+    <customer_name>User 23</customer_name>
+    <subject>Issue 23</subject>
+    <description>This is a description for issue 23. It needs to be at least 10 chars.</description>
+    <category>other</category>
+    <priority>low</priority>
+    <status>resolved</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>8ed7d53e-af44-40c8-8c95-39dda562b132</id>
+    <customer_id>CUST-1024</customer_id>
+    <customer_email>user24@example.com</customer_email>
+    <customer_name>User 24</customer_name>
+    <subject>Issue 24</subject>
+    <description>This is a description for issue 24. It needs to be at least 10 chars.</description>
+    <category>account_access</category>
+    <priority>urgent</priority>
+    <status>closed</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>e2d9887d-b288-4d3f-b09c-92be93eb8163</id>
+    <customer_id>CUST-1025</customer_id>
+    <customer_email>user25@example.com</customer_email>
+    <customer_name>User 25</customer_name>
+    <subject>Issue 25</subject>
+    <description>This is a description for issue 25. It needs to be at least 10 chars.</description>
+    <category>technical_issue</category>
+    <priority>high</priority>
+    <status>new</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>8a94fbb8-fa59-4612-aae1-f1734c1cc9ab</id>
+    <customer_id>CUST-1026</customer_id>
+    <customer_email>user26@example.com</customer_email>
+    <customer_name>User 26</customer_name>
+    <subject>Issue 26</subject>
+    <description>This is a description for issue 26. It needs to be at least 10 chars.</description>
+    <category>billing_question</category>
+    <priority>medium</priority>
+    <status>in_progress</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+  <ticket>
+    <id>e127323e-bbba-4629-a64c-37ec05be52a3</id>
+    <customer_id>CUST-1027</customer_id>
+    <customer_email>user27@example.com</customer_email>
+    <customer_name>User 27</customer_name>
+    <subject>Issue 27</subject>
+    <description>This is a description for issue 27. It needs to be at least 10 chars.</description>
+    <category>feature_request</category>
+    <priority>low</priority>
+    <status>waiting_customer</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 0</assigned_to>
+  </ticket>
+  <ticket>
+    <id>f50f7d35-3c85-44e6-8013-f1896519e7c6</id>
+    <customer_id>CUST-1028</customer_id>
+    <customer_email>user28@example.com</customer_email>
+    <customer_name>User 28</customer_name>
+    <subject>Issue 28</subject>
+    <description>This is a description for issue 28. It needs to be at least 10 chars.</description>
+    <category>bug_report</category>
+    <priority>urgent</priority>
+    <status>resolved</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 1</assigned_to>
+  </ticket>
+  <ticket>
+    <id>33c3d979-e715-47bd-be54-a3d5af9f7d40</id>
+    <customer_id>CUST-1029</customer_id>
+    <customer_email>user29@example.com</customer_email>
+    <customer_name>User 29</customer_name>
+    <subject>Issue 29</subject>
+    <description>This is a description for issue 29. It needs to be at least 10 chars.</description>
+    <category>other</category>
+    <priority>high</priority>
+    <status>closed</status>
+    <created_at>2026-04-30T14:27:23.268Z</created_at>
+    <updated_at>2026-04-30T14:27:23.268Z</updated_at>
+    <assigned_to>Agent 2</assigned_to>
+  </ticket>
+</tickets>

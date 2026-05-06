@@ -1,0 +1,27 @@
+{
+  "name": "homework-2",
+  "version": "1.0.0",
+  "description": "> **Student Name**: [Your Name]\r > **Date Submitted**: [Date]\r > **AI Tools Used**: [List tools, e.g., Claude Code, GitHub Copilot]",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^6.2.1",
+    "csv-stringify": "^6.7.0",
+    "express": "^5.2.1",
+    "fast-xml-parser": "^5.7.2",
+    "multer": "^2.1.1",
+    "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "supertest": "^7.2.2"
+  }
+}
