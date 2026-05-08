@@ -233,7 +233,35 @@ The agent configuration files (`CLAUDE.md`, `AGENTS.md`) were loaded into a Clau
 - Pydantic models for `SpendingLimitRequest` with Decimal validation
 - Unit tests for `enforce_spending_limits()` covering boundary conditions
 
-> Add screenshots of Claude Code session (agent reading spec, generating code) here.
+**Screenshot 1: Claude Code analyzing specification files**
+
+![Claude analyzing specs](./docs/screenshots/1-claude-analyzing-specs.png)
+
+Claude Code reads and analyzes the specification documents, breaking down token counts and requirements structure.
+
+**Screenshot 2: Task planning based on specification**
+
+![Claude todo list](./docs/screenshots/2-claude-todo-optimization.png)
+
+The agent creates a structured todo list derived from specification sections, demonstrating understanding of the document hierarchy.
+
+**Screenshot 3: Generating Pydantic models and FastAPI endpoints**
+
+![Pydantic and FastAPI](./docs/screenshots/3-claude-pydantic-fastapi.png)
+
+Code generation following CLAUDE.md rules: `Decimal` for money, domain-specific exceptions, idempotency handling.
+
+**Screenshot 4: Audit logging and RFC 7807 error responses**
+
+![Audit logging](./docs/screenshots/4-claude-audit-logging.png)
+
+Implementation of AGENTS.md requirements: immutable audit logs, standardized error format.
+
+**Screenshot 5: Transaction queries and rate limiting**
+
+![Transactions and rate limiting](./docs/screenshots/5-claude-transactions-ratelimit.png)
+
+Cursor pagination per specification.md Task 6, rate limiting per CLAUDE.md security rules.
 
 ### Specification → Code Traceability
 
