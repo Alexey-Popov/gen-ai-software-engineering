@@ -20,6 +20,18 @@ graph TB
 
 ---
 
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING
+    PENDING --> ACTIVE: Provisioning succeeds
+    PENDING --> CLOSED: Provisioning fails
+    ACTIVE --> FROZEN: User freeze
+    FROZEN --> ACTIVE: User unfreeze
+    ACTIVE --> CLOSED: User closes
+    FROZEN --> CLOSED: User closes
+    CLOSED --> [*]: Terminal
+\```
+
 ## Mid-Level Objectives
 
 The following objectives are observable and testable, defining what changes in the world when this system succeeds:

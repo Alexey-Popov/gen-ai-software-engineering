@@ -210,21 +210,59 @@ The resulting system would be **secure** (PAN masking, encryption, rate limiting
 
 ---
 
+## Implementation Evidence
+
+This section documents how the specification was validated in practice using Claude Code as the AI coding agent.
+
+### Specification Diagrams (Rendered)
+
+The specification includes three Mermaid diagrams rendered in GitHub/IDE:
+
+**1. System Architecture** — layered view: Users → REST API → Auth/Rate Limit → Services → PostgreSQL/Redis/Processor
+
+**2. State Machine** — card lifecycle transitions: `PENDING → ACTIVE → FROZEN ↔ ACTIVE → CLOSED`
+
+**3. API Request Flow** — sequence diagram: Client → Auth → Idempotency check → DB transaction → Processor → Audit log → Response
+
+
+
+### Claude Code Session Evidence
+
+The agent configuration files (`CLAUDE.md`, `AGENTS.md`) were loaded into a Claude Code session and used to generate:
+- FastAPI endpoint skeleton for `POST /v1/cards` with idempotency handling
+- Pydantic models for `SpendingLimitRequest` with Decimal validation
+- Unit tests for `enforce_spending_limits()` covering boundary conditions
+
+> Add screenshots of Claude Code session (agent reading spec, generating code) here.
+
+### Specification → Code Traceability
+
+Each generated artifact maps to a specification task:
+
+| Task | Specification Reference | Validation |
+|------|------------------------|------------|
+| Decimal for money | `CLAUDE.md` Coding Patterns | `grep -r "float" src/` returns 0 matches |
+| PAN masking | `specification.md` Security NFR | Response scan: `\b\d{13,19}\b` → 0 matches |
+| Idempotency | `AGENTS.md` Domain Rules | Duplicate POST returns 200, not 201 |
+| Audit log | `specification.md` Mid-Level Objective #5 | Every state change writes to `card_audit_logs` |
+
+---
+
 ## File Structure
 
 ```
 homework-3/
 ├── README.md                  # This file: rationale and best practices
 ├── specification.md           # Main specification (high → low level)
-├── agents.md                  # AI agent configuration and domain rules
+├── AGENTS.md                  # AI agent configuration and domain rules
 └── CLAUDE.md                  # Claude Code specific rules and patterns
 ```
 
 ## Document Sizes
 
 - **specification.md:** ~3,500 words, 800+ lines (main deliverable)
-- **agents.md:** ~4,000 words, 470+ lines (comprehensive agent configuration)
-- **CLAUDE.md:** ~3,000 words, 530+ lines (detailed coding patterns and rules)
+- **AGENTS.md:** ~2,000 words, 211 lines (agent configuration and domain rules)
+- **CLAUDE.md:** ~1,200 words, 175 lines (concise coding patterns and rules)
 - **README.md:** ~3,000 words (this file)
 
-**Total:** ~13,500 words of specification documentation, significantly exceeding template depth with substantial industry-specific detail.
+**Total:** ~10,000 words of specification documentation with substantial industry-specific detail.
