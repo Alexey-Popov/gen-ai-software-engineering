@@ -1,0 +1,54 @@
+---
+description: General structure and naming conventions for the virtual card service
+globs: ["src/**/*.py", "tests/**/*.py", "alembic/**/*.py"]
+alwaysApply: true
+---
+
+# General conventions
+
+## File organisation
+
+```
+src/
+  config.py          # Pydantic Settings — all env vars
+  models/            # ORM + Pydantic models (one file per entity)
+  routes/            # FastAPI route handlers (one file per resource)
+  dependencies/      # Reusable FastAPI Depends functions
+  domain/            # Pure business logic (no I/O)
+  services/          # Stateful service classes (DB + external calls)
+  workers/           # Background consumers and publishers
+  jobs/              # CLI jobs (export, GDPR redaction)
+  errors/            # Error envelope + exception handlers
+  observability/     # Structured logging + Prometheus metrics
+tests/
+  unit/              # No I/O; @pytest.mark.unit
+  integration/       # Real Postgres; @pytest.mark.integration
+  contracts/         # Stub validators; @pytest.mark.contract
+  e2e/               # Full stack; @pytest.mark.e2e
+  security/          # Auth + PAN-leak checks; @pytest.mark.security
+```
+
+## Naming
+
+| Thing | Convention |
+|---|---|
+| Modules | `snake_case` |
+| Pydantic models | `PascalCase` (e.g. `CardCreate`, `TransactionRead`) |
+| ORM models | `PascalCase` + `ORM` suffix (e.g. `CardORM`) |
+| Route functions | `snake_case`, verb-first (e.g. `issue_card`) |
+| Dependency functions | `require_` prefix (e.g. `require_auth`) |
+| Enum values | `UPPER_SNAKE_CASE` |
+| Error codes | `UPPER_SNAKE_CASE` (e.g. `CARDHOLDER_NOT_VERIFIED`) |
+
+## Imports
+
+- Absolute imports only; no relative `..` chains beyond one level.
+- Group: stdlib → third-party → internal, separated by blank lines.
+
+## Comments
+
+- Avoid prose comments that restate what the code does.
+- A comment is warranted only for non-obvious regulatory constraints, timing invariants, or known workarounds.
+- Regulatory constraints: cite the standard (e.g. `# PCI DSS v4.0 Req 3.3 — SAD must not be stored`).
+
+> Cross-reference: domain rules and security invariants → `../../agents.md`

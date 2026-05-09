@@ -1,0 +1,94 @@
+---
+description: Test category requirements, fixture conventions, and mandatory assertions for the virtual card service
+globs: ["tests/**/*.py"]
+alwaysApply: true
+---
+
+# Testing conventions
+
+> Verification strategy in `../../specification.md §8`. Test category requirements in `../../agents.md §4`.
+
+## pytest marks
+
+Mark every test with exactly one category:
+
+```python
+@pytest.mark.unit          # no I/O; pure functions only
+@pytest.mark.integration   # real Postgres; mocked external services
+@pytest.mark.contract      # validates named service contract stubs
+@pytest.mark.e2e           # full docker-compose stack
+@pytest.mark.security      # auth bypass, PAN-leak, OWASP checks
+```
+
+- `pytest -m unit` must pass with no running Postgres.
+- `pytest -m integration` requires `TEST_DATABASE_URL` env var.
+- CI runs `unit + integration + contract` on every PR.
+- `e2e + security` run in the nightly pipeline.
+
+## Mandatory assertions for mutation integration tests
+
+Every integration test for a mutation endpoint (`POST`, `PATCH`) must assert:
+
+1. **Exactly one `audit_events` row** with the correct `action` and `actor_id`.
+2. **No `pan` or `cvv` key** in `audit_events.diff`.
+3. **Idempotency replay** produces no second row (same `Idempotency-Key`, second request).
+4. The expected HTTP response status and body shape.
+
+```python
+# Example pattern
+async def test_issue_card_idempotency(client, db_session, mock_processor):
+    key = str(uuid4())
+    r1 = await client.post("/cards", headers={"Idempotency-Key": key}, json=payload)
+    r2 = await client.post("/cards", headers={"Idempotency-Key": key}, json=payload)
+
+    assert r1.status_code == 201
+    assert r2.status_code == 200  # cached response
+    assert r1.json()["token"] == r2.json()["token"]
+
+    events = await db_session.execute(select(AuditEventORM).where(...))
+    assert len(events.scalars().all()) == 1  # exactly one
+    assert "pan" not in events.scalars().first().diff
+    assert "cvv" not in events.scalars().first().diff
+```
+
+## Security test checklist
+
+For any test file in `tests/security/`, include at least:
+
+- `test_<resource>_cross_user_returns_404` — verify data isolation.
+- `test_<resource>_no_pan_in_logs` — assert log output contains no 12–19 digit numeric string.
+- `test_<resource>_no_auth_returns_401` — request without JWT.
+- `test_<resource>_wrong_scope_returns_403` — JWT with insufficient scope.
+
+## External service fixtures
+
+Use named fixtures for all external service stubs (defined in `tests/conftest.py`):
+
+| Fixture | Simulates |
+|---|---|
+| `mock_processor` | Processor partner (happy path, 503, timeout, webhook with valid HMAC) |
+| `mock_identity` | Identity service (AAL2 JWT, AAL3 JWT, expired JWT, SCA success, SCA failure) |
+| `mock_kyc` | KYC service (APPROVED, PENDING, FAILED, 503) |
+| `mock_fraud_engine` | Fraud engine (ALLOW, REVIEW, BLOCK, 503) |
+
+Never mock Postgres in integration tests — use a real test database.
+
+## Fixture naming
+
+```
+fixture_<entity>_<state>
+```
+
+Examples:
+- `fixture_card_active`
+- `fixture_card_frozen_fraud_locked`
+- `fixture_cardholder_kyc_approved`
+- `fixture_sca_verified_aal2`
+- `fixture_processor_503`
+
+## Contract tests
+
+For each external service, maintain a stub in `tests/contracts/<service_name>/`. A contract test asserts:
+
+1. The stub response matches the shape expected by the production client.
+2. The production client handles the error variants documented in `specification.md §5.1`.

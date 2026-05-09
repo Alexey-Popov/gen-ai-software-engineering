@@ -1,0 +1,96 @@
+---
+description: Security and PCI/GDPR workflow rules — what to check and avoid when touching auth, card data, or audit paths
+globs: ["src/**/*.py", "src/routes/**/*.py", "src/workers/**/*.py"]
+alwaysApply: false
+---
+
+# Security rules
+
+> Full invariants are in `../../agents.md §1–§3`. These rules are workflow triggers — what to do automatically when working in sensitive areas.
+
+## When you write or edit any route that handles card data
+
+- Confirm no field named `pan`, `cvv`, or `full_token` is present in the response model.
+- Confirm `pan_masked` is derived as `XXXXXX{last4}` — never constructed from a full PAN at runtime.
+- After completing the code, run: `grep -E '\b[0-9]{12,}\b' <log_output>` — must return empty.
+
+## When you write or edit authentication logic
+
+- **Algorithm pinning (non-negotiable):** `jwt.decode(token, key, algorithms=["RS256", "ES256"])` — hard-coded list, never derived from token header. Never include `"none"` or `"HS256"`.
+- **Issuer validation:** verify `iss` is in `settings.ALLOWED_ISSUERS` before signature check. Select JWKS endpoint from `settings.ISSUER_JWKS_ENDPOINTS[iss]`.
+- Claim validation order: iss → signature → aud → exp → scope → aal.
+- High-privilege endpoints (`scope=audit:read`, `scope=ops:admin`): require `aal >= 3`.
+- Data isolation check: cardholder_id from JWT must match the resource's cardholder_id. Use `404` on mismatch, not `403`.
+
+## When you write or edit DB migrations
+
+- Never add a column named `cvv`, `pan`, or `full_pan` to any table.
+- `audit_events` migration must include:
+  - `REVOKE UPDATE, DELETE ON audit_events FROM app_role` (INSERT-only for app runtime)
+  - `GRANT UPDATE (actor_id, ip_address, user_agent) ON audit_events TO redactor_role` (column-level — GDPR redaction only)
+  - `GRANT SELECT ON audit_events TO redactor_role`
+- When issuing UPDATE on `audit_events` under `redactor_role`, always name the three specific columns explicitly — never use a full-model flush (PostgreSQL will reject it).
+- Do not write a `downgrade()` body for `audit_events`.
+
+## When you write or edit logging
+
+- Never pass a monetary card number, CVV, or full token to any log call.
+- Use partial masking helpers from `src/observability/logging.py`:
+  - Card tokens: last 4 chars only
+  - Cardholder IDs: first char + `***` + last char
+  - IP addresses: masked to `/24`
+- Never log the value of `PROCESSOR_API_KEY` or `PROCESSOR_WEBHOOK_SIGNING_KEY`.
+
+## When you write webhook handlers
+
+Three sequential checks, in this order (earlier checks are cheaper):
+
+```python
+# 1. Timestamp check (stateless, CPU-only)
+t = int(header.split("t=")[1].split(",")[0])
+if abs(datetime.now(timezone.utc).timestamp() - t) > 300:
+    raise HTTPException(401)
+
+# 2. HMAC-SHA256 (CPU-only)
+expected = hmac.new(signing_key, f"{t}.{raw_body}".encode(), sha256).hexdigest()
+if not hmac.compare_digest(expected, v1_sig):
+    raise HTTPException(401)  # do NOT log raw_body here
+
+# 3. Event-ID dedup (one Redis write)
+if not redis.set(f"webhook:{event_id}", "1", ex=259200, nx=True):
+    return Response(status_code=200)  # duplicate, no-op
+```
+
+- Timestamp violation → `401`. Signature mismatch → `401`, do not log raw payload. Duplicate event-ID → `200 OK` no-op.
+
+## When you write or edit Redis usage
+
+- `REDIS_URL` must be `SecretStr`; never pass it as a plain string to `aioredis.from_url()` — call `.get_secret_value()` at client construction only.
+- Every `INCR` on a rate-limit key must be immediately followed by `EXPIRE {RATE_LIMIT_WINDOW_SECONDS}` — use a Lua script or pipeline to prevent orphaned counters.
+- Reveal-handle cache: store `SHA-256(handle_id)` as the key, never the raw handle.
+
+## When you write outbound HTTP to the processor
+
+- Use the SSRF-safe httpx transport (see `src/http/ssrf_transport.py`). Never use plain `httpx.AsyncClient` for processor calls.
+- SSRF-safe transport performs: single-shot DNS resolution, RFC-1918/loopback/cloud-metadata IP rejection, TCP connection pinned to validated IP, redirect-chain re-validation.
+- Do not add new `PROCESSOR_*` hostname calls without adding the FQDN to `SSRF_ALLOWED_PROCESSOR_HOSTNAMES`.
+
+## When you write outbound HTTP clients
+
+- `verify=True` always (TLS certificate verification).
+- Explicit timeouts: `httpx.Timeout(connect=2.0, read=5.0)`.
+- External 5xx → surface as `503` to the caller, not `500`.
+
+## Fail-closed checklist (security-gating services)
+
+For KYC, SCA, and fraud-engine calls — service unavailability must produce a **denial**:
+
+```python
+# CORRECT — fail-closed
+if not kyc_response or kyc_response.status_code >= 500:
+    raise HTTPException(503, detail={"code": "KYC_SERVICE_UNAVAILABLE"})
+
+# WRONG — fail-open
+if kyc_response and kyc_response.json()["status"] == "APPROVED":
+    pass  # proceed... but what if kyc_response is None?
+```

@@ -1,0 +1,138 @@
+---
+description: FinTech-specific patterns — money types, card identifiers, idempotency, and audit-on-mutation
+globs: ["src/**/*.py", "alembic/**/*.py"]
+alwaysApply: false
+---
+
+# FinTech patterns
+
+> Full invariants in `../../agents.md §1–§2`. These rules fire for day-to-day coding nudges.
+
+## Money
+
+```python
+# CORRECT
+from decimal import Decimal, ROUND_HALF_EVEN
+amount = Decimal("12.50")
+
+# WRONG — float loses precision, causes rounding errors in financial aggregations
+amount = 12.50
+amount = float(some_decimal)
+```
+
+- Postgres column type: `NUMERIC(18, 4)`.
+- API validation: max 2 decimal places for user-supplied amounts.
+- Currency codes: validate against ISO 4217 allowlist at the Pydantic layer.
+
+## Timestamps
+
+```python
+# CORRECT
+from datetime import datetime, timezone
+now = datetime.now(timezone.utc)
+
+# WRONG — naive datetime, ambiguous timezone
+now = datetime.now()
+now = datetime.utcnow()  # also wrong — no tzinfo
+```
+
+- DB column type: `TIMESTAMPTZ`.
+- Wire format: ISO 8601 with `+00:00` suffix.
+
+## Idempotency pattern
+
+Idempotency is enforced by `IdempotencyMiddleware` (Starlette `BaseHTTPMiddleware`), **not** a per-route `Depends`. The middleware runs before routing, checks `Idempotency-Key`, and short-circuits with a cached response — the route function is never called for duplicates. Do not add `Depends(idempotency_guard)` to individual routes.
+
+```python
+# src/middleware/idempotency.py — registered in src/main.py lifespan
+class IdempotencyMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        if request.method not in {"POST", "PATCH"}:
+            return await call_next(request)
+        key = request.headers.get("Idempotency-Key")
+        if not key:
+            return JSONResponse(status_code=400,
+                content={"error": {"code": "IDEMPOTENCY_KEY_REQUIRED"}})
+        cached = await idempotency_cache.get(key)
+        if cached and cached["status"] == "COMPLETED":
+            return Response(**cached["response"])  # route never called
+        if cached and cached["status"] == "PENDING":
+            return JSONResponse(status_code=409,
+                content={"error": {"code": "IN_PROGRESS"}})
+        return await call_next(request)
+```
+
+Missing `Idempotency-Key` header on `POST`/`PATCH` → `400 IDEMPOTENCY_KEY_REQUIRED`.
+
+## Audit-on-mutation pattern
+
+Every state-changing DB write must use the `write_mutation` helper to ensure audit and outbox are co-committed:
+
+```python
+async def write_mutation(
+    session: AsyncSession,
+    operation: Callable,        # writes the operational row
+    audit_payload: AuditPayload,
+    outbox_payload: OutboxPayload,
+) -> Any:
+    async with session.begin():
+        result = await operation(session)
+        await session.execute(insert(AuditEventORM).values(**audit_payload))
+        await session.execute(insert(OutboxEventORM).values(**outbox_payload))
+    return result
+```
+
+If you write a mutation without calling `write_mutation` (or an equivalent in-transaction pattern), mark it with `# AUDIT: TODO` so it is caught in review.
+
+## Card state transitions
+
+Always go through `CardStateMachine.transition` — never set `card.status` directly:
+
+```python
+# CORRECT
+new_status = CardStateMachine.transition(card.status, target_status, fraud_lock=card.fraud_lock)
+card.status = new_status
+
+# WRONG
+card.status = "FROZEN"
+```
+
+## Concurrency on shared card rows
+
+Any operation that reads a card row with the intent to mutate it must use `SELECT FOR UPDATE`:
+
+```python
+stmt = select(CardORM).where(CardORM.token == token).with_for_update()
+card = (await session.execute(stmt)).scalar_one_or_none()
+```
+
+## Idempotency on external service calls
+
+Before calling the processor for card creation, check the idempotency record. On timeout, re-query the processor with the same `Idempotency-Key` before treating the call as failed.
+
+## Reveal-handle single-use enforcement
+
+Reveal handles are bearer tokens. Use optimistic locking to prevent double-redemption:
+
+```python
+# CORRECT — optimistic lock prevents concurrent double-redemption
+result = await session.execute(
+    update(RevealHandleORM)
+    .where(
+        RevealHandleORM.id == sha256_handle,
+        RevealHandleORM.used == False,
+        RevealHandleORM.version == current_version,
+    )
+    .values(used=True, version=RevealHandleORM.version + 1)
+)
+if result.rowcount == 0:
+    raise HTTPException(410)  # already redeemed or expired
+
+# WRONG — race between check and update allows two concurrent requests to both pass
+handle = await session.get(RevealHandleORM, sha256_handle)
+if handle.used:
+    raise HTTPException(410)
+handle.used = True  # concurrent request may have already set this
+```
+
+Store `SHA-256(handle_id)` in both the DB row (`id`) and Redis. The caller's raw `handle_id` is hashed server-side before any lookup — the raw value never touches storage.
