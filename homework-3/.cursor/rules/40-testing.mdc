@@ -1,0 +1,31 @@
+---
+description: Testing expectations
+globs:
+  - "services/card-lifecycle/**/*.ts"
+  - "tests/**/*.ts"
+---
+
+# Testing
+
+Each L-task lists explicit `Acceptance criteria` in `specification.md` §9. A PR closing an L-task must tick every box in its description.
+
+## Test types expected
+
+- **Unit** — every pure function in `domain/`; FSM transitions covered exhaustively.
+- **Integration** — every endpoint, against an ephemeral DB and a vault stub. Cover green path **plus** the relevant §7 edge cases.
+- **Contract** — every event payload and outbound HTTP call has a pinned schema test that fails when the shape changes.
+- **Redaction snapshot** — any response that varies by role has both a customer-view and an ops-view snapshot. CI fails if a PAN-shaped string appears in any snapshot.
+- **Property-based** — money arithmetic and limit derivation use `fast-check` (or equivalent).
+- **Performance** — the four SLO surfaces in §4.4 each have a perf-bed test. Blocking pre-release.
+- **Chaos** — at minimum freeze-during-auth and cache-failover scenarios scripted in `tests/chaos/`.
+
+## What not to do
+
+- Do not lower an existing acceptance criterion to make a test pass; raise the implementation to meet it.
+- Do not delete a flaky test — fix the source of flakiness.
+- Do not write a "covers everything" mega-test; one behavior per test.
+- Do not test framework internals; test our behavior at our boundaries.
+
+## Coverage philosophy
+
+Coverage is **outcome-driven**, not percentage-driven. A 90 %-coverage suite that misses E-2 (double-tap race) is worse than 80 % that covers all §7 rows.

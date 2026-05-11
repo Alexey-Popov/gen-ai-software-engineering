@@ -1,0 +1,16 @@
+---
+description: Project context — always loaded
+alwaysApply: true
+---
+
+# Virtual Card Lifecycle — Cursor context
+
+This codebase implements a **FinTech virtual card service** in a regulated environment (PCI-DSS, GDPR, AML).
+
+- The spec is `specification.md` — source of truth for behavior.
+- The agent contract is `agents.md` — banking domain rules, testing, security defaults.
+- Other `.cursor/rules/*.mdc` files in this folder hold topic-specific rules (security, money handling, FSM, testing, observability).
+
+When making any code change, locate the relevant L-task in `specification.md` §9 and reference it in the commit message.
+
+If the spec is unclear or the relevant value is flagged in §10 as an open question, **ask before coding**. Guessing in a regulated codebase produces compliance findings.

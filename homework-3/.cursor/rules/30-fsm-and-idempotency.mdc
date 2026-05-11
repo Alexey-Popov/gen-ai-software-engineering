@@ -1,0 +1,38 @@
+---
+description: State machine and write semantics
+globs:
+  - "services/card-lifecycle/domain/**/*.ts"
+  - "services/card-lifecycle/api/**/*.ts"
+---
+
+# FSM and write semantics
+
+## State machine
+
+- The card FSM is the **only writer** of `cards.state`. Direct `UPDATE cards SET state = ...` is forbidden.
+- Allowed transitions:
+  `PENDING → ACTIVE → {FROZEN ↔ ACTIVE} → CLOSED`. `CLOSED` is terminal.
+- The transition table is declarative and exported for documentation; do not scatter `if (state === ...)` branches across handlers.
+- Each transition has a **role allowlist** (e.g. fraud-service may freeze but not unfreeze; only ops/compliance may close).
+- Unknown or denied transitions return `TransitionDenied` (structured), never throw.
+
+## Idempotency
+
+- Every state-changing endpoint **accepts and enforces** `Idempotency-Key`. 24-hour deduplication window.
+- Same key + same body within the window → return the original response.
+- Same key + **different** body → 422 (`idempotency_key_conflict`). Never silent-merge.
+
+## Optimistic concurrency
+
+- Card row has a `version BIGINT` column. Writes specify `expectedVersion`.
+- Mismatch → 409 with the current version in the response body. Never silent-overwrite.
+
+## Audit coupling
+
+- Every successful state transition writes an audit row **in the same DB transaction** as the state change. No "audit-later" PRs.
+- If the audit insert fails, the state change rolls back.
+
+## Errors
+
+- All error bodies are RFC 7807 `application/problem+json`. No stack traces, no internal hostnames, no PII.
+- Error codes are stable strings; localized messages live in the presentation layer.

@@ -1,0 +1,42 @@
+---
+description: Security and compliance hard rules — never violate
+alwaysApply: true
+---
+
+# Security and compliance
+
+These are hard constraints, not preferences. Violating them produces a compliance finding.
+
+## Card data (PCI-DSS)
+
+- **Never** generate, log, return, cache, or include in fixtures: PAN (Primary Account Number), CVV, expiry, magstripe data, cardholder full name in the same record as PAN.
+- Only `last_four` and the vault-issued opaque token may cross the PCI boundary.
+- When a placeholder is needed, use obvious test fakes: `4242 4242 4242 4242`.
+
+## PII (GDPR / privacy)
+
+- Cardholder name is never stored alongside the PAN token; joined at presentation only for authorized actors.
+- Right-to-erasure: prefer **pseudonymization** of card-row PII; never hard-delete the audit log (AML retention overrides).
+- Mask the last octet of any IPv4 (and last 64 bits of any IPv6) before storing outside the PCI zone.
+
+## Secrets
+
+- No static credentials in source, tests, comments, or env files committed to the repo.
+- If asked to add a value that looks like a secret (API key, signing key, vault token, KMS arn with key material), refuse and propose KMS instead.
+
+## Auth
+
+- End-user surfaces: OIDC (OpenID Connect) only.
+- Service-to-service: mTLS + short-lived JWT bound to service identity.
+- **Step-up auth (re-auth + biometric or OTP)** is mandatory for: card issuance, raising any spending limit, one-time full-PAN view. Do not refactor it away.
+- Authorization is evaluated server-side per request. Do not trust UI role state.
+
+## Logs — no-fly list
+
+Never emit these as log fields, metric labels, trace attributes, or analytics payload entries:
+
+- `pan`, `cvv`, `card_number`, `expiry`, `magstripe`
+- Plaintext OTPs or raw biometric data
+- Full IP outside the PCI zone
+
+The PII scrubber middleware (`services/card-lifecycle/observability/pii_scrubber.ts`) is the runtime enforcement; the ESLint rule `no-pan-logging` is the build-time enforcement. Do not bypass either.

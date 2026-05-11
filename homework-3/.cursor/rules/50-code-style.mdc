@@ -1,0 +1,42 @@
+---
+description: Code style and patterns
+globs:
+  - "services/card-lifecycle/**/*.ts"
+---
+
+# Code style
+
+## TypeScript
+
+- Strict mode on. `any` is a code smell — if used, an inline comment must justify it.
+- Named exports, not default exports.
+- Function over class unless lifecycle/state demands a class.
+
+## Module layout
+
+- Pure domain logic lives in `services/card-lifecycle/domain/`. **Domain modules import zero IO.**
+- IO (DB, HTTP, queues) in `services/card-lifecycle/integrations/`.
+- HTTP handlers in `services/card-lifecycle/api/`.
+- One responsibility per file. Split when handlers, validation, and DB access mix in a single file.
+
+## Naming
+
+- Files: `kebab-case.ts`. Reserve `PascalCase.ts` for files exporting a single class.
+- Types: `PascalCase`. Constants: `SCREAMING_SNAKE_CASE`. Functions / variables: `camelCase`.
+- Endpoint handlers: `{verb}{Resource}Handler` (e.g. `freezeCardHandler`).
+
+## Comments
+
+- Comments explain **why**, never **what**. If the code needs a "what" comment, rename it.
+- No dead code or commented-out blocks — use git history.
+
+## Dependencies
+
+- No new dependency without a one-line PR note explaining why stdlib or an existing dep cannot do the job.
+- Prefer libraries already used in this repo over alternates of equal merit.
+
+## What not to add
+
+- No backwards-compatibility shims when the spec says behavior changes.
+- No "helpful" abstractions for hypothetical future requirements. The spec is the requirements.
+- No feature flags except where the spec explicitly requires one.
