@@ -1,0 +1,163 @@
+{
+  "tickets": [
+    {
+      "customer_id": "CUST-101",
+      "customer_email": "alice.j@example.com",
+      "customer_name": "Alice Johnson",
+      "subject": "Cannot log in after migration",
+      "description": "I cannot log in after the data migration completed last Friday",
+      "category": "account_access",
+      "priority": "urgent",
+      "status": "new",
+      "tags": ["migration", "login"],
+      "metadata": {"source": "web_form", "browser": "Chrome", "device_type": "desktop"}
+    },
+    {
+      "customer_id": "CUST-102",
+      "customer_email": "bob.k@example.com",
+      "subject": "Two factor stuck on loading",
+      "description": "Two factor screen is stuck on loading and never proceeds to dashboard",
+      "category": "account_access",
+      "priority": "high",
+      "metadata": {"source": "chat", "device_type": "mobile"}
+    },
+    {
+      "customer_email": "carl@example.com",
+      "subject": "App crashes on filter",
+      "description": "Steps to reproduce open dashboard apply category filter watch app crash",
+      "category": "bug_report",
+      "priority": "high",
+      "status": "in_progress",
+      "tags": ["dashboard", "filter"],
+      "metadata": {"source": "email", "device_type": "desktop"}
+    },
+    {
+      "customer_email": "dana@example.com",
+      "customer_name": "Dana Doe",
+      "subject": "Refund for unused month",
+      "description": "Please refund the unused month after I cancelled my subscription on March 12",
+      "category": "billing_question",
+      "priority": "medium"
+    },
+    {
+      "customer_email": "ed@example.com",
+      "subject": "Production down on the API",
+      "description": "Production down — the API has been returning 503 for the last twenty minutes",
+      "category": "technical_issue",
+      "priority": "urgent",
+      "metadata": {"source": "api"}
+    },
+    {
+      "customer_email": "fay@example.com",
+      "subject": "Would like saved filters",
+      "description": "I would like saved filters on the ticket list so I can rerun common queries",
+      "category": "feature_request",
+      "priority": "low"
+    },
+    {
+      "customer_email": "gus@example.com",
+      "subject": "Slow query on reports",
+      "description": "The reports page is very slow and sometimes times out for accounts with many tickets",
+      "category": "technical_issue",
+      "priority": "medium",
+      "tags": ["performance"]
+    },
+    {
+      "customer_email": "hela@example.com",
+      "subject": "Wrong tax rate applied",
+      "description": "Wrong tax rate was applied on this quarter invoice for our company in Germany",
+      "category": "billing_question",
+      "priority": "high",
+      "status": "in_progress"
+    },
+    {
+      "customer_email": "ian@example.com",
+      "subject": "Can we add Slack integration",
+      "description": "Could you add Slack integration so we can post ticket updates into channels",
+      "category": "feature_request",
+      "priority": "medium",
+      "tags": ["integration", "slack"]
+    },
+    {
+      "customer_email": "june@example.com",
+      "subject": "Cannot reset password from settings",
+      "description": "Cannot reset password from the security settings page — button is disabled",
+      "category": "account_access",
+      "priority": "medium"
+    },
+    {
+      "customer_email": "ken@example.com",
+      "subject": "Invoice missing line items",
+      "description": "The invoice for April is missing several line items that should be included",
+      "category": "billing_question",
+      "priority": "medium"
+    },
+    {
+      "customer_email": "lina@example.com",
+      "subject": "Crash when exporting CSV",
+      "description": "Steps to reproduce go to reports click export CSV watch the page crash",
+      "category": "bug_report",
+      "priority": "high",
+      "tags": ["export", "csv"]
+    },
+    {
+      "customer_email": "max@example.com",
+      "subject": "Dark mode looks broken",
+      "description": "Dark mode looks broken on the settings page — text color is unreadable",
+      "category": "technical_issue",
+      "priority": "low"
+    },
+    {
+      "customer_email": "nora@example.com",
+      "subject": "API returns 401 with valid token",
+      "description": "API returns 401 even with a valid token after the recent auth changes",
+      "category": "account_access",
+      "priority": "high",
+      "metadata": {"source": "api"}
+    },
+    {
+      "customer_email": "ozzy@example.com",
+      "subject": "Suggestion for keyboard shortcuts",
+      "description": "I have a suggestion to add keyboard shortcuts for common ticket actions",
+      "category": "feature_request",
+      "priority": "low"
+    },
+    {
+      "customer_email": "pia@example.com",
+      "subject": "Browser console errors blocking checkout",
+      "description": "Browser console shows errors that block checkout from completing successfully",
+      "category": "technical_issue",
+      "priority": "high",
+      "status": "in_progress"
+    },
+    {
+      "customer_email": "ron@example.com",
+      "subject": "Locked out after vacation",
+      "description": "I am locked out after coming back from a two-week vacation last Monday",
+      "category": "account_access",
+      "priority": "medium"
+    },
+    {
+      "customer_email": "sue@example.com",
+      "subject": "Charged twice for upgrade",
+      "description": "I was charged twice for the upgrade to the Pro plan in February",
+      "category": "billing_question",
+      "priority": "high"
+    },
+    {
+      "customer_email": "tara@example.com",
+      "subject": "Just curious about roadmap",
+      "description": "I was just curious about the public roadmap for the next quarter",
+      "category": "other",
+      "priority": "low"
+    },
+    {
+      "customer_email": "umar@example.com",
+      "subject": "How to bulk delete tickets",
+      "description": "How do I bulk delete a batch of resolved tickets older than six months",
+      "category": "other",
+      "priority": "low",
+      "metadata": {"source": "chat"}
+    }
+  ]
+}

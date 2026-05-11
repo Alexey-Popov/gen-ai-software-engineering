@@ -1,0 +1,36 @@
+{
+  "tickets": [
+    {
+      "customer_email": "ellen@example.com",
+      "subject": "Two-factor code never arrives",
+      "description": "I never receive the SMS with the 2FA code on my new phone",
+      "category": "account_access",
+      "priority": "high",
+      "metadata": { "source": "web_form", "device_type": "mobile" }
+    },
+    {
+      "customer_email": "frank@example.com",
+      "subject": "Refund request",
+      "description": "Please refund the duplicate charge I reported last week",
+      "category": "billing_question",
+      "priority": "medium",
+      "metadata": { "source": "email", "device_type": "desktop" }
+    },
+    {
+      "customer_email": "grace@example.com",
+      "subject": "API timeout",
+      "description": "My integration times out at 30s when calling /reports",
+      "category": "technical_issue",
+      "priority": "low",
+      "tags": ["api", "performance"],
+      "metadata": { "source": "api", "device_type": "desktop" }
+    },
+    {
+      "customer_email": "not-an-email",
+      "subject": "Bad email row",
+      "description": "this row will fail email validation on import",
+      "category": "other",
+      "priority": "low"
+    }
+  ]
+}

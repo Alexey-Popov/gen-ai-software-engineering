@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_email>henry@example.com</customer_email>
+    <subject>Cannot reset password</subject>
+    <description>Reset link expires before I can use it on the new device</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <metadata>
+      <source>web_form</source>
+      <device_type>mobile</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_email>irina@example.com</customer_email>
+    <subject>Wrong invoice amount</subject>
+    <description>The April invoice shows the previous month's plan</description>
+    <category>billing_question</category>
+    <priority>medium</priority>
+    <tags>
+      <tag>billing</tag>
+      <tag>refund</tag>
+    </tags>
+    <metadata>
+      <source>email</source>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_email>jack@example.com</customer_email>
+    <subject>Export crashes</subject>
+    <description>Clicking Export produces a server error after a few seconds</description>
+    <category>bug_report</category>
+    <priority>urgent</priority>
+    <metadata>
+      <source>api</source>
+      <browser>Firefox</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_email>not-an-email</customer_email>
+    <subject>Invalid email row</subject>
+    <description>this row will fail email validation on import</description>
+    <category>other</category>
+    <priority>low</priority>
+  </ticket>
+</tickets>

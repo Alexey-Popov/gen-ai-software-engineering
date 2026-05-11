@@ -1,0 +1,6 @@
+customer_email,subject,description,category,priority,metadata.source
+alice@example.com,Cannot log in,Login fails after I reset my password yesterday,account_access,high,web_form
+bob@example.com,Charged twice,The same invoice was charged on March 12 and March 13,billing_question,medium,email
+charlie@example.com,Dashboard is slow,Loading the analytics dashboard takes over 30 seconds,technical_issue,low,api
+bad-email,Will fail email regex,description is long enough to pass length check,technical_issue,low,api
+diana@example.com,Description too short,short,bug_report,medium,chat

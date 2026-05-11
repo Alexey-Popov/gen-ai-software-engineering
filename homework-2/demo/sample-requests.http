@@ -1,0 +1,369 @@
+### Sample Requests — Intelligent Customer Support Ticket System
+###
+### Open this file in VS Code with the REST Client extension installed,
+### then click "Send Request" above each block.
+###
+### Variables (override per-environment if needed)
+@host = http://localhost:3000
+
+###############################################################################
+# Stage 0 — Health check
+###############################################################################
+
+### Health check
+GET {{host}}/
+Accept: application/json
+
+
+###############################################################################
+# Stage 2 — CRUD: happy path
+###############################################################################
+
+### Create a ticket (capture id for chained requests via @name)
+# @name createTicket
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-001",
+  "customer_email": "alice@example.com",
+  "customer_name": "Alice Doe",
+  "subject": "Cannot log into my account",
+  "description": "Login fails with 'invalid credentials' even after password reset.",
+  "metadata": {
+    "source": "web_form",
+    "device_type": "desktop"
+  }
+}
+
+### List all tickets
+GET {{host}}/tickets
+Accept: application/json
+
+### Get the ticket created above (id pulled from createTicket response)
+GET {{host}}/tickets/{{createTicket.response.body.id}}
+Accept: application/json
+
+### Update the ticket (subject only — updated_at should bump)
+PUT {{host}}/tickets/{{createTicket.response.body.id}}
+Content-Type: application/json
+
+{
+  "subject": "Cannot log in — happens after password reset"
+}
+
+### Update status to in_progress
+PUT {{host}}/tickets/{{createTicket.response.body.id}}
+Content-Type: application/json
+
+{
+  "status": "in_progress",
+  "assigned_to": "agent-42"
+}
+
+### Resolve the ticket — server should set resolved_at
+PUT {{host}}/tickets/{{createTicket.response.body.id}}
+Content-Type: application/json
+
+{
+  "status": "resolved"
+}
+
+### Delete the ticket → expect 204 (no body)
+DELETE {{host}}/tickets/{{createTicket.response.body.id}}
+
+### Verify deleted → expect 404
+GET {{host}}/tickets/{{createTicket.response.body.id}}
+
+
+###############################################################################
+# Stage 2 — CRUD: 404 paths
+###############################################################################
+
+### GET non-existent id → 404
+GET {{host}}/tickets/does-not-exist-123
+Accept: application/json
+
+### PUT non-existent id → 404
+PUT {{host}}/tickets/does-not-exist-123
+Content-Type: application/json
+
+{
+  "subject": "ghost"
+}
+
+### DELETE non-existent id → 404
+DELETE {{host}}/tickets/does-not-exist-123
+
+
+###############################################################################
+# Stage 3 — Validation (placeholder; expected to return 400 once Stage 3 lands)
+###############################################################################
+
+### POST with empty body → expect 400 with details[]
+POST {{host}}/tickets
+Content-Type: application/json
+
+{}
+
+### POST with multiple invalid fields → expect 400 listing all errors
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_email": "not-an-email",
+  "subject": "",
+  "description": "tiny",
+  "category": "not_a_real_category",
+  "priority": "super_urgent",
+  "status": "pending"
+}
+
+
+###############################################################################
+# Stage 4 — CSV Bulk Import (working)
+###############################################################################
+
+### Bulk import CSV — mixed valid + invalid rows (partial-success summary)
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="import-sample.csv"
+Content-Type: text/csv
+
+< ./import-sample.csv
+------WebFormBoundary--
+
+### Malformed CSV → expect 400 (not 500) with "Malformed CSV: ..." in details[]
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="broken.csv"
+Content-Type: text/csv
+
+customer_email,subject,description
+"a@example.com,broken,"unterminated
+------WebFormBoundary--
+
+### Empty multipart — expect 400 "file is required"
+POST {{host}}/tickets/import
+
+### Unsupported extension (.txt) → expect 400 "Unsupported file format"
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="notes.txt"
+Content-Type: text/plain
+
+just plain text, not a ticket file
+------WebFormBoundary--
+
+
+###############################################################################
+# Stage 5 — JSON Bulk Import (working)
+###############################################################################
+
+### Bulk import JSON — wrapper { tickets: [...] } shape, mixed valid + invalid
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="import-sample.json"
+Content-Type: application/json
+
+< ./import-sample.json
+------WebFormBoundary--
+
+### Top-level array shape — also valid
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="array.json"
+Content-Type: application/json
+
+[
+  {"customer_email":"x@ex.com","subject":"From array","description":"this is from a top-level array","category":"other","priority":"low"}
+]
+------WebFormBoundary--
+
+### Malformed JSON → expect 400 with "Malformed JSON: ..."
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="broken.json"
+Content-Type: application/json
+
+{not valid json
+------WebFormBoundary--
+
+### Unsupported shape (raw object) → expect 400 with "Unsupported JSON shape"
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="weird.json"
+Content-Type: application/json
+
+{"foo":"bar"}
+------WebFormBoundary--
+
+
+###############################################################################
+# Stage 6 — XML Bulk Import (working)
+###############################################################################
+
+### Bulk import XML — 4 tickets, 1 invalid (partial-success summary)
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="import-sample.xml"
+Content-Type: application/xml
+
+< ./import-sample.xml
+------WebFormBoundary--
+
+### Malformed XML (mismatched tag) → expect 400 "Malformed XML: ..."
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="broken.xml"
+Content-Type: application/xml
+
+<tickets><ticket></tickets>
+------WebFormBoundary--
+
+### Unsupported root element → expect 400 "Unsupported XML shape"
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="wrong-root.xml"
+Content-Type: application/xml
+
+<foo><bar/></foo>
+------WebFormBoundary--
+
+### Empty <tickets/> → expect 200 with total: 0
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=----WebFormBoundary
+
+------WebFormBoundary
+Content-Disposition: form-data; name="file"; filename="empty.xml"
+Content-Type: application/xml
+
+<tickets></tickets>
+------WebFormBoundary--
+
+
+###############################################################################
+# Stage 7 — Filtering on GET /tickets (working)
+###############################################################################
+
+### Filter by category
+GET {{host}}/tickets?category=technical_issue
+Accept: application/json
+
+### Filter by priority
+GET {{host}}/tickets?priority=urgent
+Accept: application/json
+
+### Filter by status
+GET {{host}}/tickets?status=new
+Accept: application/json
+
+### Filter by customer_id
+GET {{host}}/tickets?customer_id=CUST-001
+Accept: application/json
+
+### Combined filters (category + priority + status) — AND-combined
+GET {{host}}/tickets?category=billing_question&priority=high&status=new
+Accept: application/json
+
+### Date range — date-only (start of day → end of day, UTC)
+GET {{host}}/tickets?from=2026-01-01&to=2026-12-31
+Accept: application/json
+
+### Date range — full ISO 8601
+GET {{host}}/tickets?from=2026-05-01T00:00:00Z&to=2026-05-31T23:59:59Z
+Accept: application/json
+
+### Invalid enum → expect 400 with "category must be one of: ..."
+GET {{host}}/tickets?category=invalid_category
+Accept: application/json
+
+### Invalid date format → expect 400
+GET {{host}}/tickets?from=not-a-date
+Accept: application/json
+
+### to < from → expect 400 "from must be earlier than or equal to to"
+GET {{host}}/tickets?from=2026-12-31&to=2026-01-01
+Accept: application/json
+
+### Multiple invalid params → expect 400 with collected details[]
+GET {{host}}/tickets?category=bad&priority=bad&from=not-a-date
+Accept: application/json
+
+
+###############################################################################
+# Stage 8–9 — Auto-classification (working)
+###############################################################################
+
+### Create a ticket with autoClassify=true → server runs classifier on creation
+# @name createWithClassify
+POST {{host}}/tickets?autoClassify=true
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-002",
+  "customer_email": "bob@example.com",
+  "customer_name": "Bob Smith",
+  "subject": "Production down — critical security issue",
+  "description": "We can't access the dashboard. This is blocking the whole team and needs to be fixed asap.",
+  "metadata": { "source": "email", "device_type": "desktop" }
+}
+
+### Verify the auto-classified fields stuck (category, priority, classification block)
+GET {{host}}/tickets/{{createWithClassify.response.body.id}}
+Accept: application/json
+
+### Manual override via PUT — overrides category/priority WITHOUT re-classifying
+PUT {{host}}/tickets/{{createWithClassify.response.body.id}}
+Content-Type: application/json
+
+{
+  "category": "feature_request",
+  "priority": "low"
+}
+
+### Re-classify explicitly — should restore the auto-classifier's verdict
+POST {{host}}/tickets/{{createWithClassify.response.body.id}}/auto-classify
+Accept: application/json
+
+### Auto-classify a ticket that doesn't exist → expect 404
+POST {{host}}/tickets/no-such-id/auto-classify
+
+### Create WITHOUT the flag — server does NOT classify
+# @name createNoClassify
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_email": "carol@example.com",
+  "subject": "Hello",
+  "description": "just a friendly note about your service"
+}
+
+### Classify it later, on demand
+POST {{host}}/tickets/{{createNoClassify.response.body.id}}/auto-classify
+Accept: application/json
+
+### View classifier decision log — should show entries from above (oldest first)
+GET {{host}}/classifier/log
+Accept: application/json

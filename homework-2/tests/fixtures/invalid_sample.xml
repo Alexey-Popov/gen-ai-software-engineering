@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_email>broken@example.com</customer_email>
+    <subject>Mismatched closing tag below
+  </ticket>
+</tickets>
