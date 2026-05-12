@@ -70,7 +70,9 @@ git push origin homework-1-submission
    - ✅ Summary of what you implemented (enough detail for someone unfamiliar with your branch)
    - 🛠️ AI tools used (prompts, workflow, what you verified yourself)
    - ⚠️ Challenges encountered and how you addressed them
-   - 📸 **Screenshots** (or screen recordings) showing the running solution and, where required, AI-assisted work—embed key images in the PR or link clearly to `docs/screenshots/`
+   - 📸 **Screenshots** showing the running solution and, where required, AI-assisted work—embed key images in the PR.  Also add them to `docs/screenshots/`
+
+📌 Home Work without detailed description and screenshots in PR will not be accepted. 
 
 ### 3️⃣ Assign the Instructor for Review
 
@@ -90,7 +92,7 @@ Each homework submission **MUST** also include in the repository:
 
 | Item | Description |
 |------|-------------|
-| `README.md` | Clear explanation of your solution, approach, and AI tools used |
+| `README.md` | Clear explanation of your solution, approach, and AI tools used and *author* |
 | `HOWTORUN.md` | Step-by-step guide to run your application |
 
 ### 📸 Screenshots *(Highly Expected)*
