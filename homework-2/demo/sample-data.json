@@ -1,0 +1,71 @@
+[
+  {
+    "customer_id": "cust-001",
+    "customer_email": "alice@example.com",
+    "customer_name": "Alice Johnson",
+    "subject": "Cannot log into my account",
+    "description": "I have been trying to log in for the past hour but keep getting an invalid credentials error even though my password is correct.",
+    "status": "new",
+    "tags": ["login", "authentication"],
+    "metadata": { "source": "web_form", "browser": "Chrome 124", "device_type": "desktop" }
+  },
+  {
+    "customer_id": "cust-002",
+    "customer_email": "bob@example.com",
+    "customer_name": "Bob Smith",
+    "subject": "App crashes on startup after latest update",
+    "description": "Since installing version 3.2.1 the application crashes immediately on launch. I have tried reinstalling but the problem persists.",
+    "status": "new",
+    "tags": ["crash", "startup", "v3.2.1"],
+    "metadata": { "source": "email", "device_type": "mobile" }
+  },
+  {
+    "customer_id": "cust-003",
+    "customer_email": "carol@example.com",
+    "customer_name": "Carol White",
+    "subject": "Unexpected charge on my invoice",
+    "description": "I was charged $49.99 on my last invoice but my plan should only cost $29.99 per month. Please investigate and refund the difference.",
+    "status": "new",
+    "assigned_to": "billing-team",
+    "metadata": { "source": "chat" }
+  },
+  {
+    "customer_id": "cust-004",
+    "customer_email": "dave@example.com",
+    "customer_name": "Dave Brown",
+    "subject": "Request for dark mode support",
+    "description": "It would be great to have a dark mode option in the settings. Many users have requested this and it would reduce eye strain during night-time use.",
+    "status": "new",
+    "tags": ["dark-mode", "ui", "accessibility"]
+  },
+  {
+    "customer_id": "cust-005",
+    "customer_email": "eve@example.com",
+    "customer_name": "Eve Davis",
+    "subject": "Slow response times on the dashboard",
+    "description": "The main dashboard takes over 15 seconds to load when I have more than 100 items. Performance was fine before the last deployment.",
+    "status": "new",
+    "assigned_to": "backend-team",
+    "tags": ["performance", "dashboard"],
+    "metadata": { "source": "api", "browser": "Firefox 125", "device_type": "desktop" }
+  },
+  {
+    "customer_id": "cust-006",
+    "customer_email": "frank@example.com",
+    "customer_name": "Frank Miller",
+    "subject": "How do I export my data?",
+    "description": "I need to export all my records to CSV for a quarterly report but cannot find the export option anywhere in the interface.",
+    "status": "new",
+    "metadata": { "source": "phone" }
+  },
+  {
+    "customer_id": "cust-007",
+    "customer_email": "grace@example.com",
+    "customer_name": "Grace Lee",
+    "subject": "Two-factor authentication not working",
+    "description": "The verification code sent to my phone is not being accepted. I have confirmed the time on my phone is correct and tried multiple times.",
+    "status": "new",
+    "assigned_to": "security-team",
+    "tags": ["2fa", "security", "authentication"]
+  }
+]

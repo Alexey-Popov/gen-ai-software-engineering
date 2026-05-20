@@ -570,10 +570,10 @@ Provide ready-to-use scripts and sample data so anyone can run and test the API 
 #### 6.1 Create Startup Script
 **File**: `homework-2/demo/run.bat`
 
-- [ ] Set `NODE_ENV=development` and `PORT=3000`
-- [ ] Install dependencies (`npm install`) if `node_modules` is missing
-- [ ] Start the server with `npm run dev`
-- [ ] Print the base URL on startup
+- [x] Set `NODE_ENV=development` and `PORT=3000`
+- [x] Install dependencies (`npm install`) if `node_modules` is missing
+- [x] Start the server with `npm run dev`
+- [x] Print the base URL on startup
 
 **Deliverable**: Double-click `run.bat` starts the API server
 
@@ -582,9 +582,9 @@ Provide ready-to-use scripts and sample data so anyone can run and test the API 
 #### 6.2 Create Seed Script
 **File**: `homework-2/demo/seed.ps1`
 
-- [ ] Send several `POST /tickets` requests with realistic ticket data covering all categories and priorities
-- [ ] Print each created ticket ID and status to the console
-- [ ] Require the server to be running first (show a clear error if not reachable)
+- [x] Send several `POST /tickets` requests with realistic ticket data covering all categories and priorities
+- [x] Print each created ticket ID and status to the console
+- [x] Require the server to be running first (show a clear error if not reachable)
 
 **Deliverable**: Running `seed.ps1` populates the in-memory store with test tickets
 
@@ -593,15 +593,15 @@ Provide ready-to-use scripts and sample data so anyone can run and test the API 
 #### 6.3 Create Sample Request Scripts
 **Files**: `homework-2/demo/sample-requests.sh` and `homework-2/demo/sample-requests.ps1`
 
-- [ ] Demonstrate every endpoint:
+- [x] Demonstrate every endpoint:
   - `POST /tickets` — create a ticket
   - `GET /tickets` — list all tickets
   - `GET /tickets/:id` — get single ticket (uses ID from create response)
   - `PUT /tickets/:id` — update a ticket
   - `DELETE /tickets/:id` — delete a ticket
   - `POST /tickets/import` — bulk import from `sample-data.json`
-- [ ] Include filter examples (`?status=new`, `?priority=urgent`)
-- [ ] `.sh` version uses `curl`; `.ps1` version uses `Invoke-RestMethod`
+- [x] Include filter examples (`?status=new`, `?priority=urgent`)
+- [x] `.sh` version uses `curl`; `.ps1` version uses `Invoke-RestMethod`
 
 **Deliverable**: Scripts that demonstrate the full API surface
 
@@ -610,11 +610,11 @@ Provide ready-to-use scripts and sample data so anyone can run and test the API 
 #### 6.4 Create Sample Data File
 **File**: `homework-2/demo/sample-data.json`
 
-- [ ] JSON array of 5–10 valid tickets covering:
+- [x] JSON array of 5–10 valid tickets covering:
   - Multiple categories (account_access, technical_issue, billing_question, …)
   - Multiple priorities (urgent, high, medium, low)
   - Various optional fields (tags, metadata, assigned_to)
-- [ ] Used as the import payload in `sample-requests.*`
+- [x] Used as the import payload in `sample-requests.*`
 
 **Deliverable**: Ready-to-import JSON fixture
 
@@ -623,22 +623,24 @@ Provide ready-to-use scripts and sample data so anyone can run and test the API 
 #### 6.5 Create HOWTORUN.md
 **File**: `homework-2/HOWTORUN.md`
 
-- [ ] Prerequisites (Node.js version, npm)
-- [ ] Quick-start steps (clone → install → run)
-- [ ] How to use each demo script (`run.bat`, `seed.ps1`, `sample-requests.*`)
-- [ ] API base URL and available endpoints summary
-- [ ] Common troubleshooting (port already in use, missing node_modules)
+- [x] Prerequisites (Node.js version, npm)
+- [x] Quick-start steps (clone → install → run)
+- [x] How to use each demo script (`run.bat`, `seed.ps1`, `sample-requests.*`)
+- [x] API base URL and available endpoints summary
+- [x] Common troubleshooting (port already in use, missing node_modules)
 
 **Deliverable**: Single-page guide to get from zero to a running, tested API
 
 ---
 
 ### Phase 6 Completion Criteria
-- [ ] `run.bat` starts the server with one double-click
-- [ ] `seed.ps1` populates test data successfully
-- [ ] Both `sample-requests` scripts exercise every endpoint without errors
-- [ ] `sample-data.json` imports cleanly via `/tickets/import`
-- [ ] `HOWTORUN.md` is accurate and self-contained
+- ✅ `run.bat` starts the server with one double-click
+- ✅ `seed.ps1` populates test data successfully
+- ✅ Both `sample-requests` scripts exercise every endpoint without errors
+- ✅ `sample-data.json` imports cleanly via `/tickets/import`
+- ✅ `HOWTORUN.md` is accurate and self-contained
+
+**Status: COMPLETE** ✅
 
 ---
 
@@ -732,7 +734,8 @@ This approach ensures consistent, explainable categorization.
 | Phase 3: Services | 6-8 hours | ✅ Complete |
 | Phase 4: Routes & Errors | 6-8 hours | ✅ Complete |
 | Phase 5: Testing & Docs | 6-8 hours | ⏳ Pending |
-| **Total** | **24-32 hours** | |
+| Phase 6: Demo & Quick-Start | 1-2 hours | ✅ Complete |
+| **Total** | **25-34 hours** | |
 
 ---
 
