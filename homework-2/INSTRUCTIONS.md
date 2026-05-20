@@ -47,8 +47,7 @@ npm run test:coverage # Generate coverage report
 
 ### 5. API Documentation
 - **Base URL**: `http://localhost:3000`
-- **API Docs**: Available at `/api/docs` (Swagger UI)
-- Full endpoint documentation in [API.md](./API.md)
+- **API Docs**: Full endpoint documentation in [API_REFERENCE.md](./API_REFERENCE.md)
 
 ## Project Structure
 
@@ -73,18 +72,24 @@ homework-2/
 │   ├── app.ts               # Express app setup
 │   └── index.ts             # Server entry point
 ├── tests/
-│   ├── unit/
-│   │   ├── validators.test.ts
-│   │   └── services.test.ts
-│   └── integration/
-│       └── api.test.ts
+│   ├── test_ticket_api.ts       # API endpoint tests (11)
+│   ├── test_ticket_model.ts     # Data validation tests (9)
+│   ├── test_import_csv.ts       # CSV import tests (6)
+│   ├── test_import_json.ts      # JSON import tests (5)
+│   ├── test_import_xml.ts       # XML import tests (5)
+│   ├── test_categorization.ts   # Classifier tests (10)
+│   ├── test_integration.ts      # End-to-end tests (5)
+│   ├── test_performance.ts      # Benchmark tests (5)
+│   └── fixtures/                # Sample CSV / JSON / XML data
 ├── package.json
 ├── tsconfig.json
 ├── .env.example
 ├── jest.config.js
 ├── INSTRUCTIONS.md          # This file
 ├── DEVELOPMENT_PLAN.md      # Step-by-step plan
-└── API.md                   # API documentation
+├── API_REFERENCE.md         # Full endpoint documentation
+├── ARCHITECTURE.md          # System design and diagrams
+└── TESTING_GUIDE.md         # QA guide and test data reference
 ```
 
 ## Key Requirements
@@ -166,17 +171,18 @@ LOG_LEVEL=debug
 
 ## Testing Strategy
 
-- **Unit Tests**: Validators, services, utilities
-- **Integration Tests**: API endpoints with realistic data
-- **Fixtures**: Sample CSV/JSON/XML files for import testing
-- **Coverage Target**: 80%+ code coverage
+- **56 tests** across 8 dedicated test files (see [TESTING_GUIDE.md](./TESTING_GUIDE.md))
+- **Fixtures**: `tests/fixtures/` contains valid, mixed, and invalid sample files
+- **Coverage Target**: >85% code coverage
+- See [TESTING_GUIDE.md](./TESTING_GUIDE.md) for full manual testing checklist and performance benchmarks
 
 ## Next Steps
 
 1. Read [DEVELOPMENT_PLAN.md](./DEVELOPMENT_PLAN.md) for step-by-step implementation guide
-2. Review [API.md](./API.md) for detailed endpoint specifications
-3. Start with Phase 1 implementation following the plan
-4. Run tests frequently to catch issues early
+2. Review [API_REFERENCE.md](./API_REFERENCE.md) for detailed endpoint specifications and cURL examples
+3. Review [ARCHITECTURE.md](./ARCHITECTURE.md) for system design diagrams and trade-off decisions
+4. Review [TESTING_GUIDE.md](./TESTING_GUIDE.md) for QA checklist and performance benchmarks
+5. Run tests frequently to catch issues early (`npm run test:coverage`)
 
 ## Resources
 
