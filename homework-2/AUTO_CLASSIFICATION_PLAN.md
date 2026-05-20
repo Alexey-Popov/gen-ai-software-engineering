@@ -7,7 +7,7 @@ This document outlines the step-by-step plan to implement automatic ticket categ
 **Builds on**: Phase 1–6 of the core ticket system (`DEVELOPMENT_PLAN.md`)
 
 **New files**: `src/services/classifier.ts`, `demo/auto-classify-test.ps1`, `demo/auto-classify-test.sh`  
-**Modified files**: `src/models/ticket.ts`, `src/routes/tickets.ts`
+**Modified files**: `src/models/ticket.ts`, `src/routes/tickets.ts`, `src/routes/import.ts`, `src/services/import-service.ts`
 
 ---
 
@@ -23,7 +23,7 @@ Implement keyword-based classification of ticket category and priority, expose i
 #### 7.1 Add Classification Interfaces to Ticket Model
 **File**: `src/models/ticket.ts`
 
-- [ ] Add `ClassificationResult` interface:
+- [x] Add `ClassificationResult` interface:
   ```typescript
   export interface ClassificationResult {
     category: Category;
@@ -33,7 +33,7 @@ Implement keyword-based classification of ticket category and priority, expose i
     keywords_found: string[];
   }
   ```
-- [ ] Add `ClassificationLog` interface:
+- [x] Add `ClassificationLog` interface:
   ```typescript
   export interface ClassificationLog {
     ticket_id: string;
@@ -44,7 +44,7 @@ Implement keyword-based classification of ticket category and priority, expose i
   }
   ```
 
-**Deliverable**: Model file compiles without errors; interfaces exported
+**Deliverable**: Model file compiles without errors; interfaces exported ✅
 
 ---
 
@@ -82,7 +82,7 @@ round to 2 decimal places
 
 ##### 7.2.4 Functions to implement
 
-- [ ] `classifyTicket(ticket: Ticket): ClassificationResult`
+- [x] `classifyTicket(ticket: Ticket): ClassificationResult`
   - Lowercase `ticket.subject + ' ' + ticket.description`
   - Check category keyword map in declared order; first matching category wins
   - Collect all matched keywords for the winning category
@@ -91,28 +91,28 @@ round to 2 decimal places
   - Build `reasoning` string: `"Category '...' matched keywords: a, b. Priority '...' matched keywords: c."`
   - Return `ClassificationResult`
 
-- [ ] `logDecision(ticketId: string, ticket: Ticket, result: ClassificationResult): void`
+- [x] `logDecision(ticketId: string, ticket: Ticket, result: ClassificationResult): void`
   - Append `ClassificationLog` entry to in-memory `Map<string, ClassificationLog[]>`
   - `console.log` structured line:
     ```
     [2026-05-20T10:00:00.000Z] AUTO-CLASSIFY ticket=abc123 category=technical_issue priority=urgent confidence=0.80 keywords=error,crash,critical
     ```
 
-- [ ] `getClassificationLog(ticketId: string): ClassificationLog[]`
+- [x] `getClassificationLog(ticketId: string): ClassificationLog[]`
   - Returns all log entries for a ticket (empty array if none)
 
-- [ ] `clearClassificationLogs(): void`
+- [x] `clearClassificationLogs(): void`
   - Clears the entire log map (for test teardown)
 
-**Deliverable**: `src/services/classifier.ts` with exported functions
+**Deliverable**: `src/services/classifier.ts` with exported functions ✅
 
 ---
 
 #### 7.3 Add Auto-Classify Endpoint to Ticket Routes
 **File**: `src/routes/tickets.ts`
 
-- [ ] Import `classifyTicket`, `logDecision` from `'../services/classifier'`
-- [ ] Add route after the existing `DELETE /:id` handler:
+- [x] Import `classifyTicket`, `logDecision` from `'../services/classifier'`
+- [x] Add route after the existing `DELETE /:id` handler:
 
   ```typescript
   router.post('/:id/auto-classify', (req: Request, res: Response, next: NextFunction): void => {
@@ -154,22 +154,82 @@ round to 2 decimal places
 }
 ```
 
-- [ ] Ensure no body is required — the route reads only from ticket store and `req.params.id`
+- [x] Ensure no body is required — the route reads only from ticket store and `req.params.id`
 
-**Deliverable**: Endpoint registered and callable
+**Deliverable**: Endpoint registered and callable ✅
+
+---
+
+#### 7.4 Optional Auto-Classification Flag on Ticket Creation
+**Files**: `src/routes/tickets.ts`, `src/routes/import.ts`
+
+Accept an optional `auto_classify` flag that triggers classification immediately after a ticket is created, so callers do not need a separate `POST /tickets/:id/auto-classify` call.
+
+##### Flag mechanics
+- Accepted as a **query parameter**: `?auto_classify=true`
+- Any value other than the string `"true"` is treated as absent (flag off)
+- No changes to request body schema for either endpoint
+
+##### `POST /tickets?auto_classify=true`
+- [ ] After `createTicket()` succeeds, check `req.query.auto_classify === 'true'`
+- [ ] If true: call `classifyTicket(ticket)`, then `updateTicket(ticket.id, { category, priority })`, then `logDecision()`
+- [ ] Return the **updated ticket** (with `category` and `priority` filled in) — same 201 response shape
+- [ ] If classification throws, log the error and return the ticket without classification (do not fail the request)
+
+##### `POST /tickets/import?auto_classify=true`
+**File**: `src/routes/import.ts`
+
+- [ ] After `importTickets()` succeeds, check `req.query.auto_classify === 'true'`
+- [ ] If true: for each successfully created ticket returned from the import service, call `classifyTicket()` + `updateTicket()` + `logDecision()`
+- [ ] Return the standard `ImportResult` — classification results are stored on the tickets and visible via `GET /tickets/:id`
+- [ ] Classification errors per ticket are caught individually and do not affect the import summary
+
+> The import service returns only aggregate counts and errors, not the created ticket objects. To classify after import, the route needs access to the created ticket IDs. See implementation note below.
+
+##### Implementation note — surfacing ticket IDs from import
+The current `importTickets()` return type (`ImportResult`) does not expose created ticket IDs, making post-import classification impossible without a refactor. Two options:
+
+| Option | Change | Trade-off |
+|---|---|---|
+| **A — Extend ImportResult** | Add `created_ids: string[]` to `ImportResult` in `src/models/ticket.ts` and populate it in `import-service.ts` | Minimal invasive change; IDs available in route |
+| **B — Classify inside import service** | Pass `auto_classify` flag into `importService.importTickets()` and classify there | Couples import service to classifier; harder to test separately |
+
+**Recommended: Option A** — extend `ImportResult` with `created_ids: string[]`.
+
+- [ ] Add `created_ids: string[]` to `ImportResult` interface in `src/models/ticket.ts`
+- [ ] Populate `created_ids` in `src/services/import-service.ts` alongside existing logic
+- [ ] Use `created_ids` in the import route to classify each ticket when flag is on
+- [ ] `created_ids` is always returned in the import response (empty array if all failed); callers may use it for other purposes
+
+**Response shape** (unchanged except `created_ids` added):
+```json
+{
+  "total": 3,
+  "successful": 3,
+  "failed": 0,
+  "errors": [],
+  "created_ids": ["uuid-1", "uuid-2", "uuid-3"]
+}
+```
+
+**Deliverable**: Both creation endpoints support `?auto_classify=true`; classified tickets have `category` and `priority` set on creation
 
 ---
 
 ### Phase 7 Completion Criteria
 
-- [ ] `POST /tickets/:id/auto-classify` returns 200 with `category`, `priority`, `confidence`, `reasoning`, `keywords_found`
-- [ ] Returns 404 for unknown ticket IDs
-- [ ] `GET /tickets/:id` after classification shows updated `category` and `priority`
-- [ ] Console log line printed for each classification call
-- [ ] No-keyword ticket → `category=other`, `priority=medium`, confidence ≤ 0.55
-- [ ] Multi-keyword ticket → confidence increases with match count (≤ 0.95)
-- [ ] Priority keywords correctly elevate/demote priority vs. default `medium`
-- [ ] TypeScript compiles without errors (`npm run build`)
+- [x] `POST /tickets/:id/auto-classify` returns 200 with `category`, `priority`, `confidence`, `reasoning`, `keywords_found`
+- [x] Returns 404 for unknown ticket IDs
+- [x] `GET /tickets/:id` after classification shows updated `category` and `priority`
+- [x] Console log line printed for each classification call
+- [x] No-keyword ticket → `category=other`, `priority=medium`, confidence ≤ 0.55
+- [x] Multi-keyword ticket → confidence increases with match count (≤ 0.95)
+- [x] Priority keywords correctly elevate/demote priority vs. default `medium`
+- [x] TypeScript compiles without errors (`npm run build`)
+- [ ] `POST /tickets?auto_classify=true` returns 201 ticket with `category` and `priority` already set
+- [ ] `POST /tickets/import?auto_classify=true` classifies all successfully created tickets; `ImportResult` includes `created_ids`
+- [ ] Classification failure on creation does not fail the ticket creation request
+- [ ] `ImportResult` always includes `created_ids` regardless of the flag
 
 ---
 
