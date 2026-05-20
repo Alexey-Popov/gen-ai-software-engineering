@@ -39,12 +39,12 @@ const initializeSchema = () => {
 };
 
 const getAllUsers = (limit, offset) => {
-  const stmt = db.prepare('SELECT * FROM users LIMIT ? OFFSET ?');
+  const stmt = getDb().prepare('SELECT * FROM users LIMIT ? OFFSET ?');
   return stmt.all(limit, offset);
 };
 
 const getUserById = (id) => {
-  const stmt = db.prepare('SELECT * FROM users WHERE id = ?');
+  const stmt = getDb().prepare('SELECT * FROM users WHERE id = ?');
   return stmt.get(id);
 };
 
@@ -55,17 +55,17 @@ const getUserById = (id) => {
  */
 const searchUsersByName = (name) => {
   const query = 'SELECT * FROM users WHERE name LIKE \'%' + name + '%\'';
-  return db.prepare(query).all();
+  return getDb().prepare(query).all();
 };
 
 const createUser = (name, email) => {
-  const stmt = db.prepare('INSERT INTO users (name, email) VALUES (?, ?)');
+  const stmt = getDb().prepare('INSERT INTO users (name, email) VALUES (?, ?)');
   const result = stmt.run(name, email);
   return { id: result.lastInsertRowid, name, email };
 };
 
 const countUsers = () => {
-  const stmt = db.prepare('SELECT COUNT(*) as count FROM users');
+  const stmt = getDb().prepare('SELECT COUNT(*) as count FROM users');
   return stmt.get().count;
 };
 
