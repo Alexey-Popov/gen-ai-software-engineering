@@ -463,100 +463,243 @@ Implement Express routes for all API endpoints with proper error handling.
 ## Phase 5: Testing & Documentation
 
 ### Objective
-Achieve comprehensive test coverage and create clear documentation.
-
-### Tasks
-
-#### 5.1 Unit Tests
-**File**: `tests/unit/`
-
-- [ ] Validator tests
-  - Valid/invalid inputs
-  - Edge cases (boundary values)
-  - Error messages
-
-- [ ] Service tests
-  - CRUD operations
-  - Filtering logic
-  - Import logic
-  - Error conditions
-
-- [ ] Utility tests
-  - File parsing
-  - Format detection
-  - Error handling
-
-**Target**: 95%+ coverage
+Achieve >85% code coverage with a structured test suite and produce five audience-specific documentation files, each using different AI models and containing Mermaid diagrams.
 
 ---
 
-#### 5.2 Integration Tests
-**File**: `tests/integration/api.test.ts`
+### Part A: Test Suite
 
-- [ ] Endpoint tests using Supertest:
-  - Create ticket flow
-  - Read operations
-  - Update operations
-  - Delete operations
-  - Import flow with real files
-  - Error scenarios
+#### 5.1 Test File Structure
 
-- [ ] Test fixtures:
-  - `tests/fixtures/valid.csv`
-  - `tests/fixtures/valid.json`
-  - `tests/fixtures/valid.xml`
-  - `tests/fixtures/invalid.csv`
-  - Sample tickets for testing
-
-**Target**: 80%+ overall coverage
-
----
-
-#### 5.3 Create API Documentation
-**File**: `API.md`
-
-Document each endpoint:
-- [ ] Request/response examples
-- [ ] Query parameter descriptions
-- [ ] Error codes and messages
-- [ ] Sample cURL commands
-- [ ] Postman collection (optional)
-
-**Sections**:
-- Authentication (if applicable)
-- Base URL
-- Rate limiting (if applicable)
-- Endpoint reference
-- Error codes
-- Examples
+```
+tests/
+├── test_ticket_api.ts        # API endpoint tests (11 tests)
+├── test_ticket_model.ts      # Data validation tests (9 tests)
+├── test_import_csv.ts        # CSV parsing tests (6 tests)
+├── test_import_json.ts       # JSON parsing tests (5 tests)
+├── test_import_xml.ts        # XML parsing tests (5 tests)
+├── test_categorization.ts    # AI classification tests (10 tests)
+├── test_integration.ts       # End-to-end workflow tests (5 tests)
+├── test_performance.ts       # Benchmark tests (5 tests)
+└── fixtures/                 # Sample data files
+    ├── valid-tickets.csv
+    ├── valid-tickets.json
+    ├── valid-tickets.xml
+    ├── mixed-tickets.csv
+    └── invalid-tickets.csv
+```
 
 ---
 
-#### 5.4 Update INSTRUCTIONS.md
-- [ ] Verify all instructions are current
-- [ ] Add troubleshooting section
-- [ ] Add common issues and solutions
-- [ ] Add performance tips
+#### 5.2 `test_ticket_api.ts` — API Endpoint Tests (11 tests)
+
+**File**: `tests/test_ticket_api.ts`
+
+- [ ] `POST /tickets` returns 201 with created ticket
+- [ ] `POST /tickets` returns 400 on missing required fields
+- [ ] `POST /tickets` returns 400 on invalid email
+- [ ] `GET /tickets` returns 200 with array of tickets
+- [ ] `GET /tickets?status=new` filters by status
+- [ ] `GET /tickets?priority=urgent` filters by priority
+- [ ] `GET /tickets/:id` returns 200 for existing ticket
+- [ ] `GET /tickets/:id` returns 404 for unknown id
+- [ ] `PUT /tickets/:id` returns 200 with updated ticket
+- [ ] `PUT /tickets/:id` returns 404 for unknown id
+- [ ] `DELETE /tickets/:id` returns 204 on success
+
+**Target**: 100% route coverage
 
 ---
 
-#### 5.5 Create Test Fixtures
+#### 5.3 `test_ticket_model.ts` — Data Validation Tests (9 tests)
+
+**File**: `tests/test_ticket_model.ts`
+
+- [ ] Valid ticket payload passes Zod schema
+- [ ] Missing `customer_email` is rejected
+- [ ] Invalid email format is rejected
+- [ ] `subject` shorter than 1 char is rejected
+- [ ] `subject` longer than 200 chars is rejected
+- [ ] `description` shorter than 10 chars is rejected
+- [ ] Unknown `category` enum value is rejected
+- [ ] Unknown `priority` enum value is rejected
+- [ ] Optional fields (`tags`, `metadata`) are accepted when absent
+
+**Target**: 100% validator coverage
+
+---
+
+#### 5.4 `test_import_csv.ts` — CSV Parsing Tests (6 tests)
+
+**File**: `tests/test_import_csv.ts`
+
+- [ ] Valid CSV with 10 rows imports all records successfully
+- [ ] CSV with quoted fields (commas inside values) parsed correctly
+- [ ] CSV with missing optional columns succeeds
+- [ ] CSV with invalid email in one row reports error and continues
+- [ ] Empty CSV file returns zero successful, zero failed
+- [ ] CSV with duplicate header columns returns descriptive error
+
+**Target**: 100% CSV parser coverage
+
+---
+
+#### 5.5 `test_import_json.ts` — JSON Parsing Tests (5 tests)
+
+**File**: `tests/test_import_json.ts`
+
+- [ ] Valid JSON array imports all records
+- [ ] Single JSON object (not array) is normalized and imported
+- [ ] JSON with one invalid record reports error for that record only
+- [ ] Malformed JSON string returns parse error
+- [ ] Empty JSON array (`[]`) returns zero successful, zero failed
+
+**Target**: 100% JSON parser coverage
+
+---
+
+#### 5.6 `test_import_xml.ts` — XML Parsing Tests (5 tests)
+
+**File**: `tests/test_import_xml.ts`
+
+- [ ] Valid XML with nested `<ticket>` elements imports all records
+- [ ] XML with flat attributes-only structure is parsed correctly
+- [ ] XML with one invalid record reports error and continues
+- [ ] Malformed XML returns parse error
+- [ ] Empty `<tickets/>` element returns zero successful, zero failed
+
+**Target**: 100% XML parser coverage
+
+---
+
+#### 5.7 `test_categorization.ts` — AI Classification Tests (10 tests)
+
+**File**: `tests/test_categorization.ts`
+
+- [ ] Ticket mentioning "password" is classified as `account_access`
+- [ ] Ticket mentioning "crash" is classified as `technical_issue`
+- [ ] Ticket mentioning "charge" or "invoice" is classified as `billing_question`
+- [ ] Ticket requesting a new feature is classified as `feature_request`
+- [ ] Ticket describing a reproducible defect is classified as `bug_report`
+- [ ] Ambiguous ticket falls back to `other` category
+- [ ] "server down" subject maps to `urgent` priority
+- [ ] "minor cosmetic issue" maps to `low` priority
+- [ ] Classifier response includes `reasoning` field
+- [ ] Classifier handles API timeout gracefully (falls back to `other`/`medium`)
+
+**Target**: 95%+ classifier service coverage
+
+---
+
+#### 5.8 `test_integration.ts` — End-to-End Workflow Tests (5 tests)
+
+**File**: `tests/test_integration.ts`
+
+- [ ] Full create → read → update → delete lifecycle for a single ticket
+- [ ] Bulk CSV import followed by `GET /tickets` returns all imported tickets
+- [ ] Create ticket → classify → verify category persisted in response
+- [ ] Invalid bulk import with mixed records returns correct `successful`/`failed` counts
+- [ ] Concurrent `POST /tickets` requests all succeed without data loss
+
+**Target**: Validates cross-component interactions
+
+---
+
+#### 5.9 `test_performance.ts` — Benchmark Tests (5 tests)
+
+**File**: `tests/test_performance.ts`
+
+- [ ] `POST /tickets` responds in < 100 ms under no load
+- [ ] `GET /tickets` with 1 000 in-memory tickets responds in < 200 ms
+- [ ] Bulk import of 500-record CSV completes in < 2 s
+- [ ] 50 concurrent `GET /tickets` requests all complete without error
+- [ ] Memory usage after importing 1 000 tickets stays below 100 MB
+
+**Target**: Establish baseline benchmarks; fail if thresholds exceeded
+
+---
+
+#### 5.10 Test Fixtures
+
 **Directory**: `tests/fixtures/`
 
-- [ ] `valid-tickets.csv` — Sample CSV with 10 valid tickets
-- [ ] `valid-tickets.json` — Sample JSON with valid tickets
-- [ ] `valid-tickets.xml` — Sample XML with valid tickets
-- [ ] `mixed-tickets.csv` — CSV with valid and invalid records
-- [ ] `invalid-tickets.csv` — CSV with all invalid records
+- [ ] `valid-tickets.csv` — 10 valid tickets covering all categories and priorities
+- [ ] `valid-tickets.json` — JSON array of 10 valid tickets
+- [ ] `valid-tickets.xml` — XML document with 10 `<ticket>` elements
+- [ ] `mixed-tickets.csv` — 10 rows: 8 valid + 2 with intentional errors
+- [ ] `invalid-tickets.csv` — 5 rows all with validation errors
+
+---
+
+### Part B: Documentation
+
+Five audience-specific documentation files, generated with different AI models and containing at least 3 Mermaid diagrams in total.
+
+#### 5.11 `README.md` — Developer Guide
+
+**Model**: Claude Haiku 4.5 (fast generation, developer-friendly tone)
+
+- [ ] Project overview and feature list
+- [ ] Architecture diagram (Mermaid `graph TD`) — **Mermaid diagram #1**
+- [ ] Installation and setup instructions (`npm install`, `.env` setup)
+- [ ] How to run tests (`npm test`, `npm run test:coverage`)
+- [ ] Project folder structure with brief description of each directory
+
+---
+
+#### 5.12 `API_REFERENCE.md` — API Consumer Reference
+
+**Model**: Claude Sonnet 4.6 (balanced accuracy for technical docs)
+
+- [ ] All 6 endpoints with full request/response JSON examples
+- [ ] Data models and Zod-validated field schemas
+- [ ] Error response format with all error codes
+- [ ] cURL example for every endpoint
+- [ ] Query parameter table for `GET /tickets`
+
+---
+
+#### 5.13 `ARCHITECTURE.md` — Technical Architecture
+
+**Model**: Claude Opus 4.7 (deep reasoning for design-level content)
+
+- [ ] High-level architecture diagram (Mermaid `graph LR`) — **Mermaid diagram #2**
+- [ ] Component descriptions (routes, services, validators, utils)
+- [ ] Data flow sequence diagram (Mermaid `sequenceDiagram`) — **Mermaid diagram #3**
+- [ ] Design decisions and trade-offs (in-memory storage, Zod vs. manual validation)
+- [ ] Security considerations (no auth, input sanitization)
+- [ ] Performance considerations (sync vs. async, import batch size)
+
+---
+
+#### 5.14 `TESTING_GUIDE.md` — QA Guide
+
+**Model**: Claude Sonnet 4.6
+
+- [ ] Test pyramid diagram (Mermaid `graph TD`) showing unit / integration / e2e layers
+- [ ] How to run each test file individually
+- [ ] Sample test data locations (`tests/fixtures/`)
+- [ ] Manual testing checklist (one item per endpoint)
+- [ ] Performance benchmarks table (thresholds from `test_performance.ts`)
+
+---
+
+#### 5.15 Update `INSTRUCTIONS.md`
+
+- [ ] Verify all instructions are current after Phase 5 additions
+- [ ] Add troubleshooting section (port conflicts, missing node_modules)
+- [ ] Reference new documentation files (`README.md`, `API_REFERENCE.md`, etc.)
 
 ---
 
 ### Phase 5 Completion Criteria
-- ✅ 85%+ overall code coverage
-- ✅ All tests passing
-- ✅ API documentation complete
-- [ ] README updated with full instructions
-- ✅ No linting errors (if ESLint added)
+- [ ] 56 total tests across 8 test files, all passing
+- [ ] >85% overall code coverage (`npm run test:coverage`)
+- [ ] `tests/fixtures/` contains all 5 sample data files
+- [ ] `README.md`, `API_REFERENCE.md`, `ARCHITECTURE.md`, `TESTING_GUIDE.md` created
+- [ ] At least 3 Mermaid diagrams present across documentation files
+- [ ] Each documentation file generated with the specified AI model
+- [ ] `INSTRUCTIONS.md` updated and accurate
 
 ---
 
@@ -733,7 +876,7 @@ This approach ensures consistent, explainable categorization.
 | Phase 2: Models & Validation | 4-5 hours | ✅ Complete |
 | Phase 3: Services | 6-8 hours | ✅ Complete |
 | Phase 4: Routes & Errors | 6-8 hours | ✅ Complete |
-| Phase 5: Testing & Docs | 6-8 hours | ⏳ Pending |
+| Phase 5: Testing & Docs | 10-14 hours | ⏳ Pending |
 | Phase 6: Demo & Quick-Start | 1-2 hours | ✅ Complete |
 | **Total** | **25-34 hours** | |
 
