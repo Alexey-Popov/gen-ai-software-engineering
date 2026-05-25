@@ -6,7 +6,8 @@
   "description": "Sample notes-api with seeded bugs for the 4-agent pipeline homework",
   "scripts": {
     "start": "node src/index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "pipeline": "./run-pipeline.sh"
   },
   "dependencies": {
     "express": "^4.21.0"

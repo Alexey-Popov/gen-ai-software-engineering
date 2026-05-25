@@ -80,9 +80,11 @@ See `HOWTORUN.md` for run instructions.
 - [ ] **Stage 4** — Preparatory artifacts (Researcher + Planner outputs)
   - [ ] `context/bugs/001/research/codebase-research.md`
   - [ ] `context/bugs/001/implementation-plan.md`
-- [ ] **Stage 5** — Orchestration (single command runner)
-  - [ ] `run-pipeline.sh` or `npm run pipeline`
-  - [ ] Wires all agents in order, loads their skills
+- [x] **Stage 5** — Orchestration (single command runner)
+  - [x] `run-pipeline.sh` — syncs agents/ → .claude/agents/, runs one orchestrator Claude session
+  - [x] `npm run pipeline` wired in `package.json`
+  - [x] Halts on STOP / BLOCKED / failed between steps
+  - [x] HOWTORUN.md documents prerequisites (claude CLI + API key)
 - [ ] **Stage 6** — Run pipeline on the app, collect agent artifacts
   - [ ] `context/bugs/001/research/verified-research.md`
   - [ ] `context/bugs/001/fix-summary.md`

@@ -3,3 +3,6 @@ node_modules/
 .DS_Store
 coverage/
 .vitest-cache/
+
+# Synced from agents/ and skills/ by run-pipeline.sh — not the source of truth
+.claude/
