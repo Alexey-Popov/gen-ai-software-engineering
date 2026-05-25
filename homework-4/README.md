@@ -9,12 +9,26 @@ Anastasia Kopiika
 4-agent pipeline (Research Verifier → Bug Fixer → Security Verifier → Unit Test Generator)
 operating on a small sample application with seeded bugs and a security issue.
 
-## Pipeline
+## Pipeline (6 agents)
 ```
 Bug Researcher → Research Verifier → Bug Planner → Bug Fixer
                                                  ├─→ Security Verifier
                                                  └─→ Unit Test Generator
 ```
+
+| # | Agent | File | Model | Why this model |
+|---|-------|------|-------|----------------|
+| 1 | Bug Researcher       | `agents/bug-researcher.agent.md`        | `claude-opus-4-7`   | Root-cause analysis across multiple files; mistakes here cascade. |
+| 2 | Research Verifier    | `agents/research-verifier.agent.md`     | `claude-opus-4-7`   | Trust boundary of the pipeline; over-leniency lets bad research through. |
+| 3 | Bug Planner          | `agents/bug-planner.agent.md`           | `claude-sonnet-4-6` | Structured transformation from verified research to plan. |
+| 4 | Bug Fixer            | `agents/bug-fixer.agent.md`             | `claude-haiku-4-5`  | Mechanical edits per plan; speed and cost matter. |
+| 5 | Security Verifier    | `agents/security-verifier.agent.md`     | `claude-opus-4-7`   | Broad knowledge (OWASP/CWE) + reasoning about untrusted input flow. |
+| 6 | Unit Test Generator  | `agents/unit-test-generator.agent.md`   | `claude-sonnet-4-6` | Idiomatic vitest tests + edge-case reasoning; Sonnet balances quality and cost. |
+
+## Conventions
+- **`{id}`** in agent files is the bug-bundle id under `context/bugs/`. The orchestrator (Stage 5) passes it via the `BUG_ID` env var; for this homework `BUG_ID=001`.
+- Each agent file declares `model:` in its frontmatter — this is the explicit model selection required by the assignment.
+- All agents are designed as **Claude Code subagents** invoked by the orchestrator via the Agent tool. Verifiers (Research Verifier, Security Verifier) have read-only tools by construction.
 
 ## Sample application — `notes-api`
 A minimal Express REST API for user notes with in-memory storage.
@@ -55,13 +69,14 @@ See `HOWTORUN.md` for run instructions.
 - [x] **Stage 2** — Skills review & finalize
   - [x] `skills/research-quality-measurement.md` (aggregation rule, action-per-level, verdict examples)
   - [x] `skills/unit-tests-FIRST.md` (vitest/supertest stack, coverage minimum, reference example)
-- [ ] **Stage 3** — Agents review & finalize
-  - [x] `agents/research-verifier.agent.md` (draft)
-  - [x] `agents/bug-fixer.agent.md` (draft)
-  - [x] `agents/security-verifier.agent.md` (draft)
-  - [x] `agents/unit-test-generator.agent.md` (draft)
-  - [ ] Add Bug Researcher + Bug Planner agents (pipeline prerequisites)
-  - [ ] Justify model choice per agent in this README
+- [x] **Stage 3** — Agents review & finalize
+  - [x] `agents/research-verifier.agent.md` (Pipeline action, INSUFFICIENT stop, fail-fast on missing files)
+  - [x] `agents/bug-fixer.agent.md` (Edit preference, npm test, stop-on-failure)
+  - [x] `agents/security-verifier.agent.md` (broadened scope: changed + imported + endpoint-reachable, output template)
+  - [x] `agents/unit-test-generator.agent.md` (vitest discovery, naming convention, 1 retry max)
+  - [x] `agents/bug-researcher.agent.md` (new — produces codebase-research.md)
+  - [x] `agents/bug-planner.agent.md` (new — produces implementation-plan.md)
+  - [x] Model justification per agent (see table above)
 - [ ] **Stage 4** — Preparatory artifacts (Researcher + Planner outputs)
   - [ ] `context/bugs/001/research/codebase-research.md`
   - [ ] `context/bugs/001/implementation-plan.md`
