@@ -97,10 +97,11 @@ At the very end, print:
 EOF
 )"
 
-claude -p \
+# Pass the prompt via stdin: --allowed-tools is variadic (<tools...>) and would
+# otherwise swallow a trailing positional prompt as another tool name.
+printf '%s' "$ORCHESTRATOR_PROMPT" | claude -p \
   --permission-mode bypassPermissions \
-  --allowed-tools "Agent,Read,Write,Edit,Bash,Grep,Glob" \
-  "$ORCHESTRATOR_PROMPT"
+  --allowed-tools "Agent,Read,Write,Edit,Bash,Grep,Glob"
 
 echo
 echo "Orchestrator session ended."

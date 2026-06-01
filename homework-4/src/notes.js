@@ -16,12 +16,12 @@ export function resetNotes() {
 }
 
 export function listNotes(page, perPage) {
-  const start = page * perPage;
+  const start = (page - 1) * perPage;
   return notes.slice(start, start + perPage);
 }
 
 export function searchNotes(q) {
-  return notes.filter(n => n.title.includes(q) || n.tags.includes(q));
+  return notes.filter(n => n.title.includes(q) || (Array.isArray(n.tags) && n.tags.includes(q)));
 }
 
 export function deleteNote(id) {
