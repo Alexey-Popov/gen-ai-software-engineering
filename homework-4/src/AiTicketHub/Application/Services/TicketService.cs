@@ -92,7 +92,7 @@ public class TicketService : ITicketService
             .Where(t => request.AssignedTo == null  || t.AssignedTo == request.AssignedTo)
             .ToList();
 
-        var total    = filtered.Count;
+        var total    = allResult.Value!.Count;
         var page     = request.Page     < 1 ? 1  : request.Page;
         var pageSize = request.PageSize < 1 ? 20 : request.PageSize;
 

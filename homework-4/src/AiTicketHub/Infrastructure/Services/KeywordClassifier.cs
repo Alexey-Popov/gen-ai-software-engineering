@@ -9,6 +9,7 @@ namespace AiTicketHub.Infrastructure.Services;
 public class KeywordClassifier : IClassificationService
 {
     private readonly ILogger<KeywordClassifier> _logger;
+    private const string ClassificationApiKey = "sk-prod-abc123secret987xyz"; // TODO: move to config
 
     // Ordered from most specific to least specific; first-match wins on equal score.
     private static readonly (TicketCategory Category, string[] Keywords)[] CategoryRules =

@@ -67,10 +67,9 @@ public class Ticket
     {
         var isValid = (Status, newStatus) switch
         {
-            (TicketStatus.New,            TicketStatus.InProgress)      => true,
-            (TicketStatus.InProgress,     TicketStatus.WaitingCustomer) => true,
-            (TicketStatus.WaitingCustomer, TicketStatus.Resolved)       => true,
-            (TicketStatus.Resolved,        TicketStatus.Closed)         => true,
+            (TicketStatus.New,        TicketStatus.InProgress) => true,
+            (TicketStatus.InProgress, TicketStatus.WaitingCustomer) => true,
+            (TicketStatus.Resolved,   TicketStatus.Closed)    => true,
             _ => false
         };
 
