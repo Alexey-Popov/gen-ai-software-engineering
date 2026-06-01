@@ -1,0 +1,51 @@
+customerId,customerEmail,customerName,subject,description,category,priority,source,deviceType,assignedTo,browser,tags
+cust-001,alice@example.com,Alice Smith,Cannot log in to my account,I have been unable to log in since yesterday morning using my usual credentials.,AccountAccess,High,WebForm,Desktop,agent-01,Chrome,login|auth
+cust-002,bob@example.com,Bob Jones,Password reset not working,The password reset link I received by email does not redirect to the reset form.,AccountAccess,Urgent,Email,Mobile,,Firefox,password|reset
+cust-003,carol@example.com,Carol White,Two-factor authentication blocked,My authenticator app is not generating the correct code for login.,AccountAccess,High,Api,Desktop,agent-02,,2fa|login
+cust-004,dave@example.com,Dave Brown,Account locked after failed attempts,My account has been locked after three failed login attempts.,AccountAccess,Medium,Chat,Tablet,,,
+cust-005,eve@example.com,Eve Davis,Username not recognised,The login page says my username does not exist although I registered last week.,AccountAccess,Medium,Phone,Mobile,,Safari,
+cust-006,frank@example.com,Frank Miller,Cannot change account email,The account settings page does not save my new email address.,AccountAccess,Low,WebForm,Desktop,,,settings|email
+cust-007,grace@example.com,Grace Wilson,Session expires too quickly,My session logs me out after just two minutes of inactivity.,AccountAccess,Low,Api,Mobile,,,session
+cust-008,henry@example.com,Henry Moore,Forgot username and email changed,I no longer have access to the email associated with my account.,AccountAccess,Urgent,Email,Desktop,agent-03,Edge,account|recovery
+cust-009,irene@example.com,Irene Taylor,App crashes on startup,The mobile app crashes immediately on launch after the latest update.,TechnicalIssue,Urgent,WebForm,Mobile,,Safari,crash|startup
+cust-010,jack@example.com,Jack Anderson,API returns 500 errors intermittently,Our integration receives HTTP 500 responses roughly every ten requests.,TechnicalIssue,High,Api,Desktop,agent-01,Chrome,api|500
+cust-011,kate@example.com,Kate Thomas,Dashboard widgets not loading,Three of the five dashboard widgets show a spinner indefinitely.,TechnicalIssue,High,WebForm,Desktop,,,widgets|dashboard
+cust-012,liam@example.com,Liam Jackson,Export to CSV produces empty file,Clicking the export button downloads a file with only the header row.,TechnicalIssue,Medium,Chat,Tablet,,Firefox,export|csv
+cust-013,mia@example.com,Mia Harris,Notifications not delivered,I am not receiving any in-app or email notifications despite correct settings.,TechnicalIssue,Medium,Email,Mobile,agent-02,Chrome,notifications
+cust-014,noah@example.com,Noah Martin,Search returns wrong results,Searching for a customer name returns unrelated records.,TechnicalIssue,Medium,Phone,Desktop,,,search
+cust-015,olivia@example.com,Olivia Garcia,File upload silently fails,Uploading attachments shows success but the file is not accessible afterwards.,TechnicalIssue,High,WebForm,Desktop,agent-03,Edge,upload|files
+cust-016,peter@example.com,Peter Martinez,Page load time over 30 seconds,The reports page takes over 30 seconds to load with fewer than 100 records.,TechnicalIssue,High,Api,Desktop,,,performance|slow
+cust-017,quinn@example.com,Quinn Robinson,Duplicate charge on my invoice,I have been billed twice for the same subscription period.,BillingQuestion,Urgent,Email,Desktop,agent-01,,billing|duplicate
+cust-018,rachel@example.com,Rachel Clark,Invoice shows wrong currency,My invoices are displayed in USD although my account is set to EUR.,BillingQuestion,High,WebForm,Desktop,,,invoice|currency
+cust-019,sam@example.com,Sam Rodriguez,Refund not received after 14 days,I requested a refund two weeks ago and have not seen it on my statement.,BillingQuestion,High,Phone,Mobile,agent-02,,refund
+cust-020,tina@example.com,Tina Lewis,VAT number not appearing on invoices,My business VAT number does not appear on any of the generated invoices.,BillingQuestion,Medium,Email,Desktop,,,vat|invoice
+cust-021,uma@example.com,Uma Lee,Subscription auto-renewed unexpectedly,My annual subscription renewed automatically although I had cancelled it.,BillingQuestion,Urgent,Chat,Tablet,agent-03,Chrome,subscription|renewal
+cust-022,victor@example.com,Victor Walker,Cannot download past invoices,The invoices page shows entries but the download link returns a 404 error.,BillingQuestion,Medium,Api,Desktop,,,invoice|download
+cust-023,wendy@example.com,Wendy Hall,Promo code not applying correct discount,I entered a valid promo code but the checkout total was not reduced.,BillingQuestion,Low,WebForm,Mobile,,Firefox,promo|discount
+cust-024,xander@example.com,Xander Allen,Payment method update not saving,After updating my credit card details the system still charges the old card.,BillingQuestion,High,Email,Desktop,agent-01,,payment|card
+cust-025,yara@example.com,Yara Young,Please add dark mode to the interface,A dark mode option would greatly reduce eye strain for evening users.,FeatureRequest,Low,WebForm,Desktop,,,ui|dark-mode
+cust-026,zoe@example.com,Zoe Hernandez,Bulk CSV import from admin panel,We need to be able to import up to 10000 records directly from the admin panel.,FeatureRequest,Medium,Api,Desktop,agent-02,,import|bulk
+cust-027,alex@example.com,Alex King,Mobile push notifications,Please add push notification support to the iOS and Android apps.,FeatureRequest,Medium,Chat,Mobile,,Safari,mobile|push
+cust-028,beth@example.com,Beth Wright,Custom report builder,We need a drag-and-drop report builder to create ad-hoc reports.,FeatureRequest,High,Email,Desktop,,,reports|builder
+cust-029,carl@example.com,Carl Scott,Two-way calendar sync,Please support bidirectional sync with Google Calendar and Outlook.,FeatureRequest,Medium,WebForm,Desktop,agent-03,,calendar|sync
+cust-030,diana@example.com,Diana Green,Role-based access control per module,Admins need to grant per-module permissions rather than all-or-nothing roles.,FeatureRequest,High,Api,Desktop,,,permissions|rbac
+cust-031,ethan@example.com,Ethan Adams,Keyboard shortcuts for ticket actions,Power users need keyboard shortcuts to close and reassign tickets without the mouse.,FeatureRequest,Low,WebForm,Desktop,,,keyboard|shortcuts|ux
+cust-032,fiona@example.com,Fiona Baker,Auto-suggest tags when creating tickets,As the agent types a subject the system should suggest matching tags.,FeatureRequest,Low,Chat,Mobile,,,tags|autocomplete
+cust-033,george@example.com,George Carter,Clicking submit button causes 400 error,The submit button on the new ticket form consistently returns HTTP 400.,BugReport,High,WebForm,Desktop,agent-01,Chrome,bug|form|400
+cust-034,hannah@example.com,Hannah Mitchell,Filter dropdown resets on page refresh,Applying a category filter and then refreshing the page clears the selection.,BugReport,Medium,Api,Desktop,,,bug|filter|state
+cust-035,ivan@example.com,Ivan Perez,Sort by date broken after row 100,Sorting tickets by creation date works correctly only for the first 100 rows.,BugReport,High,Email,Desktop,agent-02,Firefox,bug|sort|pagination
+cust-036,julia@example.com,Julia Roberts,Assigned-to field shows wrong agent,After reassigning a ticket the header still shows the previous agent name.,BugReport,Medium,WebForm,Tablet,,Edge,bug|assignment|ui
+cust-037,kevin@example.com,Kevin Turner,Delete confirmation modal not closing,The confirmation modal after deleting a ticket stays open requiring a page reload.,BugReport,Low,Chat,Desktop,,,bug|modal|ui
+cust-038,laura@example.com,Laura Phillips,Ticket count badge not updating,The unread ticket count in the navigation badge does not refresh without reload.,BugReport,Medium,Phone,Mobile,,Chrome,bug|badge|realtime
+cust-039,mike@example.com,Mike Campbell,CSV export includes deleted tickets,Exported CSV files contain tickets that were deleted more than a month ago.,BugReport,High,Api,Desktop,agent-03,,bug|export|data
+cust-040,nina@example.com,Nina Parker,Date picker accepts invalid dates,The date picker allows selecting 31 February without any validation error.,BugReport,Low,WebForm,Desktop,,,bug|datepicker|validation
+cust-041,oscar@example.com,Oscar Evans,Error 503 on /api/tickets/import,The import endpoint returns 503 for files larger than 1 MB.,BugReport,Urgent,Api,Desktop,agent-01,Chrome,bug|import|503
+cust-042,paula@example.com,Paula Edwards,General question about SLA policy,I would like to understand the response time commitment for priority tickets.,Other,Low,Email,Desktop,,,sla|policy
+cust-043,ralph@example.com,Ralph Collins,Requesting a demo for my team,Our team of 20 would like to schedule a product demo before purchasing.,Other,Low,Phone,Mobile,,,demo|sales
+cust-044,sara@example.com,Sara Stewart,Documentation link returns 404,The link to the API documentation in the footer returns a 404 error.,Other,Medium,WebForm,Desktop,agent-02,,docs|404
+cust-045,tom@example.com,Tom Sanchez,Question about data residency,Can you confirm which region our data is stored in under the current plan?,Other,Medium,Email,Desktop,,,data|privacy
+cust-046,ursula@example.com,Ursula Morris,Accessibility: screen reader issues,Several interactive elements are not labelled correctly for screen readers.,Other,High,WebForm,Desktop,agent-03,,accessibility|a11y
+cust-047,vince@example.com,Vince Rogers,How to integrate with Slack,We want to post ticket updates to a Slack channel automatically.,Other,Low,Chat,Desktop,,,integration|slack
+cust-048,wanda@example.com,Wanda Reed,Request training materials,Please provide onboarding documentation for new support agents.,Other,Low,Email,Desktop,agent-01,,training|docs
+cust-049,xavier@example.com,Xavier Cook,Cannot reproduce reported crash,A customer reported a crash on iOS 17.4 that I cannot reproduce in testing.,Other,Medium,Api,Mobile,,Safari,crash|repro
+cust-050,yasmin@example.com,Yasmin Morgan,Data export compliance request,We need a full data export for GDPR compliance purposes within 30 days.,Other,High,Email,Desktop,agent-02,,gdpr|export|compliance

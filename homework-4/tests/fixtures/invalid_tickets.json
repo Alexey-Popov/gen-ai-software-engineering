@@ -1,0 +1,65 @@
+[
+  {
+    "customerEmail": "alice@example.com",
+    "customerName":  "Alice Smith",
+    "subject":       "Missing customerId field",
+    "description":   "This object omits the required customerId field and must be rejected by the parser.",
+    "category":      "AccountAccess",
+    "priority":      "High"
+  },
+  {
+    "customerId":    "cust-002",
+    "customerEmail": "bob@example.com",
+    "customerName":  "Bob Jones",
+    "subject":       "Invalid category string",
+    "description":   "The category value does not match any TicketCategory enum member and must produce a parse error.",
+    "category":      "NotARealCategory",
+    "priority":      "Medium"
+  },
+  {
+    "customerId":    "cust-003",
+    "customerEmail": "carol@example.com",
+    "customerName":  "Carol White",
+    "subject":       "Invalid priority string",
+    "description":   "The priority value is not a member of the TicketPriority enum and must be rejected.",
+    "category":      "BugReport",
+    "priority":      "SuperUrgent"
+  },
+  {
+    "customerId":    "cust-004",
+    "customerEmail": "dave@example.com",
+    "customerName":  "Dave Brown",
+    "subject":       "",
+    "description":   "The subject field is an empty string which the parser must treat as missing and reject.",
+    "category":      "TechnicalIssue",
+    "priority":      "Low"
+  },
+  {
+    "customerId":    "cust-005",
+    "customerEmail": "eve@example.com",
+    "customerName":  "Eve Davis",
+    "subject":       "Missing description field",
+    "category":      "Other",
+    "priority":      "Medium"
+  },
+  {
+    "customerId":    "",
+    "customerEmail": "frank@example.com",
+    "customerName":  "Frank Miller",
+    "subject":       "Empty customerId string",
+    "description":   "The customerId field is present but is an empty string which is treated as missing.",
+    "category":      "FeatureRequest",
+    "priority":      "Low"
+  },
+  "this is not an object and must trigger a parse error for this array element",
+  {
+    "customerId":    "cust-007",
+    "customerEmail": "grace@example.com",
+    "customerName":  "Grace Wilson",
+    "subject":       "Invalid source enum value",
+    "description":   "The source value does not match any TicketSource enum member and must be rejected by the parser.",
+    "category":      "BugReport",
+    "priority":      "High",
+    "source":        "Pigeon"
+  }
+]

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tickets>
+  <!-- Row 1: Missing required CustomerEmail element -->
+  <Ticket>
+    <CustomerId>cust-001</CustomerId>
+    <CustomerName>Alice Smith</CustomerName>
+    <Subject>Missing email field</Subject>
+    <Description>This ticket element omits the required CustomerEmail child element and must be rejected.</Description>
+    <Category>AccountAccess</Category>
+    <Priority>High</Priority>
+  </Ticket>
+
+  <!-- Row 2: Invalid Category enum value -->
+  <Ticket>
+    <CustomerId>cust-002</CustomerId>
+    <CustomerEmail>bob@example.com</CustomerEmail>
+    <CustomerName>Bob Jones</CustomerName>
+    <Subject>Invalid category value</Subject>
+    <Description>The Category element contains a value that does not match any TicketCategory enum member.</Description>
+    <Category>NotARealCategory</Category>
+    <Priority>Medium</Priority>
+  </Ticket>
+
+  <!-- Row 3: Invalid Priority enum value -->
+  <Ticket>
+    <CustomerId>cust-003</CustomerId>
+    <CustomerEmail>carol@example.com</CustomerEmail>
+    <CustomerName>Carol White</CustomerName>
+    <Subject>Invalid priority value</Subject>
+    <Description>The Priority element contains a value that is not a member of the TicketPriority enum.</Description>
+    <Category>BugReport</Category>
+    <Priority>ExtremelyUrgent</Priority>
+  </Ticket>
+
+  <!-- Row 4: Empty Subject element -->
+  <Ticket>
+    <CustomerId>cust-004</CustomerId>
+    <CustomerEmail>dave@example.com</CustomerEmail>
+    <CustomerName>Dave Brown</CustomerName>
+    <Subject></Subject>
+    <Description>The Subject element is present but contains only whitespace and must be treated as missing.</Description>
+    <Category>TechnicalIssue</Category>
+    <Priority>Low</Priority>
+  </Ticket>
+
+  <!-- Row 5: Missing required Description element -->
+  <Ticket>
+    <CustomerId>cust-005</CustomerId>
+    <CustomerEmail>eve@example.com</CustomerEmail>
+    <CustomerName>Eve Davis</CustomerName>
+    <Subject>Missing description element</Subject>
+    <Category>Other</Category>
+    <Priority>Medium</Priority>
+  </Ticket>
+
+  <!-- Row 6: Invalid Source enum value -->
+  <Ticket>
+    <CustomerId>cust-006</CustomerId>
+    <CustomerEmail>frank@example.com</CustomerEmail>
+    <CustomerName>Frank Miller</CustomerName>
+    <Subject>Invalid source enum value</Subject>
+    <Description>The Source element value does not match any TicketSource enum member and must produce an error.</Description>
+    <Category>FeatureRequest</Category>
+    <Priority>Low</Priority>
+    <Source>Pigeon</Source>
+  </Ticket>
+
+  <!-- Row 7: Invalid DeviceType enum value -->
+  <Ticket>
+    <CustomerId>cust-007</CustomerId>
+    <CustomerEmail>grace@example.com</CustomerEmail>
+    <CustomerName>Grace Wilson</CustomerName>
+    <Subject>Invalid device type value</Subject>
+    <Description>The DeviceType element contains a value that is not a member of the DeviceType enum.</Description>
+    <Category>BugReport</Category>
+    <Priority>High</Priority>
+    <DeviceType>Smartwatch</DeviceType>
+  </Ticket>
+
+  <!-- Row 8: Whitespace-only CustomerId -->
+  <Ticket>
+    <CustomerId>   </CustomerId>
+    <CustomerEmail>henry@example.com</CustomerEmail>
+    <CustomerName>Henry Moore</CustomerName>
+    <Subject>Whitespace-only customer ID</Subject>
+    <Description>The CustomerId element contains only whitespace characters which the parser must treat as missing.</Description>
+    <Category>TechnicalIssue</Category>
+    <Priority>Medium</Priority>
+  </Ticket>
+</Tickets>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tickets>
+  <Ticket>
+    <CustomerId>cust-001</CustomerId>
+    <CustomerEmail>alice@example.com</CustomerEmail>
+    <CustomerName>Alice Smith</CustomerName>
+    <Subject>Cannot log in to my account</Subject>
+    <Description>I have been unable to log in since yesterday morning using my usual credentials.</Description>
+    <Category>AccountAccess</Category>
+    <Priority>High</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-01</AssignedTo>
+    <Browser>Chrome</Browser>
+    <Tags>login|auth</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-002</CustomerId>
+    <CustomerEmail>bob@example.com</CustomerEmail>
+    <CustomerName>Bob Jones</CustomerName>
+    <Subject>Password reset link does not work</Subject>
+    <Description>The password reset email arrives but clicking the link opens an error page every time.</Description>
+    <Category>AccountAccess</Category>
+    <Priority>Urgent</Priority>
+    <Source>Email</Source>
+    <DeviceType>Mobile</DeviceType>
+    <Tags>password|reset</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-003</CustomerId>
+    <CustomerEmail>carol@example.com</CustomerEmail>
+    <CustomerName>Carol White</CustomerName>
+    <Subject>App crashes on startup after update</Subject>
+    <Description>The mobile application crashes immediately on launch following the latest version update.</Description>
+    <Category>TechnicalIssue</Category>
+    <Priority>Urgent</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Mobile</DeviceType>
+    <Browser>Safari</Browser>
+    <Tags>crash|startup</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-004</CustomerId>
+    <CustomerEmail>dave@example.com</CustomerEmail>
+    <CustomerName>Dave Brown</CustomerName>
+    <Subject>API returns 500 errors intermittently</Subject>
+    <Description>Our integration receives HTTP 500 responses roughly every ten requests during peak hours.</Description>
+    <Category>TechnicalIssue</Category>
+    <Priority>High</Priority>
+    <Source>Api</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-02</AssignedTo>
+    <Tags>api|500</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-005</CustomerId>
+    <CustomerEmail>eve@example.com</CustomerEmail>
+    <CustomerName>Eve Davis</CustomerName>
+    <Subject>Dashboard widgets not loading</Subject>
+    <Description>Three of the five dashboard widgets show an infinite spinner and never display any data.</Description>
+    <Category>TechnicalIssue</Category>
+    <Priority>Medium</Priority>
+    <Source>Chat</Source>
+    <DeviceType>Desktop</DeviceType>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-006</CustomerId>
+    <CustomerEmail>frank@example.com</CustomerEmail>
+    <CustomerName>Frank Miller</CustomerName>
+    <Subject>Export to CSV produces empty file</Subject>
+    <Description>Clicking the export button downloads a CSV file that contains only the header row with no data.</Description>
+    <Category>TechnicalIssue</Category>
+    <Priority>Medium</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Tablet</DeviceType>
+    <Tags>export|csv</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-007</CustomerId>
+    <CustomerEmail>grace@example.com</CustomerEmail>
+    <CustomerName>Grace Wilson</CustomerName>
+    <Subject>Duplicate charge on my invoice</Subject>
+    <Description>I have been billed twice for the same subscription period and need an urgent refund.</Description>
+    <Category>BillingQuestion</Category>
+    <Priority>Urgent</Priority>
+    <Source>Phone</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-03</AssignedTo>
+    <Tags>billing|duplicate</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-008</CustomerId>
+    <CustomerEmail>henry@example.com</CustomerEmail>
+    <CustomerName>Henry Moore</CustomerName>
+    <Subject>Invoice shows wrong currency</Subject>
+    <Description>My invoices are displayed in USD even though my account region is configured to use EUR.</Description>
+    <Category>BillingQuestion</Category>
+    <Priority>High</Priority>
+    <Source>Email</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>invoice|currency</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-009</CustomerId>
+    <CustomerEmail>irene@example.com</CustomerEmail>
+    <CustomerName>Irene Taylor</CustomerName>
+    <Subject>Refund not received after two weeks</Subject>
+    <Description>I requested a refund fourteen days ago and have not yet seen the credit on my bank statement.</Description>
+    <Category>BillingQuestion</Category>
+    <Priority>High</Priority>
+    <Source>Phone</Source>
+    <DeviceType>Mobile</DeviceType>
+    <Tags>refund</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-010</CustomerId>
+    <CustomerEmail>jack@example.com</CustomerEmail>
+    <CustomerName>Jack Anderson</CustomerName>
+    <Subject>Subscription auto-renewed after cancellation</Subject>
+    <Description>My annual subscription renewed automatically even though I cancelled it three weeks before renewal.</Description>
+    <Category>BillingQuestion</Category>
+    <Priority>Urgent</Priority>
+    <Source>Chat</Source>
+    <DeviceType>Tablet</DeviceType>
+    <AssignedTo>agent-01</AssignedTo>
+    <Tags>subscription|renewal</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-011</CustomerId>
+    <CustomerEmail>kate@example.com</CustomerEmail>
+    <CustomerName>Kate Thomas</CustomerName>
+    <Subject>VAT number missing from invoices</Subject>
+    <Description>My registered business VAT number does not appear on any of the invoices generated for my account.</Description>
+    <Category>BillingQuestion</Category>
+    <Priority>Medium</Priority>
+    <Source>Email</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>vat|invoice</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-012</CustomerId>
+    <CustomerEmail>liam@example.com</CustomerEmail>
+    <CustomerName>Liam Jackson</CustomerName>
+    <Subject>Promo code not applying discount</Subject>
+    <Description>I entered a valid promotional code during checkout but the total was not reduced as expected.</Description>
+    <Category>BillingQuestion</Category>
+    <Priority>Low</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Mobile</DeviceType>
+    <Tags>promo|discount</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-013</CustomerId>
+    <CustomerEmail>mia@example.com</CustomerEmail>
+    <CustomerName>Mia Harris</CustomerName>
+    <Subject>Please add dark mode to the interface</Subject>
+    <Description>A dark mode toggle would significantly reduce eye strain for users who work in low-light environments.</Description>
+    <Category>FeatureRequest</Category>
+    <Priority>Low</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>ui|dark-mode</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-014</CustomerId>
+    <CustomerEmail>noah@example.com</CustomerEmail>
+    <CustomerName>Noah Martin</CustomerName>
+    <Subject>Bulk CSV import from admin panel</Subject>
+    <Description>We need to import up to ten thousand records directly from the admin panel without using the API.</Description>
+    <Category>FeatureRequest</Category>
+    <Priority>Medium</Priority>
+    <Source>Api</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-02</AssignedTo>
+    <Tags>import|bulk</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-015</CustomerId>
+    <CustomerEmail>olivia@example.com</CustomerEmail>
+    <CustomerName>Olivia Garcia</CustomerName>
+    <Subject>Mobile push notification support</Subject>
+    <Description>Please add push notification support to both the iOS and Android mobile applications.</Description>
+    <Category>FeatureRequest</Category>
+    <Priority>Medium</Priority>
+    <Source>Chat</Source>
+    <DeviceType>Mobile</DeviceType>
+    <Browser>Safari</Browser>
+    <Tags>mobile|push</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-016</CustomerId>
+    <CustomerEmail>peter@example.com</CustomerEmail>
+    <CustomerName>Peter Martinez</CustomerName>
+    <Subject>Custom report builder with drag and drop</Subject>
+    <Description>We need a drag-and-drop report builder so agents can create ad-hoc reports without developer assistance.</Description>
+    <Category>FeatureRequest</Category>
+    <Priority>High</Priority>
+    <Source>Email</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>reports|builder</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-017</CustomerId>
+    <CustomerEmail>quinn@example.com</CustomerEmail>
+    <CustomerName>Quinn Robinson</CustomerName>
+    <Subject>Role-based access control per module</Subject>
+    <Description>Administrators need granular per-module permissions rather than the current all-or-nothing role system.</Description>
+    <Category>FeatureRequest</Category>
+    <Priority>High</Priority>
+    <Source>Api</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>permissions|rbac</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-018</CustomerId>
+    <CustomerEmail>rachel@example.com</CustomerEmail>
+    <CustomerName>Rachel Clark</CustomerName>
+    <Subject>Submit button on ticket form causes 400</Subject>
+    <Description>The submit button on the new ticket creation form consistently returns HTTP 400 with no descriptive error.</Description>
+    <Category>BugReport</Category>
+    <Priority>High</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-03</AssignedTo>
+    <Browser>Chrome</Browser>
+    <Tags>bug|form|400</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-019</CustomerId>
+    <CustomerEmail>sam@example.com</CustomerEmail>
+    <CustomerName>Sam Rodriguez</CustomerName>
+    <Subject>Filter dropdown resets on page refresh</Subject>
+    <Description>Applying a category filter and then refreshing the page clears the selected filter every time.</Description>
+    <Category>BugReport</Category>
+    <Priority>Medium</Priority>
+    <Source>Api</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>bug|filter</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-020</CustomerId>
+    <CustomerEmail>tina@example.com</CustomerEmail>
+    <CustomerName>Tina Lewis</CustomerName>
+    <Subject>Sort by date broken after row 100</Subject>
+    <Description>Sorting tickets by creation date works for the first hundred rows but ordering breaks beyond that.</Description>
+    <Category>BugReport</Category>
+    <Priority>High</Priority>
+    <Source>Email</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Browser>Firefox</Browser>
+    <Tags>bug|sort|pagination</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-021</CustomerId>
+    <CustomerEmail>uma@example.com</CustomerEmail>
+    <CustomerName>Uma Walker</CustomerName>
+    <Subject>Delete confirmation modal not closing</Subject>
+    <Description>After deleting a ticket the confirmation modal stays open and requires a full page reload to dismiss.</Description>
+    <Category>BugReport</Category>
+    <Priority>Low</Priority>
+    <Source>Chat</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>bug|modal|ui</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-022</CustomerId>
+    <CustomerEmail>victor@example.com</CustomerEmail>
+    <CustomerName>Victor Hall</CustomerName>
+    <Subject>CSV export includes deleted tickets</Subject>
+    <Description>Exported CSV files contain tickets that were permanently deleted over a month ago from the system.</Description>
+    <Category>BugReport</Category>
+    <Priority>High</Priority>
+    <Source>Api</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-01</AssignedTo>
+    <Tags>bug|export|data</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-023</CustomerId>
+    <CustomerEmail>wendy@example.com</CustomerEmail>
+    <CustomerName>Wendy Allen</CustomerName>
+    <Subject>Error 503 on bulk import for large files</Subject>
+    <Description>The import endpoint returns 503 Service Unavailable whenever the uploaded file exceeds one megabyte.</Description>
+    <Category>BugReport</Category>
+    <Priority>Urgent</Priority>
+    <Source>Api</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Browser>Edge</Browser>
+    <Tags>bug|import|503</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-024</CustomerId>
+    <CustomerEmail>xander@example.com</CustomerEmail>
+    <CustomerName>Xander Young</CustomerName>
+    <Subject>Date picker accepts invalid dates</Subject>
+    <Description>The date picker control allows selecting 31 February without displaying any validation error message.</Description>
+    <Category>BugReport</Category>
+    <Priority>Low</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>bug|datepicker|validation</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-025</CustomerId>
+    <CustomerEmail>yara@example.com</CustomerEmail>
+    <CustomerName>Yara King</CustomerName>
+    <Subject>General question about SLA policy</Subject>
+    <Description>I would like to understand the committed response times for different ticket priority levels under my plan.</Description>
+    <Category>Other</Category>
+    <Priority>Low</Priority>
+    <Source>Email</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>sla|policy</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-026</CustomerId>
+    <CustomerEmail>zoe@example.com</CustomerEmail>
+    <CustomerName>Zoe Scott</CustomerName>
+    <Subject>Requesting a product demo for our team</Subject>
+    <Description>Our team of twenty agents would like to schedule a product demonstration before committing to a plan.</Description>
+    <Category>Other</Category>
+    <Priority>Low</Priority>
+    <Source>Phone</Source>
+    <DeviceType>Mobile</DeviceType>
+    <Tags>demo|sales</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-027</CustomerId>
+    <CustomerEmail>alex@example.com</CustomerEmail>
+    <CustomerName>Alex Green</CustomerName>
+    <Subject>Documentation link returns 404</Subject>
+    <Description>The link to the API documentation page in the application footer consistently returns a 404 error.</Description>
+    <Category>Other</Category>
+    <Priority>Medium</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-02</AssignedTo>
+    <Tags>docs|404</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-028</CustomerId>
+    <CustomerEmail>beth@example.com</CustomerEmail>
+    <CustomerName>Beth Adams</CustomerName>
+    <Subject>Question about data residency region</Subject>
+    <Description>Can you confirm which geographic region our customer data is stored in under the current subscription plan?</Description>
+    <Category>Other</Category>
+    <Priority>Medium</Priority>
+    <Source>Email</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>data|privacy</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-029</CustomerId>
+    <CustomerEmail>carl@example.com</CustomerEmail>
+    <CustomerName>Carl Baker</CustomerName>
+    <Subject>Accessibility: screen reader labels missing</Subject>
+    <Description>Several interactive buttons and form inputs across the application lack the correct labels for screen reader users.</Description>
+    <Category>Other</Category>
+    <Priority>High</Priority>
+    <Source>WebForm</Source>
+    <DeviceType>Desktop</DeviceType>
+    <Tags>accessibility|a11y</Tags>
+  </Ticket>
+  <Ticket>
+    <CustomerId>cust-030</CustomerId>
+    <CustomerEmail>diana@example.com</CustomerEmail>
+    <CustomerName>Diana Carter</CustomerName>
+    <Subject>Data export required for GDPR compliance</Subject>
+    <Description>We require a full data export for GDPR subject access request compliance within the statutory thirty-day period.</Description>
+    <Category>Other</Category>
+    <Priority>High</Priority>
+    <Source>Email</Source>
+    <DeviceType>Desktop</DeviceType>
+    <AssignedTo>agent-03</AssignedTo>
+    <Tags>gdpr|export|compliance</Tags>
+  </Ticket>
+</Tickets>

@@ -1,0 +1,10 @@
+customerId,customerEmail,customerName,subject,description,category,priority
+,alice@example.com,Alice Smith,Missing customer ID,This row has no customerId value so the parser must reject it.,AccountAccess,High
+cust-002,,Bob Jones,Missing email address,This row omits the customerEmail field which is required by the parser.,BugReport,Medium
+cust-003,carol@example.com,,Empty customer name,The customerName field is blank so this row should produce a parse error.,TechnicalIssue,Low
+cust-004,dave@example.com,Dave Brown,,Missing subject,The subject field is empty and the parser must flag this row as invalid.,Other,Urgent
+cust-005,eve@example.com,Eve Davis,Missing description,,AccountAccess,High
+cust-006,frank@example.com,Frank Miller,Invalid category value,This row uses a category string that does not match any TicketCategory enum value.,NotARealCategory,Medium
+cust-007,grace@example.com,Grace Wilson,Invalid priority value,This row uses a priority string that does not match any TicketPriority enum value.,BugReport,NotAPriority
+cust-008,henry@example.com,Henry Moore,Invalid source value,This row has an unrecognised source field that must be rejected by the parser.,FeatureRequest,Low,UnknownSource
+cust-009,irene@example.com,Irene Taylor,Whitespace-only description,"   ",BillingQuestion,Medium
