@@ -1,6 +1,7 @@
 # Homework 4 — 4-Agent Pipeline
 
-> Work in progress. See the **Progress** section below for current status.
+> Pipeline implemented and run end-to-end. All agent artifacts are committed and
+> `npm test` is green. Remaining: attach screenshots and open the PR (see **Progress**).
 
 ## Author
 Anastasia Kopiika
@@ -42,20 +43,65 @@ Bugs (input for the Bug Researcher) are documented in
 [`context/bugs/001/bug-context.md`](context/bugs/001/bug-context.md).
 The security issue is **not** pre-listed there — Security Verifier discovers it independently.
 
-### Baseline (before pipeline)
+### Baseline (before pipeline) — screenshot #4
 ```
 Test Files  1 failed (1)
      Tests  4 failed | 1 passed (5)
 ```
-See `docs/screenshots/01-baseline-failures.png`.
+The two seeded bugs: pagination off-by-one (`listNotes`) and a 500 crash on search
+(`searchNotes` calls `.includes` on an undefined `tags`).
 
-## Sections (TODO)
-- Agents and chosen models (with justification)
-- Skills (research-quality-measurement, unit-tests-FIRST)
-- Pipeline runner (single command)
-- How AI was used
-- Challenges
-- Screenshots #2–#8
+## Skills
+Two skills are committed and consumed by the agents that need them:
+
+- **`skills/research-quality-measurement.md`** — a 4-level scale (HIGH / MEDIUM / LOW /
+  INSUFFICIENT) with a "lowest finding wins" aggregation rule and a per-level pipeline
+  action. The **Research Verifier** uses it to rate the research and decide PROCEED vs STOP.
+- **`skills/unit-tests-FIRST.md`** — defines **F**ast, **I**ndependent, **R**epeatable,
+  **S**elf-validating, **T**imely for the project's vitest/supertest stack. The
+  **Unit Test Generator** follows it and fills in a FIRST checklist in `test-report.md`.
+
+## Pipeline runner (single command)
+```bash
+npm run pipeline        # or ./run-pipeline.sh   (BUG_ID=001 by default)
+```
+`run-pipeline.sh` syncs `agents/*.agent.md` → `.claude/agents/` and `skills/` →
+`.claude/skills/`, then starts **one** `claude -p` orchestrator session that dispatches
+all six subagents in order via the Agent tool, halting on STOP / BLOCKED / failed
+between steps. See `HOWTORUN.md` for prerequisites and reset instructions.
+
+## Pipeline run — results (BUG_ID=001)
+| Stage | Agent | Artifact | Outcome |
+|-------|-------|----------|---------|
+| 1 | Bug Researcher      | `research/codebase-research.md` | Both bugs localized with file:line + snippet |
+| 2 | Research Verifier   | `research/verified-research.md` | **Research Quality: HIGH (4/4) → PROCEED** |
+| 3 | Bug Planner         | `implementation-plan.md`        | Minimal before/after per file |
+| 4 | Bug Fixer           | `fix-summary.md`                | **Overall Status: passed** (2 lines changed in `src/notes.js`) |
+| 5 | Security Verifier   | `security-report.md`            | **8 findings** — 1 CRITICAL (hardcoded admin token, CWE-798), 2 HIGH, 2 MED, 2 LOW, 1 INFO |
+| 6 | Unit Test Generator | `test-report.md` + `tests/bug-001.test.js` | **12 passed (5 pre-existing + 7 new)**, 0 retries |
+
+The seeded security issue (hardcoded `ADMIN_TOKEN` in `src/auth.js`) is **not** listed in
+`bug-context.md` — the Security Verifier discovered it independently and reported it as
+F-1 CRITICAL. Per its read-only contract, it reports without editing code.
+
+## How AI was used
+- **Agent + skill design**: drafted the six `*.agent.md` definitions and two skills, then
+  used Cursor to review the agents and suggest improvements (screenshot #3).
+- **The pipeline itself is the AI work product**: every artifact above was produced by the
+  six Claude subagents, not hand-authored. The only hand-written inputs are the sample app
+  (`src/`) and the seeded bug manifest (`bug-context.md`).
+- **Model selection per agent** is explicit in each frontmatter and justified in the table
+  above — Opus for the reasoning-heavy research/security roles, Sonnet for structured
+  transformation and test generation, Haiku for the mechanical fixer.
+
+## Challenges
+- **Variadic CLI flag swallowed the prompt.** `claude --allowed-tools <tools...>` is
+  variadic, so a trailing positional prompt was consumed as another tool name and the run
+  failed with `Input must be provided …` (screenshot #5). Fixed by piping the orchestrator
+  prompt via **stdin** instead of passing it positionally.
+- **Print mode buffers output.** `claude -p` emits the whole `>> starting / << done` log at
+  the end, so the run looks idle while it works; progress is observable by watching the
+  artifact files appear under `context/bugs/001/`.
 
 See `HOWTORUN.md` for run instructions.
 
@@ -77,29 +123,38 @@ See `HOWTORUN.md` for run instructions.
   - [x] `agents/bug-researcher.agent.md` (new — produces codebase-research.md)
   - [x] `agents/bug-planner.agent.md` (new — produces implementation-plan.md)
   - [x] Model justification per agent (see table above)
-- [ ] **Stage 4** — Preparatory artifacts (Researcher + Planner outputs)
-  - [ ] `context/bugs/001/research/codebase-research.md`
-  - [ ] `context/bugs/001/implementation-plan.md`
+- [x] **Stage 4** — Researcher + Planner outputs (produced by the pipeline run, not hand-authored)
+  - [x] `context/bugs/001/research/codebase-research.md`
+  - [x] `context/bugs/001/implementation-plan.md`
 - [x] **Stage 5** — Orchestration (single command runner)
   - [x] `run-pipeline.sh` — syncs agents/ → .claude/agents/, runs one orchestrator Claude session
   - [x] `npm run pipeline` wired in `package.json`
   - [x] Halts on STOP / BLOCKED / failed between steps
   - [x] HOWTORUN.md documents prerequisites (claude CLI + API key)
-- [ ] **Stage 6** — Run pipeline on the app, collect agent artifacts
-  - [ ] `context/bugs/001/research/verified-research.md`
-  - [ ] `context/bugs/001/fix-summary.md`
-  - [ ] `context/bugs/001/security-report.md`
-  - [ ] `context/bugs/001/test-report.md`
-- [ ] **Stage 7** — After-state verification (`npm test` green, app works)
-- [ ] **Stage 8** — Documentation pass (README final, HOWTORUN final, models justified)
+- [x] **Stage 6** — Run pipeline on the app, collect agent artifacts
+  - [x] `context/bugs/001/research/verified-research.md`
+  - [x] `context/bugs/001/fix-summary.md` (Overall Status: passed)
+  - [x] `context/bugs/001/security-report.md` (1 CRITICAL hardcoded token + 7 more)
+  - [x] `context/bugs/001/test-report.md` (+ `tests/bug-001.test.js`)
+- [x] **Stage 7** — After-state verification (`npm test` green: 12 passed / 2 files)
+- [x] **Stage 8** — Documentation pass (README final, HOWTORUN final, models justified)
 - [ ] **Stage 9** — Open PR (branch → fork; embed screenshots, `### Status` checkboxes, instructor as reviewer)
 
 ### Screenshots
-- [x] **#1** Baseline: bugs reproduce — `docs/screenshots/01-baseline-failures.png`
-- [ ] **#2** Pipeline run in terminal (agents in order)
-- [ ] **#3** `verified-research.md` with Research Quality level
-- [ ] **#4** `fix-summary.md` before/after
-- [ ] **#5** `security-report.md` with severity + remediation
-- [ ] **#6** `test-report.md` + generated test files
-- [ ] **#7** `npm test` all green after fix
-- [ ] **#8** App works correctly (after-state)
+- [x] **#1** Prompt / agent design (1 of 2)
+  ![Prompt / agent design 1](docs/screenshots/screenshot1.png)
+- [x] **#2** Prompt / agent design (2 of 2)
+  ![Prompt / agent design 2](docs/screenshots/screenshot2.png)
+- [x] **#3** Cursor prompt — review agents and list improvements
+  ![Cursor review prompt](docs/screenshots/screenshot3.png)
+- [x] **#4** Baseline: buggy app + tests failing (`4 failed | 1 passed`)
+  ![Baseline failures](docs/screenshots/screenshot4.png)
+- [x] **#5** Pipeline run — initial failure (`Input must be provided …`, variadic `--allowed-tools` swallowed the prompt; fixed via stdin)
+  ![Pipeline run failure](docs/screenshots/screenshot5.png)
+- [x] **#6** Pipeline logs after a successful run (6 agents in order, `ARTIFACTS:` list)
+  ![Successful pipeline logs](docs/screenshots/screenshot6.png)
+- [x] **#7** `npm test` all green after fix (`12 passed`)
+  ![Tests green](docs/screenshots/screenshot7.png)
+
+> Security scan and fixes are not screenshotted — the agent reports themselves are committed:
+> `context/bugs/001/security-report.md` (F-1 CRITICAL + 7 more) and `context/bugs/001/fix-summary.md` (before/after).
