@@ -10,6 +10,7 @@ public class JsonTicketParser : IJsonTicketParser
 {
     public async Task<ParseResult<TicketImportRecord>> ParseAsync(Stream input, CancellationToken ct = default)
     {
+        ArgumentNullException.ThrowIfNull(input);
         var records = new List<TicketImportRecord>();
         var errors  = new List<ParseRowError>();
 

@@ -10,6 +10,7 @@ public class CsvTicketParser : ICsvTicketParser
 {
     public async Task<ParseResult<TicketImportRecord>> ParseAsync(Stream input, CancellationToken ct = default)
     {
+        ArgumentNullException.ThrowIfNull(input);
         var records = new List<TicketImportRecord>();
         var errors  = new List<ParseRowError>();
 
@@ -32,7 +33,19 @@ public class CsvTicketParser : ICsvTicketParser
             rowNumber++;
             if (string.IsNullOrWhiteSpace(line)) continue;
 
-            var fields = SplitCsvLine(line);
+            string[] fields;
+            try { fields = SplitCsvLine(line); }
+            catch (FormatException ex)
+            {
+                errors.Add(new ParseRowError(rowNumber, ex.Message));
+                continue;
+            }
+            if (fields.Length < headers.Count)
+            {
+                errors.Add(new ParseRowError(rowNumber,
+                    $"Row has {fields.Length} column(s) but header declares {headers.Count}."));
+                continue;
+            }
             var (record, error) = MapRow(headers, fields, rowNumber);
 
             if (error != null) errors.Add(error);
@@ -172,6 +185,8 @@ public class CsvTicketParser : ICsvTicketParser
             }
         }
 
+        if (inQuotes)
+            throw new FormatException("Unterminated quoted field in CSV line.");
         fields.Add(current.ToString());
         return fields.ToArray();
     }

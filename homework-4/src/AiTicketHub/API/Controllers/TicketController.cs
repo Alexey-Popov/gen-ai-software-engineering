@@ -16,8 +16,10 @@ public class TicketController : ControllerBase
     public TicketController(ITicketService service) => _service = service;
 
     [HttpPost]
-    public async Task<IActionResult> CreateTicket([FromBody] CreateTicketRequest request)
+    public async Task<IActionResult> CreateTicket([FromBody] CreateTicketRequest? request)
     {
+        if (request == null)
+            return BadRequest(new { code = "Validation.Failed", message = "Request body is required." });
         var result = await _service.CreateTicketAsync(request);
         if (!result.IsSuccess) return MapError(result.Error!);
         return CreatedAtAction(nameof(GetTicketById), new { id = result.Value!.Id }, result.Value);
@@ -72,7 +74,8 @@ public class TicketController : ControllerBase
         if (file.Length > 10 * 1024 * 1024)
             return BadRequest(new { code = "Validation.Failed", message = "File exceeds the 10 MB size limit." });
 
-        var format = DetectFormat(file.ContentType, Path.GetExtension(file.FileName));
+        var safeExtension = Path.GetExtension(Path.GetFileName(file.FileName ?? string.Empty));
+        var format = DetectFormat(file.ContentType, safeExtension);
         if (format == null)
             return BadRequest(new { code = "Validation.Failed", message = "Unsupported file format. Allowed: CSV, JSON, XML." });
 

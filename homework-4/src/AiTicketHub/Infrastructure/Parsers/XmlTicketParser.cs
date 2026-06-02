@@ -10,6 +10,7 @@ public class XmlTicketParser : IXmlTicketParser
 {
     public async Task<ParseResult<TicketImportRecord>> ParseAsync(Stream input, CancellationToken ct = default)
     {
+        ArgumentNullException.ThrowIfNull(input);
         var records = new List<TicketImportRecord>();
         var errors  = new List<ParseRowError>();
 
@@ -144,7 +145,7 @@ public class XmlTicketParser : IXmlTicketParser
     {
         var child = parent.Elements()
             .FirstOrDefault(e => e.Name.LocalName.Equals(name, StringComparison.OrdinalIgnoreCase));
-        var value = child?.Value.Trim();
-        return string.IsNullOrEmpty(value) ? null : value;
+        if (child == null) return null;
+        return child.Value.Trim();
     }
 }

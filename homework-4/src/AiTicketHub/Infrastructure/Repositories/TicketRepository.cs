@@ -14,6 +14,7 @@ public class TicketRepository : ITicketRepository
 
     public Task<Result<Ticket>> AddAsync(Ticket ticket)
     {
+        ArgumentNullException.ThrowIfNull(ticket);
         if (!_store.TryAdd(ticket.Id, ticket))
             return Task.FromResult(Result<Ticket>.Failure(Errors.TicketDuplicate));
 
@@ -36,10 +37,14 @@ public class TicketRepository : ITicketRepository
 
     public Task<Result<Ticket>> UpdateAsync(Ticket ticket)
     {
-        if (!_store.TryGetValue(ticket.Id, out _))
+        if (!_store.TryGetValue(ticket.Id, out var existing))
             return Task.FromResult(Result<Ticket>.Failure(Errors.TicketNotFound));
 
-        _store[ticket.Id] = ticket;
+        // TryUpdate atomically replaces only if the stored reference has not changed,
+        // preventing silent resurrection of a concurrently-deleted ticket.
+        if (!_store.TryUpdate(ticket.Id, ticket, existing))
+            return Task.FromResult(Result<Ticket>.Failure(Errors.TicketNotFound));
+
         return Task.FromResult(Result<Ticket>.Success(ticket));
     }
 
@@ -53,9 +58,15 @@ public class TicketRepository : ITicketRepository
 
     public Task<IReadOnlyList<Result<Ticket>>> BulkAddAsync(IReadOnlyList<Ticket> tickets)
     {
+        ArgumentNullException.ThrowIfNull(tickets);
         var results = new List<Result<Ticket>>(tickets.Count);
         foreach (var ticket in tickets)
         {
+            if (ticket == null)
+            {
+                results.Add(Result<Ticket>.Failure(new Error("Ticket.Invalid", "Ticket element must not be null.")));
+                continue;
+            }
             results.Add(_store.TryAdd(ticket.Id, ticket)
                 ? Result<Ticket>.Success(ticket)
                 : Result<Ticket>.Failure(Errors.TicketDuplicate));

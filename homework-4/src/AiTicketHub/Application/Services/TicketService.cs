@@ -32,6 +32,8 @@ public class TicketService : ITicketService
 
     public async Task<Result<CreateTicketResponse>> CreateTicketAsync(CreateTicketRequest request)
     {
+        if (request == null)
+            return Result<CreateTicketResponse>.Failure(new Error(Errors.ValidationFailed.Code, "Request must not be null."));
         var validation = await _createValidator.ValidateAsync(request);
         if (!validation.IsValid)
             return Result<CreateTicketResponse>.Failure(new Error(
@@ -65,6 +67,7 @@ public class TicketService : ITicketService
         {
             var classification = _classifier.Classify(ticket.Subject, ticket.Description);
             ticket.ApplyClassification(classification.Category, classification.Priority);
+            await _repository.UpdateAsync(ticket);
         }
 
         return Result<CreateTicketResponse>.Success(MapToCreateResponse(ticket));
@@ -92,7 +95,7 @@ public class TicketService : ITicketService
             .Where(t => request.AssignedTo == null  || t.AssignedTo == request.AssignedTo)
             .ToList();
 
-        var total    = allResult.Value!.Count;
+        var total    = filtered.Count;
         var page     = request.Page     < 1 ? 1  : request.Page;
         var pageSize = request.PageSize < 1 ? 20 : request.PageSize;
 
@@ -107,6 +110,8 @@ public class TicketService : ITicketService
 
     public async Task<Result<UpdateTicketResponse>> UpdateTicketAsync(Guid id, UpdateTicketRequest request)
     {
+        if (request == null)
+            return Result<UpdateTicketResponse>.Failure(new Error(Errors.ValidationFailed.Code, "Request must not be null."));
         var validation = await _updateValidator.ValidateAsync(request);
         if (!validation.IsValid)
             return Result<UpdateTicketResponse>.Failure(new Error(
@@ -164,6 +169,7 @@ public class TicketService : ITicketService
 
     public async Task<Result<AutoClassifyResponse>> AutoClassifyAsync(Guid id, AutoClassifyRequest request)
     {
+        request ??= new AutoClassifyRequest();
         var getResult = await _repository.GetByIdAsync(id);
         if (!getResult.IsSuccess)
             return Result<AutoClassifyResponse>.Failure(getResult.Error!);

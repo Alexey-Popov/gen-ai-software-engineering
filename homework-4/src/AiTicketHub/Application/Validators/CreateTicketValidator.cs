@@ -41,5 +41,8 @@ public class CreateTicketValidator : AbstractValidator<CreateTicketRequest>
 
         RuleFor(x => x.Tags)
             .NotNull().WithMessage("Tags must not be null.");
+        RuleForEach(x => x.Tags)
+            .Must(t => !string.IsNullOrWhiteSpace(t)).WithMessage("Tag entries must not be empty or whitespace.")
+            .When(x => x.Tags != null);
     }
 }

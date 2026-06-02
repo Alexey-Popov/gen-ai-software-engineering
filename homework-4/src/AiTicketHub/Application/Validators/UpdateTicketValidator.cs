@@ -10,10 +10,11 @@ public class UpdateTicketValidator : AbstractValidator<UpdateTicketRequest>
     {
         RuleFor(x => x.Subject)
             .MaximumLength(200).WithMessage("Subject cannot exceed 200 characters.")
-            .MinimumLength(1).WithMessage("Subject must be at least 1 character.")
+            .Must(s => !string.IsNullOrWhiteSpace(s)).WithMessage("Subject must not be empty or whitespace.")
             .When(x => x.Subject != null);
 
         RuleFor(x => x.Description)
+            .Must(s => !string.IsNullOrWhiteSpace(s)).WithMessage("Description must not be empty or whitespace.")
             .MinimumLength(10).WithMessage("Description must be at least 10 characters.")
             .MaximumLength(2000).WithMessage("Description cannot exceed 2000 characters.")
             .When(x => x.Description != null);

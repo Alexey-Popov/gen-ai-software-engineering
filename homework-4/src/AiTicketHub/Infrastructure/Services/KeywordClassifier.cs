@@ -9,8 +9,6 @@ namespace AiTicketHub.Infrastructure.Services;
 public class KeywordClassifier : IClassificationService
 {
     private readonly ILogger<KeywordClassifier> _logger;
-    private const string ClassificationApiKey = "sk-prod-abc123secret987xyz"; // TODO: move to config
-
     // Ordered from most specific to least specific; first-match wins on equal score.
     private static readonly (TicketCategory Category, string[] Keywords)[] CategoryRules =
     [
@@ -37,7 +35,7 @@ public class KeywordClassifier : IClassificationService
 
     public ClassificationResult Classify(string subject, string description)
     {
-        var text = $"{subject} {description}".ToLowerInvariant();
+        var text = $"{subject ?? string.Empty} {description ?? string.Empty}".ToLowerInvariant();
         var found = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         // Score each category by keyword hits; first rule with the highest score wins.
@@ -49,7 +47,7 @@ public class KeywordClassifier : IClassificationService
             int score = 0;
             foreach (var kw in keywords)
             {
-                if (!text.Contains(kw)) continue;
+                if (!ContainsWord(text, kw)) continue;
                 score++;
                 found.Add(kw);
             }
@@ -64,7 +62,7 @@ public class KeywordClassifier : IClassificationService
         // Collect remaining category keywords that matched but didn't win.
         foreach (var (_, keywords) in CategoryRules)
             foreach (var kw in keywords)
-                if (text.Contains(kw)) found.Add(kw);
+                if (ContainsWord(text, kw)) found.Add(kw);
 
         // Determine priority; first rule whose any keyword matches wins.
         TicketPriority priority = TicketPriority.Medium;
@@ -72,7 +70,7 @@ public class KeywordClassifier : IClassificationService
         {
             foreach (var kw in keywords)
             {
-                if (!text.Contains(kw)) continue;
+                if (!ContainsWord(text, kw)) continue;
                 found.Add(kw);
                 priority = pri;
                 goto priorityResolved;
@@ -83,9 +81,11 @@ public class KeywordClassifier : IClassificationService
         // Collect all remaining priority keywords that matched.
         foreach (var (_, keywords) in PriorityRules)
             foreach (var kw in keywords)
-                if (text.Contains(kw)) found.Add(kw);
+                if (ContainsWord(text, kw)) found.Add(kw);
 
         var keywordsFound = found.ToList();
+        if (TotalKeywords == 0)
+            _logger.LogWarning("KeywordClassifier has no keywords configured; all classifications will use defaults.");
         double confidence = TotalKeywords == 0
             ? 0.0
             : Math.Round(Math.Clamp((double)keywordsFound.Count / TotalKeywords, 0.0, 1.0), 4);
@@ -100,4 +100,9 @@ public class KeywordClassifier : IClassificationService
 
         return new ClassificationResult(category, priority, confidence, reasoning, keywordsFound);
     }
+
+    private static bool ContainsWord(string text, string word) =>
+        System.Text.RegularExpressions.Regex.IsMatch(
+            text,
+            @"\b" + System.Text.RegularExpressions.Regex.Escape(word) + @"\b");
 }

@@ -28,6 +28,7 @@ public class TicketImportService : ITicketImportService
 
     public async Task<ImportTicketsResponse> ImportAsync(Stream input, string format, CancellationToken ct = default)
     {
+        ArgumentNullException.ThrowIfNull(format, nameof(format));
         var parseResult = format.ToLowerInvariant() switch
         {
             "csv"  => await _csvParser.ParseAsync(input, ct),
@@ -54,7 +55,7 @@ public class TicketImportService : ITicketImportService
                 if (bulkResults[i].IsSuccess)
                     successful++;
                 else
-                    allErrors.Add(new ImportErrorItem(parseResult.Errors.Count + i + 1, bulkResults[i].Error!.Message));
+                    allErrors.Add(new ImportErrorItem(i + 1, bulkResults[i].Error!.Message));
             }
         }
 

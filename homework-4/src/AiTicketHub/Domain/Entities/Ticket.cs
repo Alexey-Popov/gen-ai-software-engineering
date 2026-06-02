@@ -43,6 +43,11 @@ public class Ticket
         string? browser,
         DeviceType deviceType)
     {
+        if (string.IsNullOrWhiteSpace(customerId))    throw new ArgumentException("CustomerId is required.",    nameof(customerId));
+        if (string.IsNullOrWhiteSpace(customerEmail)) throw new ArgumentException("CustomerEmail is required.", nameof(customerEmail));
+        if (string.IsNullOrWhiteSpace(customerName))  throw new ArgumentException("CustomerName is required.",  nameof(customerName));
+        if (string.IsNullOrWhiteSpace(subject))       throw new ArgumentException("Subject is required.",       nameof(subject));
+        if (string.IsNullOrWhiteSpace(description))   throw new ArgumentException("Description is required.",   nameof(description));
         Id = id;
         CustomerId = customerId;
         CustomerEmail = customerEmail;
@@ -67,9 +72,11 @@ public class Ticket
     {
         var isValid = (Status, newStatus) switch
         {
-            (TicketStatus.New,        TicketStatus.InProgress) => true,
-            (TicketStatus.InProgress, TicketStatus.WaitingCustomer) => true,
-            (TicketStatus.Resolved,   TicketStatus.Closed)    => true,
+            (TicketStatus.New,             TicketStatus.InProgress)      => true,
+            (TicketStatus.InProgress,      TicketStatus.WaitingCustomer) => true,
+            (TicketStatus.InProgress,      TicketStatus.Resolved)        => true,
+            (TicketStatus.WaitingCustomer, TicketStatus.Resolved)        => true,
+            (TicketStatus.Resolved,        TicketStatus.Closed)          => true,
             _ => false
         };
 
@@ -113,8 +120,8 @@ public class Ticket
         string? browser,
         DeviceType? deviceType)
     {
-        if (subject     != null)    Subject     = subject;
-        if (description != null)    Description = description;
+        if (!string.IsNullOrEmpty(subject))     Subject     = subject;
+        if (!string.IsNullOrEmpty(description)) Description = description;
         if (category.HasValue)      Category    = category.Value;
         if (priority.HasValue)      Priority    = priority.Value;
         if (assignedTo  != null)    AssignedTo  = assignedTo;
