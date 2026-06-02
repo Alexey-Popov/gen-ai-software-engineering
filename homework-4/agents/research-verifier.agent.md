@@ -1,6 +1,6 @@
 ---
 name: Research Verifier
-model: Claude Opus 4.5
+model: claude-opus-4-7
 description: >
   Fact-checker for Bug Researcher output. Verifies every file:line reference
   and snippet in codebase-research.md against the actual source, scores

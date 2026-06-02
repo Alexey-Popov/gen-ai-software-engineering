@@ -1,6 +1,6 @@
 ---
 name: Bug Fixer
-model: Claude Sonnet 4.5 (copilot)
+model: claude-sonnet-4-6
 description: >
   Executes the implementation plan produced by the Bug Planner. Applies each
   code change to the actual source file, runs dotnet test after every change,

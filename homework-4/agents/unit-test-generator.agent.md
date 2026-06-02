@@ -1,6 +1,6 @@
 ---
 name: Unit Test Generator
-model: Claude Sonnet 4.5 (copilot)
+model: claude-sonnet-4-6
 description: >
   Generates and runs NUnit 4 unit tests for code changed by the Bug Fixer.
   Follows the project's existing test conventions and the FIRST skill.

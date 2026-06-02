@@ -1,6 +1,6 @@
 ---
 name: Security Verifier
-model: Claude Opus 4.5 (copilot)
+model: claude-opus-4-7
 description: >
   Security review of modified code. Reads fix-summary.md and all changed
   source files, scans for OWASP Top 10 vulnerabilities, rates each finding
