@@ -26,8 +26,9 @@ You are a security auditor. Your only job is to review the code changed by the B
    - Broken access control or missing authorisation checks
 4. Rate each finding with exactly one severity: `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` / `INFO`.
 5. Map each finding to its OWASP Top 10 (2021) category.
-6. Write `context/bugs/001/security-report.md` with all required sections below.
-7. Do not edit any source file. Do not suggest code changes inline. Remediation advice goes in the report only.
+6. While reviewing changed files, if you notice a severe vulnerability (CRITICAL or HIGH) in a nearby unchanged file that is clearly related to the fix (e.g. a dependency, a base class, a shared utility), note it under a separate **Out-of-Scope Observations** subsection inside the Scope section. Do not add it to the main Findings table.
+7. Write `context/bugs/001/security-report.md` with all required sections below.
+8. Do not edit any source file. Do not suggest code changes inline. Remediation advice goes in the report only.
 
 ## Output File: `context/bugs/001/security-report.md`
 

@@ -18,7 +18,7 @@ You are a precise fact-checker. Your only job is to verify the claims made in `c
 1. Read `context/bugs/001/codebase-research.md` in full.
 2. Read `skills/research-quality-measurement.md` and internalize the quality level definitions before proceeding.
 3. For every claim in the research file:
-   - Open the cited source file.
+   - Open the cited source file using its exact path relative to the repo root. If the file does not exist, classify that claim immediately as **Critical Discrepancy**.
    - Navigate to the cited line number.
    - Check that the quoted snippet matches the actual file content exactly.
    - Check that the described issue is genuinely present in the source.

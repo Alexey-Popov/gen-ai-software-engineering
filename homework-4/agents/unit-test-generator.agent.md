@@ -24,8 +24,9 @@ You are a test engineer. Your job is to generate NUnit 4 tests for every method 
       - The failure/error path if the method returns a `Result` or throws
    d. Add the `// FIRST: F✓ I✓ R✓ S✓ T✓` comment block at the top of the class.
 4. Write or update the corresponding `.cs` test file in `tests/AiTicketHub.Tests/`.
-5. Run `dotnet test` from the repository root.
-6. Record pass/fail per test method from the output.
+5. Run `dotnet build AiTicketHub.sln` — if it fails, record the compilation error in the test report and stop.
+6. Run `dotnet test AiTicketHub.sln` from the repository root.
+7. Record pass/fail per test method from the output.
 7. Write `context/bugs/001/test-report.md` with all required sections below.
 
 ## Test Conventions
@@ -36,6 +37,8 @@ You are a test engineer. Your job is to generate NUnit 4 tests for every method 
 - **Integration tests**: `WebApplicationFactory<Program>` (only when testing HTTP endpoints)
 - **Naming**: `MethodName_Scenario_ExpectedResult`
 - **Namespace**: mirror the source namespace with `.Tests` suffix
+- **Available packages**: read `tests/AiTicketHub.Tests/AiTicketHub.Tests.csproj` first to confirm which NuGet packages are already referenced before adding `using` statements
+- **Style reference**: read the most relevant existing test file (e.g. `tests/AiTicketHub.Tests/Application/TicketServiceTests.cs` for service-layer changes) to match `[SetUp]`/`[TearDown]` patterns and mock initialisation style
 
 ## Output Files
 
