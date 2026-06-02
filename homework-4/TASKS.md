@@ -106,7 +106,7 @@ flowchart LR
 ## 📁 Expected Project Structure
 
 ```
-homework-5/
+homework-4/
 ├── README.md  # includes author/student info per root README
 ├── HOWTORUN.md
 ├── agents/
