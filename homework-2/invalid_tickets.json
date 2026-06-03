@@ -1,0 +1,42 @@
+[
+  {
+    "id": "e1bf1212-59fc-45c3-8cf8-423acb3e6b5e",
+    "customer_email": "invalid",
+    "subject": "",
+    "description": "too short",
+    "category": "invalid_category",
+    "priority": "super_urgent"
+  },
+  {
+    "id": "4986c817-cb8a-464f-a752-9a521ee5dec0",
+    "customer_email": "invalid",
+    "subject": "",
+    "description": "too short",
+    "category": "invalid_category",
+    "priority": "super_urgent"
+  },
+  {
+    "id": "9a138f65-1546-4672-aed3-186644a35d72",
+    "customer_email": "invalid",
+    "subject": "",
+    "description": "too short",
+    "category": "invalid_category",
+    "priority": "super_urgent"
+  },
+  {
+    "id": "031abedb-41d8-4a63-b7c8-09d39664b662",
+    "customer_email": "invalid",
+    "subject": "",
+    "description": "too short",
+    "category": "invalid_category",
+    "priority": "super_urgent"
+  },
+  {
+    "id": "40c950dc-d958-4ac9-b614-168ebfaf27ae",
+    "customer_email": "invalid",
+    "subject": "",
+    "description": "too short",
+    "category": "invalid_category",
+    "priority": "super_urgent"
+  }
+]
