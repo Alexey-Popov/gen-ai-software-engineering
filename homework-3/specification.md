@@ -213,6 +213,56 @@ These are **targets/ranges**, not "should be fast." Each is verified in §10 and
 
 Tasks that say "inherits SMC" must implement all eight steps; do not re-document them per task.
 
+**SMC in action — `freeze` (illustrative sequence).** The autonumbered steps map to the eight SMC
+steps above; the branches show the replay (EC12), stale-version/illegal-transition (EC3/EC8), and
+fail-closed-pending (EC16) paths.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as Cardholder
+    participant API as API / Controller
+    participant SVC as CardService
+    participant IDEM as Idempotency Store
+    participant DB as Card Repo (Postgres)
+    participant PROC as Card Processor
+    participant AUD as Audit (append-only)
+    participant NTF as Notifier
+
+    U->>API: POST /cards/{id}/freeze (Idempotency-Key, If-Match v7, reason)
+    Note over API: 1. authN + RBAC (default-deny, tenant-scoped)
+    API->>IDEM: 2. lookup / register key
+    alt key already completed (replay — EC12)
+        IDEM-->>API: stored response
+        API-->>U: 200 (replayed, no new side effect)
+    else new key
+        API->>SVC: freeze(id, reason, expectedVersion=7)
+        SVC->>DB: 3-4. BEGIN; updateIfVersion(v7→v8) + state-machine guard
+        alt stale version / illegal transition (EC3/EC8)
+            DB-->>SVC: reject
+            SVC-->>API: 409 STALE_VERSION / INVALID_TRANSITION
+            API-->>U: 409 (refresh & retry)
+        else guard ok
+            SVC->>PROC: 5. push control (freeze)
+            alt control confirmed
+                PROC-->>SVC: ok
+                SVC->>AUD: 6. append card.frozen in same txn (reason, v7→v8, corr-id)
+                SVC->>DB: COMMIT
+                SVC--)NTF: 7. enqueue notification (best-effort, retried)
+                SVC-->>API: { state: FROZEN, version: 8 }
+                API->>IDEM: store response
+                API-->>U: 8. 200 FROZEN (v8)
+            else unconfirmed — fail-closed (EC16)
+                PROC--xSVC: timeout / error
+                SVC->>AUD: append card.freeze_pending in same txn
+                SVC->>DB: COMMIT
+                SVC-->>API: { state: FROZEN (pending) }
+                API-->>U: 202 pending; alert raised
+            end
+        end
+    end
+```
+
 ### 6.2 Other hard guardrails
 - **Money:** integer minor units only; arithmetic in minor units; format only at the presentation
   edge. Reject mixed-currency operations (limit currency must equal card currency).
@@ -415,6 +465,25 @@ docs/runbooks/compliance-freeze.md (T22)
   - [ ] Each persona can do exactly its allowed actions and nothing else (table-driven test).
   - [ ] Cross-tenant access returns `404` (not `403`) and emits a `security.cross_tenant_attempt` event (EC6).
 
+**Authoritative permission matrix** (✅ allowed · ⚪ with the user's consent token, masked · 2️⃣ requires
+dual control · ❌ denied). Cardholder rows are scoped to their **own** cards; a cross-tenant id ⇒ `404` (EC6).
+
+| Action | Cardholder | Support | Ops/Compliance | Fraud | Finance |
+|--------|:--:|:--:|:--:|:--:|:--:|
+| Issue card (T4) | ✅ | ❌ | ❌ | ❌ | ❌ |
+| View own activity (T7) | ✅ | ⚪ | ✅ | ✅ | ❌ |
+| Set / change limit (T6) | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Freeze / unfreeze — user (T5) | ✅ | ✅¹ | ❌² | ❌² | ❌ |
+| Replace / close (T8/T9) | ✅ | ❌ | ❌ | ❌ | ❌ |
+| View ANY card / activity (T12) | ❌ | ⚪ | ✅ | ✅ | ❌ |
+| Compliance-freeze (T12) | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Lift compliance/fraud freeze (T12) | ❌ | ❌ | 2️⃣ | ❌ | ❌ |
+| Reveal additional PII (T12) | ❌ | ❌ | ✅ (logged) | ❌ | ❌ |
+| Read full audit trail (T10/T12) | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Read reconciliation (T20) | ❌ | ❌ | ✅ | ❌ | ✅ |
+
+¹ Support may **freeze on the user's behalf** but cannot unfreeze. ² Ops/Fraud use **compliance-freeze**, not the user freeze.
+
 ### T14 — Rate limiting
 - **Prompt:** "Add per-user, per-route write rate limits with standard headers and typed 429."
 - **File:** `src/http/middleware/rateLimit.ts`
@@ -452,6 +521,30 @@ docs/runbooks/compliance-freeze.md (T22)
 - **Serves:** §6.2, all. **AC:**
   - [ ] Every thrown domain error maps to a documented code + HTTP status.
   - [ ] Error bodies contain `code`,`message`,`correlation_id` only; a fuzz test asserts no PAN-shaped digits leak.
+
+**Error-code catalog** (single source of truth — adding an error means adding a row). All bodies use
+`{ "error": { "code", "message", "correlation_id", "details" } }`.
+
+| Code | HTTP | Meaning | Raised by |
+|------|:----:|---------|-----------|
+| `IDEMPOTENCY_KEY_REQUIRED` | 400 | Mutating request missing `Idempotency-Key` | T3 |
+| `VALIDATION_ERROR` | 422 | Generic schema/field validation failure | all writes |
+| `INVALID_LIMIT` | 422 | Limit ≤ 0 or malformed | T6 · EC2 |
+| `CURRENCY_MISMATCH` | 422 | Limit currency ≠ card currency | T6 · EC4 |
+| `LIMIT_EXCEEDS_CEILING` | 422 | Limit above the account ceiling | T6 · EC5 |
+| `IDEMPOTENCY_CONFLICT` | 422 | Same key reused with a different body | T3 · EC13 |
+| `CARD_NOT_FOUND` | 404 | Unknown card **or** cross-tenant (existence hidden) | T13 · EC6 |
+| `INVALID_TRANSITION` | 409 | State machine disallows the requested change | T1 · EC8 |
+| `STALE_VERSION` | 409 | `expected_version`/`If-Match` mismatch (lost-update guard) | T16 · EC3 |
+| `CARD_CLOSED` | 409 | Mutation attempted on a terminal card | T9 · EC8 |
+| `CARD_FROZEN` | 409 | Operation requires an `ACTIVE` card (card is frozen) | T5 · EC7 |
+| `IDEMPOTENCY_IN_PROGRESS` | 409 | Same key is still being processed | T3 |
+| `DUAL_CONTROL_REQUIRED` | 403 | One actor cannot lift a compliance/fraud freeze or reveal PII | T5/T12 |
+| `FORBIDDEN` | 403 | RBAC denies this action for the caller's role | T13 |
+| `RATE_LIMITED` | 429 | Per-user write budget exceeded (sends `Retry-After`) | T14 |
+| `WEBHOOK_SIGNATURE_INVALID` | 401 | Inbound processor webhook failed the signature check | T15 · EC18 |
+| `PROVISIONING_FAILED` | 502 | Vault/processor error during issuance | T4 · EC15 |
+| `CONTROL_PUSH_UNCONFIRMED` | 202 | Freeze/limit accepted but not yet confirmed downstream (**fail-closed**, pending) | T5 · EC16 |
 
 ### T18 — Retention & PII-redaction job
 - **Prompt:** "Schedule a job that purges/anonymizes records past the retention window while preserving audit integrity."
