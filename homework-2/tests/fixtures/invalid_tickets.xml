@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<tickets>
+  <ticket>
+    <customer_id>CUST-999</customer_id>
+    <customer_email>not-an-email</customer_email>
+    <customer_name>John Doe</customer_name>
+    <subject>Help</subject>
+    <description>Short</description>
+  <!-- missing closing ticket -->
+</tickets>

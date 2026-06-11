@@ -1,0 +1,320 @@
+﻿[
+  {
+    "customer_id": "CUST-2000",
+    "customer_email": "alice@example.com",
+    "customer_name": "Charlie Brown",
+    "subject": "Production down: critical database failure",
+    "description": "Our API is completely down, returning error 500. This is a critical production down safety breach.",
+    "assigned_to": "agent_0", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "chat",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2001",
+    "customer_email": "diana@outlook.com",
+    "customer_name": "Diana Prince",
+    "subject": "Error on billing invoice payment",
+    "description": "The system shows payment failed but my credit card was charged $49. Please send invoice receipt.",
+    "category": "billing_question", 
+    "priority": "medium", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2002",
+    "customer_email": "alice@example.com",
+    "customer_name": "Alice Smith",
+    "subject": "Feature request: add dark mode",
+    "description": "It would be great if you could add a dark mode feature to the dashboard. It would improve usability.",
+    "category": "feature_request", 
+    "priority": "low", 
+    "assigned_to": "agent_2", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2003",
+    "customer_email": "alice@example.com",
+    "customer_name": "Evan Wright",
+    "subject": "Cannot login to account",
+    "description": "I am trying to sign in but keep getting a wrong credentials message. Please reset my password.",
+    "priority": "low", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "chat",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2004",
+    "customer_email": "alice@example.com",
+    "customer_name": "Evan Wright",
+    "subject": "Cannot login to account",
+    "description": "I am trying to sign in but keep getting a wrong credentials message. Please reset my password.",
+    "category": "billing_question", 
+    "assigned_to": "agent_4", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2005",
+    "customer_email": "evan@yahoo.com",
+    "customer_name": "Evan Wright",
+    "subject": "Refund request for last month",
+    "description": "I want to request a refund for the duplicate transaction. The invoice number is INV-12345.",
+    "category": "feature_request", 
+    "priority": "medium", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2006",
+    "customer_email": "evan@yahoo.com",
+    "customer_name": "Evan Wright",
+    "subject": "Security issue with 2FA setup",
+    "description": "The authenticator app doesn't scan the barcode for 2FA. Can't access my account credentials.",
+    "priority": "low", 
+    "assigned_to": "agent_6", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "chat",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2007",
+    "customer_email": "bob@example.org",
+    "customer_name": "Bob Jones",
+    "subject": "Cannot login to account",
+    "description": "I am trying to sign in but keep getting a wrong credentials message. Please reset my password.",
+    "category": "billing_question", 
+    "priority": "low", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2008",
+    "customer_email": "evan@yahoo.com",
+    "customer_name": "Alice Smith",
+    "subject": "blocking bug in API call asap",
+    "description": "This is an important blocking issue. The export is not working. We need this fixed asap.",
+    "category": "feature_request", 
+    "assigned_to": "agent_8", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2009",
+    "customer_email": "bob@example.org",
+    "customer_name": "Charlie Brown",
+    "subject": "Cosmetic issue on profile page",
+    "description": "There is a minor typo on the landing page header. Please fix this cosmetic suggestion.",
+    "priority": "medium", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "chat",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2010",
+    "customer_email": "alice@example.com",
+    "customer_name": "Diana Prince",
+    "subject": "Security issue with 2FA setup",
+    "description": "The authenticator app doesn't scan the barcode for 2FA. Can't access my account credentials.",
+    "category": "billing_question", 
+    "priority": "low", 
+    "assigned_to": "agent_10", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2011",
+    "customer_email": "alice@example.com",
+    "customer_name": "Diana Prince",
+    "subject": "Refund request for last month",
+    "description": "I want to request a refund for the duplicate transaction. The invoice number is INV-12345.",
+    "category": "feature_request", 
+    "priority": "low", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2012",
+    "customer_email": "diana@outlook.com",
+    "customer_name": "Diana Prince",
+    "subject": "Cosmetic issue on profile page",
+    "description": "There is a minor typo on the landing page header. Please fix this cosmetic suggestion.",
+    "assigned_to": "agent_12", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "chat",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2013",
+    "customer_email": "bob@example.org",
+    "customer_name": "Charlie Brown",
+    "subject": "Refund request for last month",
+    "description": "I want to request a refund for the duplicate transaction. The invoice number is INV-12345.",
+    "category": "billing_question", 
+    "priority": "medium", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2014",
+    "customer_email": "diana@outlook.com",
+    "customer_name": "Alice Smith",
+    "subject": "Security issue with 2FA setup",
+    "description": "The authenticator app doesn't scan the barcode for 2FA. Can't access my account credentials.",
+    "category": "feature_request", 
+    "priority": "low", 
+    "assigned_to": "agent_14", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2015",
+    "customer_email": "diana@outlook.com",
+    "customer_name": "Evan Wright",
+    "subject": "Error on billing invoice payment",
+    "description": "The system shows payment failed but my credit card was charged $49. Please send invoice receipt.",
+    "priority": "low", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "chat",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2016",
+    "customer_email": "bob@example.org",
+    "customer_name": "Evan Wright",
+    "subject": "General question about subscription plans",
+    "description": "I have a minor question about the difference between standard and pro subscription costs.",
+    "category": "billing_question", 
+    "assigned_to": "agent_16", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2017",
+    "customer_email": "alice@example.com",
+    "customer_name": "Evan Wright",
+    "subject": "Feature request: add dark mode",
+    "description": "It would be great if you could add a dark mode feature to the dashboard. It would improve usability.",
+    "category": "feature_request", 
+    "priority": "medium", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2018",
+    "customer_email": "evan@yahoo.com",
+    "customer_name": "Diana Prince",
+    "subject": "Error on billing invoice payment",
+    "description": "The system shows payment failed but my credit card was charged $49. Please send invoice receipt.",
+    "priority": "low", 
+    "assigned_to": "agent_18", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "chat",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  },
+  {
+    "customer_id": "CUST-2019",
+    "customer_email": "diana@outlook.com",
+    "customer_name": "Evan Wright",
+    "subject": "General question about subscription plans",
+    "description": "I have a minor question about the difference between standard and pro subscription costs.",
+    "category": "billing_question", 
+    "priority": "low", 
+    "status": "new",
+    "tags": ["import_json", "test"],
+    "metadata": {
+      "source": "phone",
+      "browser": "Safari 17",
+      "device_type": "tablet"
+    }
+  }
+]

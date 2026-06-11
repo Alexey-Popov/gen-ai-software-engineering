@@ -1,0 +1,12 @@
+﻿[
+  {
+    "customer_id": "CUST-999",
+    "customer_email": "invalid-email",
+    "customer_name": "John Doe",
+    "subject": "No login",
+    "description": "Too short",
+    "metadata": {
+      "source": "web_form",
+      "device_type": "desktop"
+    }
+  }

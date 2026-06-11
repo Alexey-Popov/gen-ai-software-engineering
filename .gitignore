@@ -56,3 +56,12 @@ temp/
 .Spotlight-V100
 .Trashes
 ehthumbs.db
+
+# .NET / C# Build Outputs
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/

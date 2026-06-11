@@ -1,0 +1,7 @@
+﻿customer_id,customer_email,customer_name,subject,description,category,priority,status,assigned_to,tags,source,browser,device_type
+CUST-999,test@example.com,John Doe,Login issue,I cannot login reset password please,account_access,urgent,new,,tag,web_form,Chrome,desktop
+,test@example.com,John Doe,Login issue,I cannot login reset password please,account_access,urgent,new,,tag,web_form,Chrome,desktop
+CUST-999,not-an-email,John Doe,Login issue,I cannot login reset password please,account_access,urgent,new,,tag,web_form,Chrome,desktop
+CUST-999,test@example.com,John Doe,Login issue,short,account_access,urgent,new,,tag,web_form,Chrome,desktop
+CUST-999,test@example.com,John Doe,Login issue,I cannot login reset password please,invalid_category_enum,urgent,new,,tag,web_form,Chrome,desktop
+CUST-999,test@example.com,John Doe,Login issue,I cannot login reset password please,account_access,urgent,new,,tag,invalid_source_enum,Chrome,desktop

@@ -1,0 +1,465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<tickets>
+  <ticket>
+    <customer_id>CUST-3000</customer_id>
+    <customer_email>diana@outlook.com</customer_email>
+    <customer_name>Diana Prince</customer_name>
+    <subject>Security issue with 2FA setup</subject>
+    <description>The authenticator app doesn&apos;t scan the barcode for 2FA. Can&apos;t access my account credentials.</description>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3001</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>Cannot login to account</subject>
+    <description>I am trying to sign in but keep getting a wrong credentials message. Please reset my password.</description>
+    <category>bug_report</category>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3002</customer_id>
+    <customer_email>diana@outlook.com</customer_email>
+    <customer_name>Charlie Brown</customer_name>
+    <subject>General question about subscription plans</subject>
+    <description>I have a minor question about the difference between standard and pro subscription costs.</description>
+    <category>other</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3003</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Diana Prince</customer_name>
+    <subject>Production down: critical database failure</subject>
+    <description>Our API is completely down, returning error 500. This is a critical production down safety breach.</description>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3004</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Cosmetic issue on profile page</subject>
+    <description>There is a minor typo on the landing page header. Please fix this cosmetic suggestion.</description>
+    <category>bug_report</category>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3005</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Feature request: add dark mode</subject>
+    <description>It would be great if you could add a dark mode feature to the dashboard. It would improve usability.</description>
+    <category>other</category>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3006</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Refund request for last month</subject>
+    <description>I want to request a refund for the duplicate transaction. The invoice number is INV-12345.</description>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3007</customer_id>
+    <customer_email>diana@outlook.com</customer_email>
+    <customer_name>Charlie Brown</customer_name>
+    <subject>General question about subscription plans</subject>
+    <description>I have a minor question about the difference between standard and pro subscription costs.</description>
+    <category>bug_report</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3008</customer_id>
+    <customer_email>alice@example.com</customer_email>
+    <customer_name>Evan Wright</customer_name>
+    <subject>Cosmetic issue on profile page</subject>
+    <description>There is a minor typo on the landing page header. Please fix this cosmetic suggestion.</description>
+    <category>other</category>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3009</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Diana Prince</customer_name>
+    <subject>Security issue with 2FA setup</subject>
+    <description>The authenticator app doesn&apos;t scan the barcode for 2FA. Can&apos;t access my account credentials.</description>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3010</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>blocking bug in API call asap</subject>
+    <description>This is an important blocking issue. The export is not working. We need this fixed asap.</description>
+    <category>bug_report</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3011</customer_id>
+    <customer_email>alice@example.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>Refund request for last month</subject>
+    <description>I want to request a refund for the duplicate transaction. The invoice number is INV-12345.</description>
+    <category>other</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3012</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Production down: critical database failure</subject>
+    <description>Our API is completely down, returning error 500. This is a critical production down safety breach.</description>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3013</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>blocking bug in API call asap</subject>
+    <description>This is an important blocking issue. The export is not working. We need this fixed asap.</description>
+    <category>bug_report</category>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3014</customer_id>
+    <customer_email>bob@example.org</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Error on billing invoice payment</subject>
+    <description>The system shows payment failed but my credit card was charged $49. Please send invoice receipt.</description>
+    <category>other</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3015</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Error on billing invoice payment</subject>
+    <description>The system shows payment failed but my credit card was charged $49. Please send invoice receipt.</description>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3016</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>Security issue with 2FA setup</subject>
+    <description>The authenticator app doesn&apos;t scan the barcode for 2FA. Can&apos;t access my account credentials.</description>
+    <category>bug_report</category>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3017</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Charlie Brown</customer_name>
+    <subject>General question about subscription plans</subject>
+    <description>I have a minor question about the difference between standard and pro subscription costs.</description>
+    <category>other</category>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3018</customer_id>
+    <customer_email>alice@example.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>Feature request: add dark mode</subject>
+    <description>It would be great if you could add a dark mode feature to the dashboard. It would improve usability.</description>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3019</customer_id>
+    <customer_email>alice@example.com</customer_email>
+    <customer_name>Evan Wright</customer_name>
+    <subject>Feature request: add dark mode</subject>
+    <description>It would be great if you could add a dark mode feature to the dashboard. It would improve usability.</description>
+    <category>bug_report</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3020</customer_id>
+    <customer_email>bob@example.org</customer_email>
+    <customer_name>Diana Prince</customer_name>
+    <subject>Production down: critical database failure</subject>
+    <description>Our API is completely down, returning error 500. This is a critical production down safety breach.</description>
+    <category>other</category>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3021</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>Refund request for last month</subject>
+    <description>I want to request a refund for the duplicate transaction. The invoice number is INV-12345.</description>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3022</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Diana Prince</customer_name>
+    <subject>Bug: crash when clicking button</subject>
+    <description>Steps to reproduce: 1. Go to page A, 2. Click button B, 3. The page crashes and displays an error code.</description>
+    <category>bug_report</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3023</customer_id>
+    <customer_email>alice@example.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>blocking bug in API call asap</subject>
+    <description>This is an important blocking issue. The export is not working. We need this fixed asap.</description>
+    <category>other</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3024</customer_id>
+    <customer_email>bob@example.org</customer_email>
+    <customer_name>Evan Wright</customer_name>
+    <subject>Cannot login to account</subject>
+    <description>I am trying to sign in but keep getting a wrong credentials message. Please reset my password.</description>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3025</customer_id>
+    <customer_email>diana@outlook.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Error on billing invoice payment</subject>
+    <description>The system shows payment failed but my credit card was charged $49. Please send invoice receipt.</description>
+    <category>bug_report</category>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3026</customer_id>
+    <customer_email>bob@example.org</customer_email>
+    <customer_name>Charlie Brown</customer_name>
+    <subject>Security issue with 2FA setup</subject>
+    <description>The authenticator app doesn&apos;t scan the barcode for 2FA. Can&apos;t access my account credentials.</description>
+    <category>other</category>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3027</customer_id>
+    <customer_email>diana@outlook.com</customer_email>
+    <customer_name>Charlie Brown</customer_name>
+    <subject>Refund request for last month</subject>
+    <description>I want to request a refund for the duplicate transaction. The invoice number is INV-12345.</description>
+    <priority>low</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3028</customer_id>
+    <customer_email>evan@yahoo.com</customer_email>
+    <customer_name>Evan Wright</customer_name>
+    <subject>General question about subscription plans</subject>
+    <description>I have a minor question about the difference between standard and pro subscription costs.</description>
+    <category>bug_report</category>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+  <ticket>
+    <customer_id>CUST-3029</customer_id>
+    <customer_email>charlie@gmail.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>blocking bug in API call asap</subject>
+    <description>This is an important blocking issue. The export is not working. We need this fixed asap.</description>
+    <category>other</category>
+    <priority>high</priority>
+    <status>new</status>
+    <tags><tag>xml_import</tag><tag>test</tag></tags>
+    <metadata>
+      <source>web_form</source>
+      <browser>Firefox 126</browser>
+      <device_type>desktop</device_type>
+    </metadata>
+  </ticket>
+</tickets>

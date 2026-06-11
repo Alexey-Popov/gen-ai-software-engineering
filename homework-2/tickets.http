@@ -1,0 +1,154 @@
+# Support Ticket Management API Request Collection
+
+@host = http://localhost:5104
+
+### 1. Create a Support Ticket (Auto-Classified)
+# Automatically categorizes and assigns priority based on text keywords.
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-4001",
+  "customer_email": "jane.doe@example.com",
+  "customer_name": "Jane Doe",
+  "subject": "Cannot log in resetting password locked out credentials",
+  "description": "I cannot login to my account. My password keeps failing and I am locked out from credentials.",
+  "metadata": {
+    "source": "web_form",
+    "browser": "Chrome 125.0",
+    "device_type": "desktop"
+  },
+  "auto_classify": true
+}
+
+###
+
+### 2. Create a Support Ticket (Manual Override)
+# Overrides classification on creation by passing manual fields.
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-4002",
+  "customer_email": "john.jones@example.com",
+  "customer_name": "John Jones",
+  "subject": "Question about billing costs",
+  "description": "Just looking to find the invoice details.",
+  "category": "billing_question",
+  "priority": "low",
+  "metadata": {
+    "source": "email",
+    "device_type": "mobile"
+  },
+  "auto_classify": false
+}
+
+###
+
+### 3. List All Support Tickets
+GET {{host}}/tickets
+
+###
+
+### 4. List Tickets with Combined Filtering
+# Filter by category and priority
+GET {{host}}/tickets?category=account_access&priority=urgent
+
+###
+
+### 5. Fetch a Ticket by ID
+# NOTE: Replace the UUID with a valid ID from the list tickets response
+@ticketId = d3b07384-d113-4444-a267-34d650221389
+GET {{host}}/tickets/{{ticketId}}
+
+###
+
+### 6. Run Auto-Classification On-Demand
+# Re-analyzes text to classify the category/priority
+POST {{host}}/tickets/{{ticketId}}/auto-classify
+
+###
+
+### 7. Update Ticket Fields (Manual Override)
+# Mutates ticket fields. Manually changing category/priority resets confidence score to 1.0.
+PUT {{host}}/tickets/{{ticketId}}
+Content-Type: application/json
+
+{
+  "status": "in_progress",
+  "assigned_to": "agent_charlie",
+  "category": "technical_issue",
+  "priority": "high",
+  "tags": ["high-priority", "v1.2-bug"]
+}
+
+###
+
+### 8. Delete a Ticket
+DELETE {{host}}/tickets/{{ticketId}}
+
+###
+
+### =========================================================================
+### NEGATIVE TESTS (EXPECTED FAILURES)
+### =========================================================================
+
+### 9. Create Ticket - Validation Failures (Should return 400 Bad Request)
+# Fails because:
+# - customer_email is not a valid email
+# - subject is empty
+# - description is too short (less than 10 characters)
+POST {{host}}/tickets
+Content-Type: application/json
+
+{
+  "customer_id": "CUST-FAIL",
+  "customer_email": "invalid-email-address",
+  "customer_name": "Test Failure",
+  "subject": "",
+  "description": "short",
+  "metadata": {
+    "source": "web_form",
+    "device_type": "desktop"
+  }
+}
+
+###
+
+### 10. Fetch Non-Existent Ticket (Should return 404 Not Found)
+GET {{host}}/tickets/00000000-0000-0000-0000-000000000000
+
+###
+
+### 11. Update Non-Existent Ticket (Should return 404 Not Found)
+PUT {{host}}/tickets/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "status": "resolved"
+}
+
+###
+
+### 12. Delete Non-Existent Ticket (Should return 404 Not Found)
+DELETE {{host}}/tickets/00000000-0000-0000-0000-000000000000
+
+###
+
+### 13. Auto-Classify Non-Existent Ticket (Should return 404 Not Found)
+POST {{host}}/tickets/00000000-0000-0000-0000-000000000000/auto-classify
+
+###
+
+### 14. Bulk Import Unsupported File Format (Should return 400 Bad Request)
+POST {{host}}/tickets/import
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="invalid_extension.txt"
+Content-Type: text/plain
+
+customer_id,customer_email
+CUST-1,test@test.com
+--boundary--
+
