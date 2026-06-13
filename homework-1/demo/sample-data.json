@@ -1,0 +1,58 @@
+[
+  {
+    "fromAccount": "ACC-EX000",
+    "toAccount":   "ACC-AA111",
+    "amount":      1000.00,
+    "currency":    "USD",
+    "type":        "deposit"
+  },
+  {
+    "fromAccount": "ACC-EX000",
+    "toAccount":   "ACC-BB222",
+    "amount":      500.00,
+    "currency":    "EUR",
+    "type":        "deposit"
+  },
+  {
+    "fromAccount": "ACC-AA111",
+    "toAccount":   "ACC-BB222",
+    "amount":      200.00,
+    "currency":    "USD",
+    "type":        "transfer"
+  },
+  {
+    "fromAccount": "ACC-BB222",
+    "toAccount":   "ACC-EX000",
+    "amount":      100.00,
+    "currency":    "EUR",
+    "type":        "withdrawal"
+  },
+  {
+    "fromAccount": "ACC-EX000",
+    "toAccount":   "ACC-CC333",
+    "amount":      750.00,
+    "currency":    "USD",
+    "type":        "deposit"
+  },
+  {
+    "fromAccount": "ACC-CC333",
+    "toAccount":   "ACC-AA111",
+    "amount":      350.00,
+    "currency":    "GBP",
+    "type":        "transfer"
+  },
+  {
+    "fromAccount": "ACC-AA111",
+    "toAccount":   "ACC-DD444",
+    "amount":      150.50,
+    "currency":    "USD",
+    "type":        "transfer"
+  },
+  {
+    "fromAccount": "ACC-CC333",
+    "toAccount":   "ACC-EX000",
+    "amount":      200.00,
+    "currency":    "USD",
+    "type":        "withdrawal"
+  }
+]
