@@ -1,0 +1,11 @@
+customer_id,customer_email,customer_name,subject,description,category,priority,status
+CUST001,alice@example.com,Alice Smith,Cannot log in,I have been unable to log into my account for the past two days.,account_access,high,new
+CUST002,bob@example.com,Bob Jones,Invoice incorrect,My latest invoice shows the wrong amount charged to my account.,billing_question,medium,new
+CUST003,carol@example.com,Carol White,App crashes on startup,The mobile application crashes immediately when I try to open it.,bug_report,urgent,new
+CUST004,dave@example.com,Dave Brown,Feature request: dark mode,Please add a dark mode option to the settings screen.,feature_request,low,new
+CUST005,eve@example.com,Eve Davis,Slow page load,The dashboard takes over 30 seconds to load on my computer.,technical_issue,high,new
+CUST006,frank@example.com,Frank Miller,Password reset not working,I requested a password reset but never received the email.,account_access,medium,new
+CUST007,grace@example.com,Grace Wilson,Billing cycle confusion,I am confused about when my billing cycle resets each month.,billing_question,low,new
+CUST008,henry@example.com,Henry Moore,Export button missing,The export to CSV button that was on the reports page is gone.,bug_report,high,new
+CUST009,iris@example.com,Iris Taylor,API rate limit too low,Our integration is hitting rate limits very frequently.,feature_request,medium,new
+CUST010,jack@example.com,Jack Anderson,Two-factor auth issue,Two-factor authentication codes are not working for my account.,account_access,urgent,new

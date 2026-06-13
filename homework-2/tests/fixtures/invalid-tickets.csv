@@ -1,0 +1,6 @@
+customer_id,customer_email,customer_name,subject,description,category,priority,status
+CUST001,not-an-email,Alice Smith,Cannot log in,I cannot access my account.,account_access,high,new
+CUST002,bob@example.com,,Invoice issue,My invoice is wrong.,billing_question,medium,new
+CUST003,carol@example.com,Carol White,Short,Too short,bug_report,urgent,new
+CUST004,dave@example.com,Dave Brown,Feature request,Please add dark mode.,feature_request,bad_priority,new
+CUST005,eve@example.com,Eve Davis,Slow load,The dashboard is slow.,technical_issue,high,bad_status

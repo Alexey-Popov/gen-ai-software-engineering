@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(tree \"c:\\\\AI\\\\Tests project\\\\gen-ai-software-engineering\\\\homework-2\\\\tests\\\\\" /F)"
+    ]
+  }
+}

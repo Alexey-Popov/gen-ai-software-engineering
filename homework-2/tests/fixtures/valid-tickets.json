@@ -1,0 +1,32 @@
+[
+  {
+    "customer_id": "CUST001",
+    "customer_email": "alice@example.com",
+    "customer_name": "Alice Smith",
+    "subject": "Cannot log in",
+    "description": "I have been unable to log into my account for the past two days.",
+    "category": "account_access",
+    "priority": "high",
+    "status": "new"
+  },
+  {
+    "customer_id": "CUST002",
+    "customer_email": "bob@example.com",
+    "customer_name": "Bob Jones",
+    "subject": "Invoice incorrect",
+    "description": "My latest invoice shows the wrong amount charged to my account.",
+    "category": "billing_question",
+    "priority": "medium",
+    "status": "new"
+  },
+  {
+    "customer_id": "CUST003",
+    "customer_email": "carol@example.com",
+    "customer_name": "Carol White",
+    "subject": "App crashes on startup",
+    "description": "The mobile application crashes immediately when I try to open it.",
+    "category": "bug_report",
+    "priority": "urgent",
+    "status": "new"
+  }
+]

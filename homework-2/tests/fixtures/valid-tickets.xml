@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tickets>
+  <ticket>
+    <customer_id>CUST001</customer_id>
+    <customer_email>alice@example.com</customer_email>
+    <customer_name>Alice Smith</customer_name>
+    <subject>Cannot log in</subject>
+    <description>I have been unable to log into my account for the past two days.</description>
+    <category>account_access</category>
+    <priority>high</priority>
+    <status>new</status>
+  </ticket>
+  <ticket>
+    <customer_id>CUST002</customer_id>
+    <customer_email>bob@example.com</customer_email>
+    <customer_name>Bob Jones</customer_name>
+    <subject>Invoice incorrect</subject>
+    <description>My latest invoice shows the wrong amount charged to my account.</description>
+    <category>billing_question</category>
+    <priority>medium</priority>
+    <status>new</status>
+  </ticket>
+  <ticket>
+    <customer_id>CUST003</customer_id>
+    <customer_email>carol@example.com</customer_email>
+    <customer_name>Carol White</customer_name>
+    <subject>App crashes on startup</subject>
+    <description>The mobile application crashes immediately when I try to open it.</description>
+    <category>bug_report</category>
+    <priority>urgent</priority>
+    <status>new</status>
+  </ticket>
+</tickets>

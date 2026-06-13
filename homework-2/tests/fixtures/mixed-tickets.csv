@@ -1,0 +1,6 @@
+customer_id,customer_email,customer_name,subject,description,category,priority,status
+CUST001,alice@example.com,Alice Smith,Cannot log in,I have been unable to log into my account for the past two days.,account_access,high,new
+CUST002,not-an-email,Bob Jones,Invoice incorrect,My latest invoice shows the wrong amount.,billing_question,medium,new
+CUST003,carol@example.com,Carol White,App crashes,The mobile application crashes immediately.,bug_report,urgent,new
+CUST004,dave@example.com,Dave Brown,Short,Too short,feature_request,low,new
+CUST005,eve@example.com,Eve Davis,Slow page load,The dashboard takes over 30 seconds to load on my computer.,technical_issue,high,new
