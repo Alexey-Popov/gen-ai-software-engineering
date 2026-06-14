@@ -1,0 +1,19 @@
+{
+  "name": "homework-4-notes-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Sample notes-api with seeded bugs for the 4-agent pipeline homework",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "vitest run",
+    "pipeline": "./run-pipeline.sh"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0",
+    "vitest": "^2.1.4"
+  }
+}
