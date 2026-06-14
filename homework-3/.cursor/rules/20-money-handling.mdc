@@ -1,0 +1,26 @@
+---
+description: Money arithmetic and identifiers
+globs:
+  - "services/card-lifecycle/**/*.ts"
+  - "services/card-lifecycle/migrations/**/*.sql"
+---
+
+# Money and identifiers
+
+## Money
+
+- Store amounts as **minor units** in `BIGINT`. Never `float` or `double`.
+- All money arithmetic via `decimal.js` or `dinero.js`. Avoid `Number` for any monetary value.
+- Always pair an amount with its **ISO 4217 currency code**. Mixed-currency arithmetic is rejected at the type level (use a typed wrapper if the language allows).
+- Money columns in DB end with `_minor` (e.g. `daily_cap_minor`).
+- Per-currency min/max limit bounds live in config (not in schema), so policy can change without a migration.
+
+## Identifiers
+
+- New entities: **ULID** (Universally Unique Lexicographically Sortable Identifier), not UUID v4. ULIDs index-friendly, sortable, and acceptable for external exposure.
+- PAN token: vault-issued opaque string; treat as a secret-equivalent — never echo in responses, logs, or error bodies.
+- Internal surrogate database ids never appear in APIs.
+
+## Currencies
+
+- Validate currency codes against an explicit allowlist at the boundary. Do not accept arbitrary three-letter strings.
