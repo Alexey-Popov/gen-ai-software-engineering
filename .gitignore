@@ -7,6 +7,9 @@ __pycache__/
 target/
 build/
 dist/
+bin/
+debug/
+obj/
 
 # Environment files
 .env
