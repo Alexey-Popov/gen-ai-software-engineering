@@ -1,6 +1,6 @@
-# HOWTORUN — Homework 6: Multi-Agent Banking Pipeline
+# HOWTORUN — Multi-Agent Banking Pipeline (REST)
 
-Step-by-step from setup to demo. All commands are run from the `homework-6` directory.
+Step-by-step from setup to demo. All commands run from the `homework-6` directory.
 
 ---
 
@@ -8,7 +8,7 @@ Step-by-step from setup to demo. All commands are run from the `homework-6` dire
 
 | Tool | Used by | Check |
 |------|---------|-------|
-| Python 3.10+ | pipeline, tests, MCP server | `python --version` |
+| Python 3.10+ | pipeline, services, tests, MCP server | `python --version` |
 | Node.js + `npx` | context7 MCP (via Claude Code) | `npx --version` |
 | Claude Code | slash commands, hooks, MCP | — |
 
@@ -19,94 +19,118 @@ cd homework-6
 python -m pip install -r requirements.txt
 ```
 
-`requirements.txt` pins `fastmcp>=2.0`, `pytest>=8.0`, `pytest-cov>=5.0`
-(verified on `fastmcp 3.4.2`, `pytest 9.x`).
+`requirements.txt` pins `fastmcp`, `fastapi`, `uvicorn`, `httpx`, `pytest`, `pytest-cov`.
 
-## 3. Run the pipeline
+## 3. One-command demo (recommended)
+
+```bash
+./demo.sh
+```
+
+Starts all seven services (validator, policy, fraud, compliance, settlement, reporting, and the
+orchestrator gateway), submits the bundled samples **and** one extra transaction through the REST
+API, prints the results, then shuts everything down — zero manual steps. To install deps first in
+the same step: `DEMO_INSTALL=1 ./demo.sh`. (Equivalent: `python demo.py`.)
+
+Expected: 8 total, 1 rejected (TXN006), 3 flagged, 2 on hold, 4 settled; the extra `TXN-DEMO`
+settles (fee 4.20, net 4195.80).
+
+## 4. Run the services, then call the gateway yourself
+
+Terminal 1 — start the fleet (keeps running until Ctrl+C):
+
+```bash
+python run_services.py
+```
+
+Terminal 2 — use the API gateway on `http://127.0.0.1:8000`:
+
+```bash
+# Submit one transaction (201 Created + Location header)
+curl -i -X POST http://127.0.0.1:8000/api/v1/transactions \
+  -H "Content-Type: application/json" \
+  -d '{"transaction_id":"TXN-A1","timestamp":"2026-03-16T12:00:00Z",
+       "source_account":"ACC-1","destination_account":"ACC-2","amount":"1500.00",
+       "currency":"USD","transaction_type":"transfer","metadata":{"country":"US"}}'
+
+# Retrieve that result
+curl http://127.0.0.1:8000/api/v1/transactions/TXN-A1
+
+# Run the whole sample batch, then read the summary
+curl -X POST http://127.0.0.1:8000/api/v1/pipeline/runs -H "Content-Type: application/json" -d '{}'
+curl http://127.0.0.1:8000/api/v1/pipeline/summary
+```
+
+Each worker also serves `GET /health/live` and `GET /health/ready`, and its OpenAPI docs at
+`/docs` (e.g. the policy agent at `http://127.0.0.1:8002/docs`).
+
+## 5. CLI entry point
+
+With the services running (`python run_services.py`), the CLI drives the batch:
 
 ```bash
 python integrator.py
 ```
 
-This clears `shared/`, loads `sample-transactions.json`, runs all five agents, writes one
-result per transaction to `shared/results/`, and prints a summary. Expected: 8 total,
-1 rejected (TXN006), 3 flagged, 2 on hold, 4 settled.
+It loads `sample-transactions.json`, runs every transaction through the master agent over HTTP,
+writes one result per transaction to `shared/results/`, and prints a summary.
 
-## 4. Validate only (dry run)
+## 6. The configurable rule engine
+
+All thresholds, limits and block-lists live in `config/rules.json` — edit it to change behaviour
+without touching code. For example, to block GBP and lower the fraud "high value" threshold:
+
+```jsonc
+"policy":  { "allowed_currencies": ["USD", "EUR"], ... },   // drop GBP
+"fraud":   { "high_value": "5000", ... }
+```
+
+Restart the services (or re-run `demo.sh`) and the new rules apply. Governing rules:
+`rules/policy.md` and `rules/orchestrator.md`.
+
+## 7. Validate only (dry run, no services needed)
 
 ```bash
 python agents/transaction_validator.py --dry-run
 ```
 
 Prints total / valid / invalid counts and a table with the rejection reason for TXN006.
-No files are written.
 
-## 5. Run the tests with coverage
+## 8. Run the tests with coverage
 
 ```bash
 python -m pytest
 ```
 
-63 tests, ~99% coverage (gate requires ≥ 80%, target ≥ 90%). Coverage is written to
-`coverage.json` and printed with missing lines.
+~99% coverage (gate requires ≥ 80%, target ≥ 90%). REST endpoints are tested in-process via
+Starlette's `TestClient`, so no sockets are bound. Coverage is written to `coverage.json`.
 
-## 6. Custom MCP server
-
-```bash
-# direct run (stdio transport)
-python mcp/server.py
-```
-
-Or quick self-test without an MCP client:
+## 9. Custom MCP server
 
 ```bash
-python -c "import sys; sys.path.insert(0,'mcp'); import server; print(server.get_transaction_status('TXN005')); print(server.list_pipeline_results()); print(server.pipeline_summary())"
+python mcp/server.py            # stdio transport
 ```
 
-The server exposes:
-- Tool `get_transaction_status(transaction_id)` — status of one transaction.
-- Tool `list_pipeline_results()` — one line per processed transaction.
-- Resource `pipeline://summary` — the latest run summary.
+Exposes `get_transaction_status(transaction_id)`, `list_pipeline_results()`, and the
+`pipeline://summary` resource — all reading from `shared/results/`.
 
-## 7. Connect MCP servers in Claude Code
+## 10. Connect MCP servers in Claude Code
 
-`mcp.json` (and `.mcp.json`, which Claude Code auto-loads from the project root) register both
-servers:
+`.mcp.json` registers `context7` and `pipeline-status`. Run **`/mcp`** to approve them, then try
+*"Use get_transaction_status for TXN005."*
 
-```json
-{
-  "mcpServers": {
-    "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp@latest"] },
-    "pipeline-status": { "command": "python", "args": ["mcp/server.py"] }
-  }
-}
-```
+## 11. Slash commands (skills)
 
-Run **`/mcp`** in Claude Code to approve them, then try:
-- *"Use context7 to look up the Python decimal module."* (context7)
-- *"Use get_transaction_status for TXN005."* (custom server)
-
-## 8. Slash commands (skills)
-
-In Claude Code, from this folder:
 - **`/run-pipeline`** — runs the pipeline end-to-end and summarizes results.
 - **`/validate-transactions`** — dry-run validation with a results table.
 - **`/write-spec`** — regenerates `specification.md` from the template.
 
-## 9. Coverage-gate hook
+## 12. Coverage-gate hook
 
-Configured in `.claude/settings.json` as a `PreToolUse` hook on `Bash`. Before any
-`git push`, it runs the tests and **blocks the push** if coverage < 80%.
+Configured in `.claude/settings.json` as a `PreToolUse` hook on `Bash`. Before any `git push` it
+runs the tests and **blocks** the push if coverage < 80%.
 
-- Manual check (allowed, push proceeds):
-  ```bash
-  echo '{"tool_name":"Bash","tool_input":{"command":"git push"}}' | python .claude/hooks/coverage_gate.py
-  ```
-- To **demo a block** for the screenshot, temporarily raise the threshold in
-  `.claude/hooks/coverage_gate.py` (e.g. `THRESHOLD = 100.0`) and run the command above — it
-  exits with code 2 and a "BLOCKED push" message. Revert the threshold afterwards.
+## 13. Screenshots
 
-## 10. Screenshots
-
-Capture these into `docs/screenshots/`: `pipeline-run-py.png`, `test-coverage.png`,
+Capture into `docs/screenshots/`: `demo-run.png`, `gateway-curl.png`, `test-coverage.png`,
 `skill-run-pipeline.png`, `hook-trigger.png`, `mcp-interaction.png`.

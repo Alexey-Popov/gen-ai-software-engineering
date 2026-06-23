@@ -15,22 +15,24 @@ A transaction with no blocking flag is marked ``compliant``.
 
 from __future__ import annotations
 
-from decimal import Decimal
 from typing import Any
 
-from agents import common
+from agents import common, rule_engine
 
 AGENT_NAME = "compliance_checker"
 
-REPORTING_THRESHOLD = Decimal("10000")
-WIRE_AUTOCLEAR_LIMIT = Decimal("50000")
 
-#: Accounts blocked by compliance (sanctions / fraud demo list).
-BLOCKED_ACCOUNTS: frozenset[str] = frozenset({"ACC-9999"})
+def evaluate(data: dict[str, Any], rules: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Return compliance findings for a transaction's data block.
 
+    Args:
+        rules: the ``compliance`` rule section; defaults to the engine's config.
+    """
+    r = rule_engine.section("compliance", rules)
+    reporting_threshold = common.parse_amount(r["reporting_threshold"])
+    wire_autoclear_limit = common.parse_amount(r["wire_autoclear_limit"])
+    blocked_accounts = set(r["blocked_accounts"])
 
-def evaluate(data: dict[str, Any]) -> dict[str, Any]:
-    """Return compliance findings for a transaction's data block."""
     flags: list[str] = []
     requires_reporting = False
     hold = False
@@ -40,15 +42,15 @@ def evaluate(data: dict[str, Any]) -> dict[str, Any]:
     destination = str(data.get("destination_account", ""))
     txn_type = str(data.get("transaction_type", "")).lower()
 
-    if source in BLOCKED_ACCOUNTS or destination in BLOCKED_ACCOUNTS:
+    if source in blocked_accounts or destination in blocked_accounts:
         flags.append("BLOCKED_ACCOUNT")
         hold = True
 
-    if amount >= REPORTING_THRESHOLD:
+    if amount >= reporting_threshold:
         flags.append("CTR_REPORTING_REQUIRED")
         requires_reporting = True
 
-    if txn_type == "wire_transfer" and amount >= WIRE_AUTOCLEAR_LIMIT:
+    if txn_type == "wire_transfer" and amount >= wire_autoclear_limit:
         flags.append("WIRE_LIMIT_EXCEEDED")
         hold = True
 

@@ -48,28 +48,24 @@ def test_transaction_id_of_default():
     assert common.transaction_id_of({"data": {}}) == "UNKNOWN"
 
 
-def test_ensure_shared_dirs_creates_all(tmp_path):
+def test_ensure_shared_dirs_creates_results(tmp_path):
     paths = common.ensure_shared_dirs(tmp_path / "shared")
+    assert common.SHARED_SUBDIRS == ("results",)
     for name in common.SHARED_SUBDIRS:
         assert paths[name].is_dir()
 
 
-def test_write_read_move_message(tmp_path, make_message):
+def test_write_read_message_roundtrips(tmp_path, make_message):
     paths = common.ensure_shared_dirs(tmp_path / "shared")
     msg = make_message()
-    path = common.write_message(paths["input"], msg, "TXN100.json")
+    path = common.write_message(paths["results"], msg, "TXN100.json")
     assert path.exists()
     loaded = common.read_message(path)
     assert loaded["data"]["transaction_id"] == "TXN100"
 
-    moved = common.move_message(path, paths["processing"])
-    assert moved.parent.name == "processing"
-    assert not path.exists()
-
-    # Moving onto an existing file overwrites it.
-    again = common.write_message(paths["input"], msg, "TXN100.json")
-    moved2 = common.move_message(again, paths["processing"])
-    assert moved2.exists()
+    # write_message defaults the filename to the transaction id, and overwrites.
+    default_named = common.write_message(paths["results"], msg)
+    assert default_named.name == "TXN100.json"
 
 
 def test_mask_account():

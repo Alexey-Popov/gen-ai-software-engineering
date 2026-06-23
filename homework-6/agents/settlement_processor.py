@@ -14,13 +14,16 @@ from __future__ import annotations
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
 
-from agents import common
+from agents import common, rule_engine
 
 AGENT_NAME = "settlement_processor"
 
-#: Processing fee rate applied to the gross amount (0.1%).
-FEE_RATE = Decimal("0.001")
 CENTS = Decimal("0.01")
+
+
+def _fee_rate(rules: dict[str, Any] | None = None) -> Decimal:
+    """Processing fee rate from the ``settlement`` rule section (e.g. 0.1%)."""
+    return common.parse_amount(rule_engine.section("settlement", rules)["fee_rate"])
 
 
 def is_settleable(data: dict[str, Any]) -> bool:
@@ -32,14 +35,17 @@ def is_settleable(data: dict[str, Any]) -> bool:
     )
 
 
-def compute_settlement(amount: Decimal) -> tuple[Decimal, Decimal]:
+def compute_settlement(
+    amount: Decimal, rules: dict[str, Any] | None = None
+) -> tuple[Decimal, Decimal]:
     """Return ``(fee, settled_amount)`` for a gross ``amount``.
 
     The fee is charged on the absolute value (so refunds are also charged),
     rounded half-up to the cent; the settled amount nets the fee out of the
-    gross while preserving the original sign of the transaction.
+    gross while preserving the original sign of the transaction. The fee rate
+    comes from the configurable rule engine.
     """
-    fee = (abs(amount) * FEE_RATE).quantize(CENTS, rounding=ROUND_HALF_UP)
+    fee = (abs(amount) * _fee_rate(rules)).quantize(CENTS, rounding=ROUND_HALF_UP)
     settled = (amount - fee).quantize(CENTS, rounding=ROUND_HALF_UP)
     return fee, settled
 

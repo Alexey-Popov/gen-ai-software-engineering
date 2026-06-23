@@ -1,115 +1,65 @@
-"""Integrator / orchestrator for the multi-agent banking pipeline.
+"""CLI entry point for the multi-agent banking pipeline.
 
-Responsibilities:
-    1. Create the ``shared/{input,processing,output,results}`` channel.
-    2. Load ``sample-transactions.json`` and wrap each record in a message.
-    3. Drive every message through the agent chain, moving the JSON file
-       ``input -> processing -> output`` at each hop and writing the final
-       outcome to ``shared/results/<transaction_id>.json``.
-    4. Run the reporting agent to produce ``shared/results/pipeline-summary.json``.
+The orchestration itself lives in the **master agent**
+(:mod:`agents.orchestrator`); this module is the thin command-line front end
+that loads the bundled transactions, hands them to the master agent over an
+HTTP pipeline client, and prints the resulting summary.
 
-Run with::
+The five worker agents and the orchestrator run as REST services — start them
+first with ``run_services.py``::
 
-    python integrator.py
+    python run_services.py        # terminal 1: start the agent services
+    python integrator.py          # terminal 2: drive the pipeline
+
+``run_pipeline`` / ``clear_shared`` / ``load_transactions`` are re-exported from
+the master agent so existing callers and tests keep working.
 """
 
 from __future__ import annotations
 
-import shutil
 import sys
 from pathlib import Path
 from typing import Any
 
-from agents import (
-    common,
-    compliance_checker,
-    fraud_detector,
-    reporting_agent,
-    settlement_processor,
-    transaction_validator,
-)
+from agents import orchestrator
+from agents.client import HttpPipelineClient
+# Re-exported for backward compatibility (tests and external callers).
+from agents.orchestrator import clear_shared, load_transactions  # noqa: F401
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_SHARED = BASE_DIR / "shared"
 DEFAULT_TRANSACTIONS = BASE_DIR / "sample-transactions.json"
 
-#: Ordered processing stages (the reporting agent is run separately at the end).
-STAGES = [
-    transaction_validator,
-    fraud_detector,
-    compliance_checker,
-    settlement_processor,
-]
 
-
-def clear_shared(shared_root: Path) -> None:
-    """Remove and recreate the shared channel for a clean run."""
-    shared_root = Path(shared_root)
-    if shared_root.exists():
-        shutil.rmtree(shared_root)
-    common.ensure_shared_dirs(shared_root)
-
-
-def load_transactions(path: Path) -> list[dict[str, Any]]:
-    """Load raw transactions from ``path`` (a JSON array)."""
-    import json
-
-    return json.loads(Path(path).read_text(encoding="utf-8"))
-
-
-def process_transaction(
-    shared_root: Path, paths: dict[str, Path], txn: dict[str, Any]
-) -> dict[str, Any]:
-    """Run one transaction through the full agent chain.
-
-    Returns the final message that was written to ``results/``.
-    """
-    txn_id = txn.get("transaction_id", "UNKNOWN")
-    message = common.new_message("integrator", "transaction_validator", txn)
-    current_path = common.write_message(paths["input"], message, f"{txn_id}.json")
-
-    for stage in STAGES:
-        proc_path = common.move_message(current_path, paths["processing"])
-        message = common.read_message(proc_path)
-        message = stage.process_message(message)
-        current_path = common.write_message(paths["output"], message, f"{txn_id}.json")
-        proc_path.unlink(missing_ok=True)
-        common.append_audit(
-            shared_root, stage.AGENT_NAME, txn_id, message["data"].get("status", "unknown")
-        )
-        if message.get("target_agent") == "reporting_agent" and message["data"].get(
-            "status"
-        ) in {"rejected", "compliance_hold"}:
-            break
-
-    final = reporting_agent.process_message(message)
-    common.write_message(paths["results"], final, f"{txn_id}.json")
-    common.append_audit(
-        shared_root, reporting_agent.AGENT_NAME, txn_id, final["data"].get("status", "unknown")
-    )
-    # Clean the intermediate output file now that the result is final.
-    (paths["output"] / f"{txn_id}.json").unlink(missing_ok=True)
-    return final
+def default_client() -> HttpPipelineClient:  # pragma: no cover - real network
+    """Create the production HTTP client (the tests inject their own)."""
+    return HttpPipelineClient()
 
 
 def run_pipeline(
+    client: Any | None = None,
     shared_root: Path | None = None,
     transactions_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Run the entire pipeline and return the summary dict."""
+    """Load transactions and run them through the master agent.
+
+    Args:
+        client: a pipeline client (``process``/``summary``/``close``). When
+            ``None``, the production HTTP client is created and closed here.
+    """
     shared_root = Path(shared_root if shared_root is not None else DEFAULT_SHARED)
     transactions_path = Path(
         transactions_path if transactions_path is not None else DEFAULT_TRANSACTIONS
     )
-    clear_shared(shared_root)
-    paths = common.ensure_shared_dirs(shared_root)
-
     transactions = load_transactions(transactions_path)
-    finals = [process_transaction(shared_root, paths, txn) for txn in transactions]
 
-    summary = reporting_agent.build_summary(finals)
-    reporting_agent.write_summary(shared_root, summary)
-    return summary
+    owns_client = client is None
+    client = client or default_client()
+    try:
+        return orchestrator.run_pipeline(client, transactions, shared_root)
+    finally:
+        if owns_client:
+            client.close()
 
 
 def _print_summary(summary: dict[str, Any]) -> None:

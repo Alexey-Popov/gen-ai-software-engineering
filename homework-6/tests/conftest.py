@@ -52,3 +52,17 @@ def shared_root(tmp_path) -> Path:
     root = tmp_path / "shared"
     common.ensure_shared_dirs(root)
     return root
+
+
+@pytest.fixture
+def pipeline_client():
+    """An in-process REST client that drives the real FastAPI agent apps.
+
+    Exercises the full HTTP contract (routing, request validation, status
+    codes) without binding any sockets, so integration tests stay fast.
+    """
+    from agents.client import InProcessPipelineClient
+
+    client = InProcessPipelineClient()
+    yield client
+    client.close()

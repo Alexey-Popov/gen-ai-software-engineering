@@ -56,10 +56,10 @@ def validate(data: dict[str, Any]) -> tuple[bool, str | None]:
 def process_message(message: dict[str, Any]) -> dict[str, Any]:
     """Validate the transaction carried by ``message``.
 
-    Returns a new message addressed to the fraud detector. ``data.status`` is
+    Returns a new message addressed to the policy agent. ``data.status`` is
     set to ``validated`` or ``rejected`` (with ``data.reason`` on rejection).
     """
-    out = common.relabel(message, AGENT_NAME, "fraud_detector")
+    out = common.relabel(message, AGENT_NAME, "policy_agent")
     is_valid, reason = validate(out["data"])
     if is_valid:
         out["data"]["status"] = "validated"

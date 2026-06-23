@@ -1,0 +1,35 @@
+{
+  "policy": {
+    "allowed_currencies": ["USD", "EUR", "GBP", "JPY", "CHF", "CAD", "AUD"],
+    "max_transaction_amount": "1000000.00",
+    "blocked_countries": ["IR", "KP", "SY", "CU"],
+    "blocked_transaction_types": []
+  },
+  "fraud": {
+    "very_high_value": "50000",
+    "high_value": "10000",
+    "structuring_floor": "9000",
+    "unusual_hours": [0, 1, 2, 3, 4, 5],
+    "suspicious_accounts": ["ACC-9999"],
+    "domestic_country": "US",
+    "scores": {
+      "very_high_value": 60,
+      "high_value": 40,
+      "possible_structuring": 25,
+      "unusual_timing": 20,
+      "cross_border": 15,
+      "suspicious_destination": 40,
+      "wire_transfer": 10
+    },
+    "high_risk_score": 40,
+    "medium_risk_score": 20
+  },
+  "compliance": {
+    "reporting_threshold": "10000",
+    "wire_autoclear_limit": "50000",
+    "blocked_accounts": ["ACC-9999"]
+  },
+  "settlement": {
+    "fee_rate": "0.001"
+  }
+}

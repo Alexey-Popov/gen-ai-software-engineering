@@ -62,11 +62,11 @@ def test_zero_refund_rejected(valid_txn):
     assert "non-zero" in reason
 
 
-def test_process_message_valid_routes_to_fraud(make_message):
+def test_process_message_valid_routes_to_policy(make_message):
     out = tv.process_message(make_message())
     assert out["data"]["status"] == "validated"
     assert out["data"]["validated"] is True
-    assert out["target_agent"] == "fraud_detector"
+    assert out["target_agent"] == "policy_agent"
 
 
 def test_process_message_rejected_routes_to_reporting(make_message):

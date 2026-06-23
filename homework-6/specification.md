@@ -10,8 +10,10 @@
 ## High-Level Objective
 
 - Build a multi-agent pipeline that takes raw bank transactions and runs each one through
-  validation, fraud scoring, compliance review, settlement, and reporting — with every step
-  communicating through JSON files in shared directories and recorded in an audit trail.
+  validation, policy, fraud scoring, compliance review, settlement, and reporting — with each
+  agent exposed as a REST service, a master agent (orchestrator) driving the chain over HTTP and
+  exposing an API gateway, all rules read from a configurable JSON engine, and every step
+  recorded in an audit trail.
 
 ## Mid-Level Objectives
 
@@ -39,8 +41,12 @@
   flowing between agents, but never write them to the audit log or other logs in plaintext
   (a `mask_account` helper exists for the rare diagnostic that needs a reference).
 - **Communication protocol:** agents pass standard messages
-  (`message_id`, `timestamp`, `source_agent`, `target_agent`, `message_type`, `data`) as JSON
-  files through `shared/{input,processing,output,results}`.
+  (`message_id`, `timestamp`, `source_agent`, `target_agent`, `message_type`, `data`) as HTTP
+  JSON bodies between REST services; the orchestrator persists the final message to
+  `shared/results/<id>.json`.
+- **Rule engine:** thresholds, limits and block-lists live in `config/rules.json` (sections:
+  `policy`, `fraud`, `compliance`, `settlement`) and are read via `agents/rule_engine.py`. No
+  business values are hard-coded in agents.
 - **Coding standards:** Python 3.10+, type hints, pure `process_message(message) -> message`
   functions for unit-testability; pytest + pytest-cov; coverage gate at 80% (target ≥ 90%).
 
@@ -52,13 +58,17 @@
 - Claude Code with the `context7` and custom `pipeline-status` MCP servers configured.
 
 ### Ending context
-- `agents/` — five agent modules plus a shared `common.py`.
-- `integrator.py` — orchestrator that drives the chain and writes results.
+- `agents/` — six agent modules (incl. the new `policy_agent.py`) plus `common.py`,
+  `rule_engine.py`, `rest.py`, `client.py`, `orchestrator.py`.
+- `config/rules.json` — the configurable rule engine values.
+- `run_services.py` — launches the agent fleet; `integrator.py` — thin CLI.
+- `demo.sh` / `demo.py` — one-command end-to-end demo.
 - `shared/results/` — one JSON result per transaction, `pipeline-summary.json`, and
   `audit-log.jsonl`.
 - `mcp/server.py` — custom FastMCP server exposing pipeline status.
-- `tests/` — unit + integration tests with coverage ≥ 90%.
-- Documentation (`README.md`, `HOWTORUN.md`) and screenshots.
+- `rules/` — governance rules (`orchestrator.md`, `policy.md`).
+- `tests/` — unit + integration + REST tests with coverage ≥ 90%.
+- Documentation (`README.md`, `HOWTORUN.md`, `agents.md`) and screenshots.
 
 ## Low-Level Tasks
 
@@ -120,14 +130,40 @@ Function to CREATE: build_summary(results: list[dict]) -> dict
 Details: Feeds the custom MCP pipeline://summary resource.
 ```
 
-### 6. Integrator / Orchestrator
+### 6. Master Agent (Orchestrator / Gateway)
 ```
-Task: Integrator
-Prompt: "Create the orchestrator that sets up shared/ directories, loads
-         sample-transactions.json, wraps each record in a message, drives it through the
-         agent chain (moving the JSON file input -> processing -> output), writes the final
-         result to shared/results/<id>.json, and runs the reporting agent."
-File to CREATE: integrator.py
-Function to CREATE: run_pipeline(shared_root, transactions_path) -> dict
-Details: All eight transactions must appear in shared/results/.
+Task: Orchestrator
+Prompt: "Create the master agent that drives each transaction through the agent chain over
+         HTTP (following the reply's target_agent), writes the final result to
+         shared/results/<id>.json, appends the audit trail, and asks the reporting service for
+         the summary. Expose it as a REST API gateway: POST /api/v1/pipeline/runs (batch),
+         POST /api/v1/transactions (one, 201 + Location), GET /api/v1/transactions/{id} and
+         GET /api/v1/pipeline/summary (retrieve). Contain no banking logic."
+Files to CREATE: agents/orchestrator.py, agents/rest.py, agents/client.py, run_services.py
+Function to CREATE: orchestrator.run_pipeline(client, transactions, shared_root) -> dict
+Details: All eight transactions appear in shared/results/; integrator.py is a thin CLI.
+```
+
+### 7. Policy Agent + Configurable Rule Engine
+```
+Task: Policy Agent & Rule Engine
+Prompt: "Create a rule engine that loads config/rules.json and a new policy agent that enforces
+         the 'policy' section (allowed currencies, max amount, blocked countries/types),
+         rejecting violations and routing them to reporting. Refactor fraud, compliance and
+         settlement to read their thresholds from the engine. Place the policy agent between
+         the validator and the fraud detector."
+Files to CREATE: config/rules.json, agents/rule_engine.py, agents/policy_agent.py
+Function to CREATE: policy_agent.process_message(message: dict) -> dict
+Details: Shipped config reproduces the original outcomes (7 validated, 1 rejected, 3 flagged,
+         2 on hold, 4 settled).
+```
+
+### 8. One-command Demo
+```
+Task: Demo
+Prompt: "Create demo.sh (+ demo.py) that starts every service, submits transactions through
+         the REST gateway, retrieves and displays the results, and tears everything down with
+         zero manual steps."
+Files to CREATE: demo.sh, demo.py
+Details: Single command; no manual steps.
 ```

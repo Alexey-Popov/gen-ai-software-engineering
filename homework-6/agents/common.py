@@ -2,13 +2,17 @@
 
 This module is the reusable base every agent depends on. It provides:
 
-* the canonical message envelope (:func:`new_message`) and a small set of
-  helpers to read / write / move those messages through the ``shared/``
-  directories;
+* the canonical message envelope (:func:`new_message`) that travels between
+  agents over HTTP (the agents are REST services; see :mod:`agents.rest`);
 * monetary parsing on :class:`decimal.Decimal` (never ``float``);
+* the ``shared/results`` sink where the integrator persists the final
+  per-transaction outcome and the run summary;
 * an append-only **audit trail** (:func:`append_audit`) that records *who*
   did *what* to *which transaction* with an ISO 8601 timestamp — and which
   deliberately never writes account numbers or names (PII) in plaintext.
+
+The previous file-based ``input -> processing -> output`` channel has been
+replaced by REST calls; only ``results`` remains as a persistence sink.
 """
 
 from __future__ import annotations
@@ -54,8 +58,10 @@ REQUIRED_FIELDS: tuple[str, ...] = (
     "transaction_type",
 )
 
-#: Sub-directories that make up the file-based communication channel.
-SHARED_SUBDIRS: tuple[str, ...] = ("input", "processing", "output", "results")
+#: Sub-directory under ``shared/`` where the integrator persists outcomes.
+#: (The former ``input``/``processing``/``output`` channel is gone — agents
+#: now exchange messages over HTTP, so only ``results`` survives.)
+SHARED_SUBDIRS: tuple[str, ...] = ("results",)
 
 AUDIT_FILE = "audit-log.jsonl"
 SUMMARY_FILE = "pipeline-summary.json"
@@ -122,7 +128,7 @@ def transaction_id_of(message: dict[str, Any]) -> str:
     return str(message.get("data", {}).get("transaction_id", "UNKNOWN"))
 
 
-# --- File-based channel ------------------------------------------------------
+# --- Results persistence -----------------------------------------------------
 
 def ensure_shared_dirs(shared_root: Path) -> dict[str, Path]:
     """Create the ``shared/`` sub-directories and return a name -> path map."""
@@ -148,18 +154,6 @@ def write_message(directory: Path, message: dict[str, Any], name: str | None = N
 def read_message(path: Path) -> dict[str, Any]:
     """Read a JSON message from ``path``."""
     return json.loads(Path(path).read_text(encoding="utf-8"))
-
-
-def move_message(src: Path, dest_dir: Path) -> Path:
-    """Move a message file into ``dest_dir`` (overwriting any same-named file)."""
-    src = Path(src)
-    dest_dir = Path(dest_dir)
-    dest_dir.mkdir(parents=True, exist_ok=True)
-    dest = dest_dir / src.name
-    if dest.exists():
-        dest.unlink()
-    src.replace(dest)
-    return dest
 
 
 # --- Audit trail (PII-safe) --------------------------------------------------
