@@ -1,0 +1,113 @@
+# Banking Transactions API — Sample Requests
+# Use with VS Code REST Client extension (humao.rest-client)
+# Start the server first: uvicorn src.app:app --reload
+
+@baseUrl = http://localhost:8000
+
+### ── Task 1: Create transactions ────────────────────────────────────────────
+
+### Create a deposit
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-EXT01",
+  "toAccount": "ACC-12345",
+  "amount": 500.00,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+### Create a transfer
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-67890",
+  "amount": 100.50,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+### Create a withdrawal
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-EXT01",
+  "amount": 75.00,
+  "currency": "USD",
+  "type": "withdrawal"
+}
+
+### ── Task 2: Validation errors ───────────────────────────────────────────────
+
+### Invalid currency code → 400
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-67890",
+  "amount": 100.00,
+  "currency": "XYZ",
+  "type": "transfer"
+}
+
+### Invalid amount (negative) → 400
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-67890",
+  "amount": -50,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+### Invalid account format → 400
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "BADFORMAT",
+  "toAccount": "ACC-67890",
+  "amount": 100.00,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+### ── Task 1: List and get transactions ───────────────────────────────────────
+
+### Get all transactions
+GET {{baseUrl}}/transactions
+
+### Get specific transaction (replace <id> with a real UUID from a POST response)
+GET {{baseUrl}}/transactions/<id>
+
+### ── Task 3: Filtering ────────────────────────────────────────────────────────
+
+### Filter by account
+GET {{baseUrl}}/transactions?accountId=ACC-12345
+
+### Filter by type
+GET {{baseUrl}}/transactions?type=deposit
+
+### Filter by date range
+GET {{baseUrl}}/transactions?from=2024-01-01&to=2029-12-31
+
+### Filter combined: account + type
+GET {{baseUrl}}/transactions?accountId=ACC-12345&type=transfer
+
+### ── Task 1: Account balance ─────────────────────────────────────────────────
+
+### Get account balance
+GET {{baseUrl}}/accounts/ACC-12345/balance
+
+### ── Task 4: Account summary ─────────────────────────────────────────────────
+
+### Get account summary
+GET {{baseUrl}}/accounts/ACC-12345/summary

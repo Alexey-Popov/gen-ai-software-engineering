@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.env
+venv/
+.venv/
+
+# Internal planning files — not part of the submission
+PLAN-AI-DEVELOPER.md
+PLAN-USER.md
+CONTEXT-FOR-EXECUTOR.md
+docs/PR-DESCRIPTION-DRAFT.md
