@@ -1,0 +1,84 @@
+### Banking Transactions API — sample requests
+### Use with the VS Code "REST Client" extension, or read as curl reference.
+@host = http://localhost:3000
+
+### Health check
+GET {{host}}/health
+
+### Create a transfer (201)
+POST {{host}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-67890",
+  "amount": 100.50,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+### Create a deposit (201) — only toAccount allowed
+POST {{host}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "ACC-12345",
+  "amount": 500,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+### Create a withdrawal (201) — only fromAccount allowed
+POST {{host}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "amount": 100,
+  "currency": "USD",
+  "type": "withdrawal"
+}
+
+### Validation failure (400) — negative amount, bad currency, deposit with fromAccount
+POST {{host}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-00001",
+  "toAccount": "ACC-12345",
+  "amount": -5,
+  "currency": "XYZ",
+  "type": "deposit"
+}
+
+### List all transactions
+GET {{host}}/transactions
+
+### Filter: by account (matches fromAccount OR toAccount)
+GET {{host}}/transactions?accountId=ACC-12345
+
+### Filter: by type
+GET {{host}}/transactions?type=transfer
+
+### Filter: by inclusive date range
+GET {{host}}/transactions?from=2024-01-01&to=2024-12-31
+
+### Filter: combined
+GET {{host}}/transactions?accountId=ACC-12345&type=transfer
+
+### Get one transaction by id (replace <id> with a real id from a POST response)
+GET {{host}}/transactions/<id>
+
+### Account balance
+GET {{host}}/accounts/ACC-12345/balance
+
+### Account summary (Task 4-A)
+GET {{host}}/accounts/ACC-12345/summary
+
+### Simple interest (Task 4-B)
+GET {{host}}/accounts/ACC-12345/interest?rate=0.05&days=30
+
+### CSV export (Task 4-C)
+GET {{host}}/transactions/export?format=csv
+
+### Rate limiting (Task 4-D): send >100 requests/min from one IP to receive 429
