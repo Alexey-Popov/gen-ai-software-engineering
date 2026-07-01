@@ -1,0 +1,81 @@
+### Banking Transactions API — sample requests
+### Use with the VS Code "REST Client" extension (or import into Postman).
+### Start the server first:  npm run start:prod
+
+@baseUrl = http://localhost:3000
+
+### 1. Create a deposit (funds arrive into ACC-12345)
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "ACC-12345",
+  "amount": 1000.00,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+### 2. Create a transfer ACC-12345 -> ACC-67890
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-67890",
+  "amount": 100.50,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+### 3. Create a withdrawal from ACC-12345
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "amount": 75.25,
+  "currency": "USD",
+  "type": "withdrawal"
+}
+
+### 4. Validation error example (invalid amount, currency, account)
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "BAD",
+  "toAccount": "ACC-1",
+  "amount": -5.999,
+  "currency": "XX",
+  "type": "transfer"
+}
+
+### 5. List all transactions
+GET {{baseUrl}}/transactions
+
+### 6. Filter by account
+GET {{baseUrl}}/transactions?accountId=ACC-12345
+
+### 7. Filter by type
+GET {{baseUrl}}/transactions?type=transfer
+
+### 8. Filter by date range
+GET {{baseUrl}}/transactions?from=2024-01-01&to=2030-12-31
+
+### 9. Combined filters
+GET {{baseUrl}}/transactions?accountId=ACC-12345&type=deposit
+
+### 10. Get a single transaction by id (replace with a real id)
+GET {{baseUrl}}/transactions/REPLACE_WITH_ID
+
+### 11. Account balance
+GET {{baseUrl}}/accounts/ACC-12345/balance
+
+### 12. Account summary (Task 4A)
+GET {{baseUrl}}/accounts/ACC-12345/summary
+
+### 13. Simple interest (Task 4B)
+GET {{baseUrl}}/accounts/ACC-12345/interest?rate=0.05&days=30
+
+### 14. CSV export (Task 4C)
+GET {{baseUrl}}/transactions/export?format=csv
