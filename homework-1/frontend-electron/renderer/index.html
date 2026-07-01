@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Banking Transactions — Desktop</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="nav">
+        <div class="brand"><span class="logo">▦</span><span class="grad">Banking</span></div>
+        <nav>
+          <a data-view="transactions" class="active"><span class="dot"></span>Transactions</a>
+          <a data-view="new"><span class="dot"></span>New transaction</a>
+          <a data-view="accounts"><span class="dot"></span>Account tools</a>
+        </nav>
+      </aside>
+
+      <div class="main">
+        <header class="topbar">
+          <span class="title">Banking Transactions · Desktop</span>
+          <div class="top-actions">
+            <span id="apiChip" class="chip">Checking…</span>
+            <button id="themeBtn" class="btn btn-subtle">☀ Light</button>
+          </div>
+        </header>
+
+        <main class="content">
+          <!-- Transactions -->
+          <section id="view-transactions">
+            <div class="header-row">
+              <h1>Transactions</h1>
+              <div class="actions">
+                <button id="exportBtn" class="btn">⤓ Export CSV</button>
+                <button class="btn btn-primary" data-view="new">+ New transaction</button>
+              </div>
+            </div>
+            <div class="card filters">
+              <div class="row">
+                <div class="field"><label class="label">Account</label><input id="fAccount" class="input" placeholder="ACC-12345" /></div>
+                <div class="field"><label class="label">Type</label>
+                  <select id="fType" class="input">
+                    <option value="">All</option><option value="deposit">Deposit</option>
+                    <option value="withdrawal">Withdrawal</option><option value="transfer">Transfer</option>
+                  </select>
+                </div>
+                <div class="field"><label class="label">From</label><input id="fFrom" class="input" type="date" /></div>
+                <div class="field"><label class="label">To</label><input id="fTo" class="input" type="date" /></div>
+                <div class="field"><button id="applyBtn" class="btn btn-primary">Apply</button></div>
+                <div class="field"><button id="clearBtn" class="btn">Clear</button></div>
+              </div>
+            </div>
+            <div class="card"><div id="txTable"></div></div>
+          </section>
+
+          <!-- New transaction -->
+          <section id="view-new" hidden>
+            <h1>New transaction</h1>
+            <div class="card form-card">
+              <div class="grid">
+                <div class="field"><label class="label">From account</label><input id="nFrom" class="input" placeholder="ACC-12345" /><span class="error-text" id="eFrom"></span></div>
+                <div class="field"><label class="label">To account</label><input id="nTo" class="input" placeholder="ACC-67890" /><span class="error-text" id="eTo"></span></div>
+                <div class="field"><label class="label">Amount</label><input id="nAmount" class="input" type="number" step="0.01" placeholder="100.50" /><span class="error-text" id="eAmount"></span></div>
+                <div class="field"><label class="label">Currency</label>
+                  <select id="nCurrency" class="input"><option>USD</option><option>EUR</option><option>GBP</option><option>JPY</option></select>
+                  <span class="error-text" id="eCurrency"></span>
+                </div>
+                <div class="field"><label class="label">Type</label>
+                  <select id="nType" class="input"><option value="deposit">Deposit</option><option value="withdrawal">Withdrawal</option><option value="transfer" selected>Transfer</option></select>
+                  <span class="error-text" id="eType"></span>
+                </div>
+              </div>
+              <div class="row" style="margin-top:8px">
+                <button id="createBtn" class="btn btn-primary">Create transaction</button>
+                <button class="btn" data-view="transactions">Cancel</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Account tools -->
+          <section id="view-accounts" hidden>
+            <h1>Account tools</h1>
+            <div class="card">
+              <h2>Balance</h2>
+              <div class="row">
+                <div class="field"><label class="label">Account</label><input id="bAccount" class="input" placeholder="ACC-12345" /></div>
+                <div class="field"><button id="balanceBtn" class="btn btn-primary">Get balance</button></div>
+              </div>
+              <div id="balanceOut" class="stat" hidden></div>
+            </div>
+            <div class="card">
+              <h2>Summary</h2>
+              <div class="row">
+                <div class="field"><label class="label">Account</label><input id="sAccount" class="input" placeholder="ACC-12345" /></div>
+                <div class="field"><button id="summaryBtn" class="btn btn-primary">Get summary</button></div>
+              </div>
+              <div id="summaryOut" class="stat-grid" hidden></div>
+            </div>
+            <div class="card">
+              <h2>Simple interest</h2>
+              <div class="row">
+                <div class="field"><label class="label">Account</label><input id="iAccount" class="input" placeholder="ACC-12345" /></div>
+                <div class="field"><label class="label">Rate</label><input id="iRate" class="input" type="number" step="0.01" value="0.05" /></div>
+                <div class="field"><label class="label">Days</label><input id="iDays" class="input" type="number" value="30" /></div>
+                <div class="field"><button id="interestBtn" class="btn btn-primary">Calculate</button></div>
+              </div>
+              <div id="interestOut" class="stat-grid" hidden></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="toaster" class="toaster"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -22,6 +22,12 @@ These render in the main [`../../README.md`](../../README.md).
 | `9.png` | Cycle 1 implemented test‑first (model, repo, service, endpoints, 404) |
 | `10.png` | "9 tests passed" → Cycle 2 (validation + structured 400) begins |
 
+## Added — quick start
+
+| File | Content |
+|------|---------|
+| `21.png` | `./run.sh` running — FastAPI backend + Electron desktop app live (the full stack) |
+
 ## Added — tests & backend running
 
 | File | Content |

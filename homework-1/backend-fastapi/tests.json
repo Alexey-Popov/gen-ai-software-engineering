@@ -1,0 +1,16 @@
+{
+  "description": "Test tracker for the FastAPI backend (pytest). 32 tests, verified passing. Same feature coverage as the Java/Go versions.",
+  "framework": "pytest + FastAPI TestClient",
+  "total": 32,
+  "status": "passing",
+  "suites": [
+    {"file": "tests/test_transactions.py", "tests": 5, "covers": "create (201), list, get by id, 404"},
+    {"file": "tests/test_validation.py", "tests": 6, "covers": "structured 400: amount, account, currency, type, multiple"},
+    {"file": "tests/test_accounts.py", "tests": 7, "covers": "balance, summary, interest, 400 on bad interest params"},
+    {"file": "tests/test_filter.py", "tests": 5, "covers": "filter by accountId/type/date range/combined/none"},
+    {"file": "tests/test_export.py", "tests": 3, "covers": "CSV export headers, header+rows, unsupported format 400"},
+    {"file": "tests/test_ratelimit.py", "tests": 2, "covers": "within limit ok, over limit 429"},
+    {"file": "tests/test_integration.py", "tests": 1, "covers": "end-to-end create -> balance -> summary -> filters"},
+    {"file": "tests/test_meta.py", "tests": 3, "covers": "health UP, OpenAPI spec, Swagger docs page"}
+  ]
+}

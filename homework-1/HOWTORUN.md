@@ -2,17 +2,17 @@
 
 Banking Transactions API — Homework 1. Built test-first; see `PLAN-BACKEND-TDD.md`.
 
-## ⚡ Quick start (one command)
+## ⚡ Quick start
 
-From `homework-1/`, run both backend and frontend together:
+From `homework-1/`, run the interactive launcher:
 
 ```bash
-./start.sh
+./run.sh
 ```
 
-It checks prerequisites, installs frontend deps on first run, starts the backend (:3000)
-and frontend (:4200), seeds sample data, opens the browser, and streams logs. Press
-**Ctrl+C** once to stop everything. Requires JDK 17+, Maven, and Node.js.
+It prompts you to choose a backend (Java / Go / FastAPI / .NET) and a frontend
+(Angular / Electron / Flutter / none), then starts the backend on :3000, seeds sample data,
+launches the frontend, and stops everything on **Ctrl+C** (requires the chosen stack's tools).
 
 The manual steps below are the alternative if you prefer to run each part yourself.
 

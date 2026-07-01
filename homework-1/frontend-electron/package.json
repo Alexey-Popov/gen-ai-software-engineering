@@ -1,0 +1,12 @@
+{
+  "name": "banking-electron",
+  "version": "1.0.0",
+  "description": "Electron desktop client for the Banking Transactions API",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}
