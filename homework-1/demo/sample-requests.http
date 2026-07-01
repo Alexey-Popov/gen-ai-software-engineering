@@ -1,11 +1,14 @@
 ### Banking Transactions API — sample requests
-### Use with the VS Code "REST Client" extension, or read as curl reference.
+### Works with the IntelliJ/PhpStorm HTTP Client and the VS Code "REST Client" extension.
+### Start the server first:  npm start   (http://localhost:3000)
 @host = http://localhost:3000
 
 ### Health check
 GET {{host}}/health
 
-### Create a transfer (201)
+> {% client.test("ok", () => client.assert(response.status === 200)); %}
+
+### Create a transfer (expect 201) — saves the new id into {{txId}}
 POST {{host}}/transactions
 Content-Type: application/json
 
@@ -17,7 +20,12 @@ Content-Type: application/json
   "type": "transfer"
 }
 
-### Create a deposit (201) — only toAccount allowed
+> {%
+  client.test("created", () => client.assert(response.status === 201));
+  client.global.set("txId", response.body.id);
+%}
+
+### Create a deposit (expect 201) — only toAccount allowed
 POST {{host}}/transactions
 Content-Type: application/json
 
@@ -28,7 +36,9 @@ Content-Type: application/json
   "type": "deposit"
 }
 
-### Create a withdrawal (201) — only fromAccount allowed
+> {% client.test("created", () => client.assert(response.status === 201)); %}
+
+### Create a withdrawal (expect 201) — only fromAccount allowed
 POST {{host}}/transactions
 Content-Type: application/json
 
@@ -39,7 +49,11 @@ Content-Type: application/json
   "type": "withdrawal"
 }
 
-### Validation failure (400) — negative amount, bad currency, deposit with fromAccount
+> {% client.test("created", () => client.assert(response.status === 201)); %}
+
+### Validation failure — THIS IS EXPECTED TO RETURN 400
+### (negative amount, bad currency, deposit carrying a fromAccount).
+### The test below passes when the API correctly rejects it, so the request shows green.
 POST {{host}}/transactions
 Content-Type: application/json
 
@@ -50,6 +64,11 @@ Content-Type: application/json
   "currency": "XYZ",
   "type": "deposit"
 }
+
+> {%
+  client.test("rejected with 400", () => client.assert(response.status === 400));
+  client.test("has details[]", () => client.assert(Array.isArray(response.body.details)));
+%}
 
 ### List all transactions
 GET {{host}}/transactions
@@ -66,8 +85,11 @@ GET {{host}}/transactions?from=2024-01-01&to=2024-12-31
 ### Filter: combined
 GET {{host}}/transactions?accountId=ACC-12345&type=transfer
 
-### Get one transaction by id (replace <id> with a real id from a POST response)
-GET {{host}}/transactions/<id>
+### Get one transaction by id — uses {{txId}} captured from the transfer above.
+### Run the "Create a transfer" request first so {{txId}} is set.
+GET {{host}}/transactions/{{txId}}
+
+> {% client.test("found", () => client.assert(response.status === 200)); %}
 
 ### Account balance
 GET {{host}}/accounts/ACC-12345/balance

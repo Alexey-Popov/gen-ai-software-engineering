@@ -66,8 +66,22 @@ curl http://localhost:3000/accounts/ACC-12345/balance
 # Filtered list
 curl "http://localhost:3000/transactions?accountId=ACC-12345&type=transfer"
 
-# CSV export
+# Task 4-A: Account summary (deposits, withdrawals, count, most recent date)
+curl http://localhost:3000/accounts/ACC-12345/summary
+
+# Task 4-B: Simple interest on current balance (annual rate, N days)
+curl "http://localhost:3000/accounts/ACC-12345/interest?rate=0.05&days=30"
+
+# Task 4-C: CSV export (accepts the same filters as the list endpoint)
 curl "http://localhost:3000/transactions/export?format=csv"
+# ...export only one account:
+curl "http://localhost:3000/transactions/export?format=csv&accountId=ACC-12345"
+
+# Task 4-D: Rate limiting — fire >100 requests/min from one IP to get HTTP 429.
+# This loop prints the status code of each request; the 101st should be 429.
+for i in $(seq 1 101); do
+  curl -s -o /dev/null -w "%{http_code} " http://localhost:3000/health
+done; echo
 ```
 
 Or load everything at once (server must be running; needs `jq`):
