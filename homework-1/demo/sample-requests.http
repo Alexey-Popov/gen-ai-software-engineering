@@ -1,0 +1,113 @@
+### Banking Transactions API - Sample Requests
+### Use with VS Code REST Client extension
+### Base URL: http://localhost:3000
+
+### =====================
+### CREATE TRANSACTIONS
+### =====================
+
+### Create a transfer between accounts
+POST http://localhost:3000/api/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-12345",
+  "toAccount": "ACC-67890",
+  "amount": 250.00,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+### Create a deposit
+POST http://localhost:3000/api/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-00000",
+  "toAccount": "ACC-12345",
+  "amount": 1000.50,
+  "currency": "EUR",
+  "type": "deposit"
+}
+
+### Create a withdrawal
+POST http://localhost:3000/api/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-67890",
+  "toAccount": "ACC-00000",
+  "amount": 75.25,
+  "currency": "GBP",
+  "type": "withdrawal"
+}
+
+### =====================
+### LIST TRANSACTIONS
+### =====================
+
+### Get all transactions
+GET http://localhost:3000/api/transactions
+
+### Filter by account ID
+GET http://localhost:3000/api/transactions?accountId=ACC-12345
+
+### Filter by type
+GET http://localhost:3000/api/transactions?type=transfer
+
+### Filter by date range
+GET http://localhost:3000/api/transactions?from=2024-01-01T00:00:00.000Z&to=2024-12-31T23:59:59.999Z
+
+### Combined filters (account + type)
+GET http://localhost:3000/api/transactions?accountId=ACC-12345&type=deposit
+
+### =====================
+### GET TRANSACTION BY ID
+### =====================
+
+### Get a specific transaction (replace with actual ID from create response)
+GET http://localhost:3000/api/transactions/replace-with-actual-uuid
+
+### =====================
+### ACCOUNT BALANCE
+### =====================
+
+### Get account balance
+GET http://localhost:3000/api/accounts/ACC-12345/balance
+
+### =====================
+### ACCOUNT SUMMARY
+### =====================
+
+### Get account summary
+GET http://localhost:3000/api/accounts/ACC-12345/summary
+
+### =====================
+### INTEREST CALCULATION
+### =====================
+
+### Calculate simple interest (5% rate, 30 days)
+GET http://localhost:3000/api/accounts/ACC-12345/interest?rate=0.05&days=30
+
+### =====================
+### CSV EXPORT
+### =====================
+
+### Export all transactions as CSV
+GET http://localhost:3000/api/transactions/export?format=csv
+
+### =====================
+### VALIDATION ERROR EXAMPLE
+### =====================
+
+### Invalid request - demonstrates validation errors
+POST http://localhost:3000/api/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "INVALID",
+  "toAccount": "ALSO-INVALID",
+  "amount": -50,
+  "currency": "NOTREAL",
+  "type": "invalid-type"
+}

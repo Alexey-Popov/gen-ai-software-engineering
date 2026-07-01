@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+    "fromAccount": "ACC-12345",
+    "toAccount": "ACC-67890",
+    "amount": 250.00,
+    "currency": "USD",
+    "type": "transfer",
+    "timestamp": "2024-06-15T10:30:00.000Z",
+    "status": "completed"
+  },
+  {
+    "id": "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
+    "fromAccount": "ACC-00000",
+    "toAccount": "ACC-12345",
+    "amount": 1000.50,
+    "currency": "EUR",
+    "type": "deposit",
+    "timestamp": "2024-06-14T08:15:00.000Z",
+    "status": "completed"
+  },
+  {
+    "id": "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
+    "fromAccount": "ACC-67890",
+    "toAccount": "ACC-00000",
+    "amount": 75.25,
+    "currency": "GBP",
+    "type": "withdrawal",
+    "timestamp": "2024-06-13T14:45:00.000Z",
+    "status": "completed"
+  },
+  {
+    "id": "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a",
+    "fromAccount": "ACC-ABCDE",
+    "toAccount": "ACC-12345",
+    "amount": 500.00,
+    "currency": "JPY",
+    "type": "transfer",
+    "timestamp": "2024-06-12T16:00:00.000Z",
+    "status": "pending"
+  },
+  {
+    "id": "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b",
+    "fromAccount": "ACC-00000",
+    "toAccount": "ACC-67890",
+    "amount": 2500.75,
+    "currency": "USD",
+    "type": "deposit",
+    "timestamp": "2024-06-11T09:00:00.000Z",
+    "status": "completed"
+  },
+  {
+    "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c",
+    "fromAccount": "ACC-12345",
+    "toAccount": "ACC-00000",
+    "amount": 150.00,
+    "currency": "USD",
+    "type": "withdrawal",
+    "timestamp": "2024-06-10T11:30:00.000Z",
+    "status": "failed"
+  }
+]
