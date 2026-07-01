@@ -1,0 +1,15 @@
+{
+  "name": "transactions-api",
+  "version": "1.0.0",
+  "description": "REST API for financial transactions",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  }
+}

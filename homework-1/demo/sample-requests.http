@@ -1,0 +1,259 @@
+### Transactions API — Sample Requests
+### Compatible with VS Code REST Client and JetBrains HTTP Client
+### Start server first: bash demo/run.sh
+
+@baseUrl = http://localhost:3000
+
+# ─────────────────────────────────────────────
+# Task 1 – Core API
+# ─────────────────────────────────────────────
+
+### 1.1 Create deposit
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "ACC-AA001",
+  "amount": 5000,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+###
+
+### 1.2 Create deposit in EUR
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "ACC-AA001",
+  "amount": 1200,
+  "currency": "EUR",
+  "type": "deposit"
+}
+
+###
+
+### 1.3 Create withdrawal
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-AA001",
+  "amount": 250.50,
+  "currency": "USD",
+  "type": "withdrawal"
+}
+
+###
+
+### 1.4 Create transfer
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-AA001",
+  "toAccount": "ACC-BB002",
+  "amount": 800,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+###
+
+### 1.5 List all transactions
+GET {{baseUrl}}/transactions
+
+###
+
+### 1.6 Get transaction by ID
+# Copy an "id" value from the response above and paste it below
+@txId = paste-transaction-id-here
+GET {{baseUrl}}/transactions/{{txId}}
+
+###
+
+### 1.7 Get account balance
+GET {{baseUrl}}/accounts/ACC-AA001/balance
+
+# ─────────────────────────────────────────────
+# Task 2 – Validation (all return 400)
+# ─────────────────────────────────────────────
+
+### 2.1 Invalid account format (should be ACC-XXXXX)
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "acc-001",
+  "amount": 100,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+###
+
+### 2.2 Negative amount
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "ACC-AA001",
+  "amount": -50,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+###
+
+### 2.3 More than 2 decimal places
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "ACC-AA001",
+  "amount": 99.999,
+  "currency": "USD",
+  "type": "deposit"
+}
+
+###
+
+### 2.4 Invalid ISO 4217 currency code
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "ACC-AA001",
+  "amount": 100,
+  "currency": "XYZ",
+  "type": "deposit"
+}
+
+###
+
+### 2.5 Multiple validation errors at once
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "toAccount": "bad",
+  "amount": -5.999,
+  "currency": "ZZZ",
+  "type": "deposit"
+}
+
+###
+
+### 2.6 Transfer to same account
+POST {{baseUrl}}/transactions
+Content-Type: application/json
+
+{
+  "fromAccount": "ACC-AA001",
+  "toAccount": "ACC-AA001",
+  "amount": 100,
+  "currency": "USD",
+  "type": "transfer"
+}
+
+# ─────────────────────────────────────────────
+# Task 3 – Filtering
+# ─────────────────────────────────────────────
+
+### 3.1 Filter by account
+GET {{baseUrl}}/transactions?accountId=ACC-AA001
+
+###
+
+### 3.2 Filter by type
+GET {{baseUrl}}/transactions?type=transfer
+
+###
+
+### 3.3 Filter by date range
+GET {{baseUrl}}/transactions?from=2026-01-01&to=2026-06-30
+
+###
+
+### 3.4 Combined filters
+GET {{baseUrl}}/transactions?accountId=ACC-AA001&type=deposit&from=2026-01-01
+
+###
+
+### 3.5 Invalid filter — bad accountId format (400)
+GET {{baseUrl}}/transactions?accountId=bad-id
+
+###
+
+### 3.6 Invalid filter — from later than to (400)
+GET {{baseUrl}}/transactions?from=2026-12-31&to=2026-01-01
+
+# ─────────────────────────────────────────────
+# Task 4A – Account Summary
+# ─────────────────────────────────────────────
+
+### 4A.1 Summary for ACC-AA001
+GET {{baseUrl}}/accounts/ACC-AA001/summary
+
+###
+
+### 4A.2 Summary for ACC-BB002
+GET {{baseUrl}}/accounts/ACC-BB002/summary
+
+###
+
+### 4A.3 Non-existent account (404)
+GET {{baseUrl}}/accounts/ACC-ZZ999/summary
+
+# ─────────────────────────────────────────────
+# Task 4B – Simple Interest
+# ─────────────────────────────────────────────
+
+### 4B.1 5% annual rate for 30 days
+GET {{baseUrl}}/accounts/ACC-AA001/interest?rate=0.05&days=30
+
+###
+
+### 4B.2 10% annual rate for 365 days
+GET {{baseUrl}}/accounts/ACC-AA001/interest?rate=0.10&days=365
+
+###
+
+### 4B.3 Missing days parameter (400)
+GET {{baseUrl}}/accounts/ACC-AA001/interest?rate=0.05
+
+###
+
+### 4B.4 Negative rate (400)
+GET {{baseUrl}}/accounts/ACC-AA001/interest?rate=-0.1&days=30
+
+# ─────────────────────────────────────────────
+# Task 4C – CSV Export
+# ─────────────────────────────────────────────
+
+### 4C.1 Export all transactions as CSV
+GET {{baseUrl}}/transactions/export?format=csv
+
+###
+
+### 4C.2 Export only deposits as CSV
+GET {{baseUrl}}/transactions/export?format=csv&type=deposit
+
+###
+
+### 4C.3 Export filtered by account and date range
+GET {{baseUrl}}/transactions/export?format=csv&accountId=ACC-AA001&from=2026-01-01
+
+###
+
+### 4C.4 Unsupported format (400)
+GET {{baseUrl}}/transactions/export?format=xml
+
+# ─────────────────────────────────────────────
+# Task 4D – Rate Limiting
+# ─────────────────────────────────────────────
+
+### 4D.1 Check rate limit headers in response
+# Look at: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset
+GET {{baseUrl}}/transactions

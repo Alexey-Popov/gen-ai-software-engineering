@@ -1,0 +1,95 @@
+{
+  "description": "Sample transaction data — representative of what the API stores and returns",
+  "accounts": [
+    { "id": "ACC-AA001", "owner": "Alice Anderson" },
+    { "id": "ACC-BB002", "owner": "Bob Baker" },
+    { "id": "ACC-CC003", "owner": "Carol Chen" }
+  ],
+  "transactions": [
+    {
+      "id": "11111111-0000-0000-0000-000000000001",
+      "fromAccount": null,
+      "toAccount": "ACC-AA001",
+      "amount": 5000,
+      "currency": "USD",
+      "type": "deposit",
+      "timestamp": "2026-01-05T09:15:00.000Z",
+      "status": "completed"
+    },
+    {
+      "id": "11111111-0000-0000-0000-000000000002",
+      "fromAccount": null,
+      "toAccount": "ACC-BB002",
+      "amount": 3000,
+      "currency": "USD",
+      "type": "deposit",
+      "timestamp": "2026-01-06T10:00:00.000Z",
+      "status": "completed"
+    },
+    {
+      "id": "11111111-0000-0000-0000-000000000003",
+      "fromAccount": null,
+      "toAccount": "ACC-AA001",
+      "amount": 1500,
+      "currency": "EUR",
+      "type": "deposit",
+      "timestamp": "2026-01-10T14:30:00.000Z",
+      "status": "completed"
+    },
+    {
+      "id": "11111111-0000-0000-0000-000000000004",
+      "fromAccount": "ACC-AA001",
+      "toAccount": "ACC-BB002",
+      "amount": 800,
+      "currency": "USD",
+      "type": "transfer",
+      "timestamp": "2026-02-01T11:00:00.000Z",
+      "status": "completed"
+    },
+    {
+      "id": "11111111-0000-0000-0000-000000000005",
+      "fromAccount": "ACC-BB002",
+      "toAccount": "ACC-CC003",
+      "amount": 500,
+      "currency": "USD",
+      "type": "transfer",
+      "timestamp": "2026-02-14T16:45:00.000Z",
+      "status": "completed"
+    },
+    {
+      "id": "11111111-0000-0000-0000-000000000006",
+      "fromAccount": "ACC-AA001",
+      "toAccount": null,
+      "amount": 250.50,
+      "currency": "USD",
+      "type": "withdrawal",
+      "timestamp": "2026-03-03T08:20:00.000Z",
+      "status": "completed"
+    },
+    {
+      "id": "11111111-0000-0000-0000-000000000007",
+      "fromAccount": null,
+      "toAccount": "ACC-CC003",
+      "amount": 200,
+      "currency": "EUR",
+      "type": "deposit",
+      "timestamp": "2026-03-15T13:00:00.000Z",
+      "status": "completed"
+    },
+    {
+      "id": "11111111-0000-0000-0000-000000000008",
+      "fromAccount": "ACC-AA001",
+      "toAccount": "ACC-CC003",
+      "amount": 300,
+      "currency": "EUR",
+      "type": "transfer",
+      "timestamp": "2026-04-01T09:00:00.000Z",
+      "status": "completed"
+    }
+  ],
+  "expectedBalances": {
+    "ACC-AA001": { "USD": 3949.50, "EUR": 1200 },
+    "ACC-BB002": { "USD": 3300 },
+    "ACC-CC003": { "USD": 500,    "EUR": 500 }
+  }
+}
