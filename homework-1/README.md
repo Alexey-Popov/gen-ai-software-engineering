@@ -92,7 +92,7 @@ the work followed a disciplined, verifiable loop. Here is the actual sequence of
 
 ### 1. Engineering a professional prompt
 
-We started by asking the AI to research **Anthropic's official prompt‑engineering best practices**
+I started by asking the AI to research **Anthropic's official prompt‑engineering best practices**
 and produce a top‑tier prompt for the assignment. The result is [`PROMPT.md`](PROMPT.md): a
 prompt structured with XML tags (`<role>`, `<context>`, `<requirements>`, `<examples>`,
 `<engineering_principles>`, `<definition_of_done>`, `<self_check>`), few‑shot request/response
@@ -101,14 +101,14 @@ A parallel frontend prompt was produced as [`PROMPT-FRONTEND.md`](PROMPT-FRONTEN
 
 ### 2. A test‑first plan
 
-Before any code, we asked for a TDD implementation plan: [`PLAN-BACKEND-TDD.md`](PLAN-BACKEND-TDD.md).
+Before any code, I asked for a TDD implementation plan: [`PLAN-BACKEND-TDD.md`](PLAN-BACKEND-TDD.md).
 It defines the Red → Green → Refactor discipline, the test pyramid (unit + MockMvc web tests +
 one integration test), a `tests.json` tracker, and **nine ordered cycles**, each with the exact
 tests to write first.
 
 ### 3. Cycle‑by‑cycle implementation (the core loop)
 
-Because the sandbox couldn't run Java/Maven, we agreed on a **cycle‑by‑cycle** rhythm:
+Because the sandbox couldn't run Java/Maven, I agreed on a **cycle‑by‑cycle** rhythm:
 
 1. Claude writes the failing tests **and** the minimum code for one cycle.
 2. Claude statically checks the code (package/path, brace balance, `tests.json` validity).
@@ -133,13 +133,13 @@ verifying it with `ng build` (clean compile).
 
 ### 6. Design iterations
 
-We iterated on the UI several times: a full **"Microsoft 2030"** premium restyle (acrylic glass,
+I iterated on the UI several times: a full **"Microsoft 2030"** premium restyle (acrylic glass,
 gradient accents, glow, motion, light/dark), a nicer **disabled‑button** state (soft brand tint
 instead of gray text on the gradient), and equal‑width **filter fields** in the transactions row.
 
 ### 7. Developer experience & operability
 
-Finally we added a **one‑command launcher** (`start.sh`) that runs backend + frontend, seeds
+Finally I added a **one‑command launcher** (`start.sh`) that runs backend + frontend, seeds
 sample data (`demo/seed.sh`), and opens the browser; a **health** endpoint via Actuator; and a
 modern **API reference** via Scalar at `/docs`, surfaced in the frontend topbar with a live
 status chip.
@@ -171,12 +171,11 @@ get to green; money as `BigDecimal`; a general solution, not one hard‑coded to
 
 ## 📸 Screenshots
 
-> Screenshot files live in [`docs/screenshots/`](docs/screenshots). Add the PNGs with the names
-> below and they will render here.
+> Screenshot files live in [`docs/screenshots/`](docs/screenshots).
 
 ### AI‑assisted development — the planning phase
 
-These six screenshots capture how the project was set up with Claude, from first prompt to the
+Here is screenshots capture how the project was set up with Claude, from first prompt to the
 start of the TDD cycles.
 
 ![Kick-off and research](docs/screenshots/1.png)
